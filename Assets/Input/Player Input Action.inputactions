@@ -1,0 +1,74 @@
+{
+    "name": "Player Input Action",
+    "maps": [
+        {
+            "name": "Player",
+            "id": "98f7f569-38b9-4d6e-90a7-2b04e06bdbb0",
+            "actions": [
+                {
+                    "name": "Jump",
+                    "type": "Value",
+                    "id": "5e58a11b-55e1-46f3-aa01-4740021dfecc",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Slide",
+                    "type": "Button",
+                    "id": "47a5d22c-e8bd-4d2c-8a77-5d88268bae0f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Attack",
+                    "type": "Button",
+                    "id": "65469120-5274-42af-968c-533210badc82",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "cb371cf7-658f-4380-a47e-00c38f4a7eef",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "eb00b40e-003a-4929-aa22-a5f91ca06122",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Slide",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a9134162-b661-49ac-bb9e-6ff2bb616a2a",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
