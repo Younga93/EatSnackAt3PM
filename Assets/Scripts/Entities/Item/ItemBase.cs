@@ -6,7 +6,7 @@ public abstract class ItemBase : MonoBehaviour, IInteractable
 {
     [SerializeField] private ItemType itemType;
 
-    public abstract void OnInteract();
+    public abstract void OnInteract(PlayerController player);
 
     public ItemType GetItemType() { return itemType; }
 

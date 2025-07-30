@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class RecoveryItem : ItemBase
 {
-    [SerializeField] private float _energyRecoveryAmount;
+    [SerializeField] private int _energyRecoveryAmount;
 
-    public override void OnInteract()
+    public override void OnInteract(PlayerController player)
     {
         // TODO: 플레이어 체력 회복
+        player.ChangeHp(_energyRecoveryAmount);
     }
 }
