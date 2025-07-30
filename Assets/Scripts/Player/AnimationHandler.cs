@@ -15,9 +15,18 @@ public class AnimationHandler : MonoBehaviour
     private readonly int IsDamage = Animator.StringToHash("IsDamage");
     private readonly int IsDeath = Animator.StringToHash("IsDeath");
 
+    private List<int> animatorParams = new List<int>();
+
+
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
+        animatorParams.Add(IsJump);
+        animatorParams.Add(IsSlide);
+        animatorParams.Add(IsAttack);
+        animatorParams.Add(IsDamage);
+        animatorParams.Add(IsDeath);
     }
 
     private void Update()
@@ -30,9 +39,7 @@ public class AnimationHandler : MonoBehaviour
     {
         if (!animator.GetBool(IsJump))
         {
-            animator.SetBool(IsAttack, false);
-            animator.SetBool(IsSlide, false);
-            animator.SetBool(IsJump, true);
+            TurnOnState(IsJump);
         }
         else // 더블점프 상황
         {
@@ -50,8 +57,7 @@ public class AnimationHandler : MonoBehaviour
     {
         // 0번 : 기본 레이어
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-        // Debug.Log($"공중에 있는가 : {stateInfo.IsName("Jump In Air") || stateInfo.IsName("Jump Start")}");
-        return stateInfo.IsName("Jump In Air") || stateInfo.IsName("Jump Start");
+        return stateInfo.IsName("Jump");
     }
 
 
@@ -71,10 +77,9 @@ public class AnimationHandler : MonoBehaviour
     {
         if (!animator.GetBool(IsSlide))
         {
-            animator.SetBool(IsAttack, false);
-            animator.SetBool(IsJump, false);
+            TurnOnState(IsSlide);
             animator.speed = 1f;
-            animator.SetBool(IsSlide, true);
+            
             
         }
     }
@@ -89,10 +94,8 @@ public class AnimationHandler : MonoBehaviour
         if (animator.GetBool(IsJump)) return;
         if (!animator.GetBool(IsAttack))
         {
-            animator.SetBool(IsSlide, false);
-            animator.SetBool(IsJump, false);
             animator.speed = 1f;
-            animator.SetBool(IsAttack, true);
+            TurnOnState(IsAttack);
         }
     }
 
@@ -109,5 +112,36 @@ public class AnimationHandler : MonoBehaviour
     public void Death()
     {
         animator.SetTrigger(IsDeath);
+    }
+
+
+    /// <summary>
+    /// state 하나만 키고 나머지는 다 false 처리
+    /// </summary>
+    /// <param name="state"></param>
+    public void TurnOnState(int state) 
+    {
+        foreach(var aniParam in animatorParams)
+        {
+            if(aniParam == state)
+            {
+                animator.SetBool(state, true);
+            }
+            else
+            {
+                animator.SetBool(aniParam, false);
+            }
+        }
+    }
+
+    /// <summary>
+    /// 모든 파라미터를 false 처리
+    /// </summary>
+    public void TurnOffAllState()
+    {
+        foreach(var aniParam in animatorParams)
+        {
+            animator.SetBool(aniParam, false);
+        }
     }
 }
