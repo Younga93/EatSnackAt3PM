@@ -1,18 +1,11 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InputBindingsSO : MonoBehaviour
+[CreateAssetMenu(fileName = "InputBindings", menuName = "ScriptableObjects/InputBindings")]
+public class InputBindingsSO : ScriptableObject
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public string jumpBindingPath = "<Keyboard>/w";
+    public string slideBindingPath = "<Keyboard>/s";
+    public string attackBindingPath = "<Keyboard>/d";
 }
