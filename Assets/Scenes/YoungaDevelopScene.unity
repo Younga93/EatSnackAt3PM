@@ -197,7 +197,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputActions: {fileID: -944628639613478452, guid: 59e2a1562c76e8742a2cd5fe3967cab5, type: 3}
-  defaultBindings: {fileID: 11400000, guid: 36e7c84911925954ca0adcce028c7d7c, type: 2}
 --- !u!4 &1854957372
 Transform:
   m_ObjectHideFlags: 0
