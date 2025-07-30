@@ -185,7 +185,7 @@ public class PlayerController : MonoBehaviour
     /// 체력 처리 함수. 체력을 바꿉니다.
     /// </summary>
     /// <param name="hp"></param>
-    private void ChangeHp(int changeHp)
+    public void ChangeHp(int changeHp)
     {
         // 추후에 체력 변화치가 양수면 주변에 밝은 파티클이 돌아다녀도 괜찮을 것 같아요.
         currentHp += changeHp;
@@ -197,7 +197,7 @@ public class PlayerController : MonoBehaviour
     /// 체력 처리 함수. 체력을 지정합니다.
     /// </summary>
     /// <param name="changeHp"></param>
-    private void SetHp(int changeHp)
+    public void SetHp(int changeHp)
     {
         currentHp = changeHp;
     }
@@ -209,7 +209,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     /// <param name="changeSpeed"></param>
 
-    private void ChangeSpeed(float changeSpeed)
+    public void ChangeSpeed(float changeSpeed)
     {
         forwardSpeed += changeSpeed;
     }
@@ -220,7 +220,7 @@ public class PlayerController : MonoBehaviour
     /// 앞으로 달리는 속도를 지정합니다.
     /// </summary>
     /// <param name="changeSpeed"></param>
-    private void SetSpeed(float changeSpeed)
+    public void SetSpeed(float changeSpeed)
     {
         forwardSpeed = changeSpeed;
     }
