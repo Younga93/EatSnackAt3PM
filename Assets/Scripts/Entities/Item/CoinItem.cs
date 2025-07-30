@@ -2,15 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CoinItem : ItemBase, IAttractable
+public class CoinItem : ItemBase
 {
     // 각 코인 프리팹마다 상승 점수를 설정
     [SerializeField] private int _score;
-
-    public void AttractedBy()
-    {
-        
-    }
 
     public override void OnInteract()
     {
