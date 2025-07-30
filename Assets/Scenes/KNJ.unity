@@ -248,11 +248,11 @@ MonoBehaviour:
   obstacleTopBPrefab: {fileID: 7802689750949744255, guid: 61636aa875f39fb4e97f92e823f75a88, type: 3}
   obstacleBotAPrefab: {fileID: 6827845806679023423, guid: 6a23890bbee3442408a0783f6f519316, type: 3}
   obstacleBotBPrefab: {fileID: 8277595793484319287, guid: d34304fbedfab194e98e9e47dcc368c4, type: 3}
-  breakableObstaclePrefab: {fileID: 0}
-  coinItemAPrefab: {fileID: 0}
-  coinItemBPrefab: {fileID: 0}
-  recoveryItemPrefab: {fileID: 0}
-  SpeedUpItemPrefab: {fileID: 0}
+  breakableObstaclePrefab: {fileID: 751668914780710500, guid: c811231292c78f94c8d0df332fb255d2, type: 3}
+  coinItemAPrefab: {fileID: 163731351021526248, guid: 4a8cc3c16d350534abf282fabce581c3, type: 3}
+  coinItemBPrefab: {fileID: 7790831306140494515, guid: 067b2da1cea01404bbc17629dc9f1bb3, type: 3}
+  recoveryItemPrefab: {fileID: 7858876677893516950, guid: ebfdd0fe6050d4a4a925cc72fd73900b, type: 3}
+  SpeedUpItemPrefab: {fileID: 5865038146276636957, guid: da5754671b824e04398fbfe92631eb13, type: 3}
   presets:
   - {fileID: 8961782985308924064, guid: e9276f2883163674fb75a4b06c4a361a, type: 3}
 --- !u!4 &1474143099

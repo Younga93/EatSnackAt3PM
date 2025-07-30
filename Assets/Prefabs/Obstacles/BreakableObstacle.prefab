@@ -94,7 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2507350025756994871}
   - component: {fileID: 1765644285237725931}
-  - component: {fileID: 1788356449552069839}
+  - component: {fileID: 751668914780710500}
   m_Layer: 0
   m_Name: BreakableObstacle
   m_TagString: Untagged
@@ -163,7 +163,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 2}
   m_EdgeRadius: 0
---- !u!114 &1788356449552069839
+--- !u!114 &751668914780710500
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -172,7 +172,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 6576373696014713631}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90fc61ce7cce74d42ac8c7366fcff853, type: 3}
+  m_Script: {fileID: 11500000, guid: 5571c09a1f9a89944bdb7d9a6c7b3e27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   obstacleType: 4
+  _energyRecoveryAmount: 20
+  _score: 1000

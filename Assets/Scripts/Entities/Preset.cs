@@ -9,6 +9,10 @@ public class Preset : MonoBehaviour
     public void Init(PresetSpawnManager spawnManager)
     { _spawnManager = spawnManager; }
 
+    /// <summary>
+    /// 해당 오브젝트의 자식 오브젝트들을 모두 오브젝트 풀로 되돌리는 함수
+    /// TODO: 이 오브젝트가 제거영역에 닿았을때 실행하도록 구현필요
+    /// </summary>
     public void ReturnEveryObjects()
     {
         ObstacleBase[] obstacles = GetComponentsInChildren<ObstacleBase>();
@@ -24,11 +28,7 @@ public class Preset : MonoBehaviour
             _spawnManager.ReturnItem(item);
         }
 
+        _spawnManager = null;
         Destroy(gameObject);
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.yellow;
     }
 }
