@@ -6,8 +6,11 @@ public class AnimationHandler : MonoBehaviour
 {
     Animator animator;
 
-    bool jumpStopped = false;
-    [SerializeField] float inAirStopTime;
+    [Header("Jump Setting")]
+    [SerializeField] float jumpHeight; // 이단 점프 측정할 높이
+    [SerializeField] float resumeAnimationHeight; // 점프하고 내려올때 다시 애니메이션 재개할 기준 높이
+    [SerializeField] float maxJumpHeight; // 최대 높이
+    [SerializeField] float groundHeight;
 
     private readonly int IsJump = Animator.StringToHash("IsJump");
     private readonly int IsSlide = Animator.StringToHash("IsSlide");
@@ -15,18 +18,16 @@ public class AnimationHandler : MonoBehaviour
     private readonly int IsDamage = Animator.StringToHash("IsDamage");
     private readonly int IsDeath = Animator.StringToHash("IsDeath");
 
-    private List<int> animatorParams = new List<int>();
-
+    private int jumpCount;
+    private Rigidbody2D rb;
+   
 
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
-        animatorParams.Add(IsJump);
-        animatorParams.Add(IsSlide);
-        animatorParams.Add(IsAttack);
-        animatorParams.Add(IsDamage);
-        animatorParams.Add(IsDeath);
+        rb = GetComponent<Rigidbody2D>();
+        
     }
 
     private void Update()
@@ -34,54 +35,50 @@ public class AnimationHandler : MonoBehaviour
         
     }
 
-
-    public void Jump()
+    private void FixedUpdate()
     {
-        if (!animator.GetBool(IsJump))
+
+        if (rb.velocity.y < 0f
+            && animator.speed < 1f)
         {
-            TurnOnState(IsJump);
+            animator.speed = 1f;
         }
-        else // 더블점프 상황
+
+        
+        
+
+        // 최대 높이 설정
+        Vector3 pos = transform.position;
+        if (pos.y > maxJumpHeight) pos.y = maxJumpHeight;
+        transform.position = pos;
+    }
+
+
+    public void Jump(int jumpCount)
+    {
+
+        // TurnOnState(IsJump);
+
+        this.jumpCount = jumpCount;
+
+        // jumpCount == 1 : 이단 점프
+        if (transform.position.y > groundHeight)
         {
-            if (!jumpStopped && IsInAirAnimation())
-            {
-                Debug.Log("Double Jump Animation Stopped");
-                animator.speed = 0f;
-                Invoke("ResumeAnimation", inAirStopTime);
-                jumpStopped = true;
-            }
+            Debug.Log("Double Jump Animation Stopped");
+            animator.speed = 0f;
+            // Invoke("ResumeAnimation", inAirStopTime);
         }
-    }
-
-    bool IsInAirAnimation()
-    {
-        // 0번 : 기본 레이어
-        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-        return stateInfo.IsName("Jump");
-    }
-
-
-    void ResumeAnimation()
-    {
-        animator.speed = 1f;
-    }
-
-
-    public void OnLandAnimationEnd()
-    {
-        animator.SetBool(IsJump, false);
-        jumpStopped = false;
+        else
+        {
+            animator.SetTrigger(IsJump);
+        }
+        
     }
 
     public void Slide()
     {
-        if (!animator.GetBool(IsSlide))
-        {
-            TurnOnState(IsSlide);
-            animator.speed = 1f;
-            
-            
-        }
+        animator.speed = 1f;
+        animator.SetTrigger(IsSlide);
     }
 
     public void OnSlideAnimationEnd()
@@ -91,17 +88,8 @@ public class AnimationHandler : MonoBehaviour
 
     public void Attack()
     {
-        if (animator.GetBool(IsJump)) return;
-        if (!animator.GetBool(IsAttack))
-        {
-            animator.speed = 1f;
-            TurnOnState(IsAttack);
-        }
-    }
-
-    public void EndAttack()
-    {
-        animator.SetBool(IsAttack, false);
+        animator.speed = 1f;
+        animator.SetTrigger(IsAttack);
     }
 
     public void Damage()
@@ -111,37 +99,6 @@ public class AnimationHandler : MonoBehaviour
 
     public void Death()
     {
-        animator.SetTrigger(IsDeath);
-    }
-
-
-    /// <summary>
-    /// state 하나만 키고 나머지는 다 false 처리
-    /// </summary>
-    /// <param name="state"></param>
-    public void TurnOnState(int state) 
-    {
-        foreach(var aniParam in animatorParams)
-        {
-            if(aniParam == state)
-            {
-                animator.SetBool(state, true);
-            }
-            else
-            {
-                animator.SetBool(aniParam, false);
-            }
-        }
-    }
-
-    /// <summary>
-    /// 모든 파라미터를 false 처리
-    /// </summary>
-    public void TurnOffAllState()
-    {
-        foreach(var aniParam in animatorParams)
-        {
-            animator.SetBool(aniParam, false);
-        }
+        animator.SetBool(IsDeath, true);
     }
 }

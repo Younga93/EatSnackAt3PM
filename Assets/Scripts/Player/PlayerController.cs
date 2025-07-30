@@ -6,6 +6,11 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    // 이동 관련 변수
+    [Header("Move Settings")]
+    [SerializeField] float forwardSpeed; // 앞으로 이동하는 속도
+
+
     // 점프 관련 변수들
     [Header("Jump Settings")]
     [SerializeField] float firstJumpForce;
@@ -62,11 +67,15 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         Tick();
+
+        Vector3 velo = rb.velocity;
+        velo.x = forwardSpeed;
+        rb.velocity = velo;
     }
 
     void Tick()
     {
-        if(jumpCount != 0)
+        if(jumpDelay < maxJumpDelay)
         {
             jumpDelay += Time.deltaTime;
         }
@@ -81,11 +90,13 @@ public class PlayerController : MonoBehaviour
             {
                 if (jumpDelay >= maxJumpDelay)
                 {
+                    OnSlideAnimationEnd();
+
                     Vector3 velocity = rb.velocity;
                     velocity.y += jumpCount == 0 ? firstJumpForce : secondJumpForce;
                     rb.velocity = velocity;
                     
-                    aniHandler.Jump();
+                    aniHandler.Jump(jumpCount);
 
                     jumpCount++;
                     jumpDelay = 0f;
@@ -107,6 +118,7 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("Slide");
                 isSlide = true;
                 StartSlide();
+                jumpCount = 0;
             }
         }
     }
@@ -115,8 +127,9 @@ public class PlayerController : MonoBehaviour
     {
         if(inputValue.isPressed)
         {
-            if (jumpCount != 0) return;
-            if (isSlide) isSlide = false;
+            if (isSlide) {
+                OnSlideAnimationEnd();
+            }
             if (!isAttack)
             {
                 Debug.Log("Attack");
@@ -132,12 +145,28 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+
+        Debug.Log($"Collision Enter in Player : {collision.gameObject.name}");
+
         if (collision.gameObject.CompareTag("ground"))
         {
             if(jumpCount != 0)
             {
                 jumpCount = 0;
             }
+        }
+        
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log($"Trigger Enter in Player : {collision.gameObject.name}");
+
+        if (collision.gameObject.CompareTag("enemy"))
+        {
+            // TODO : 데미지 설정
+            Debug.Log($"Enemy와 부딪힘");
+            aniHandler.Damage();
         }
     }
 
@@ -175,7 +204,6 @@ public class PlayerController : MonoBehaviour
     private void EndAttack()
     {
         attackPivot.SetActive(false);
-        aniHandler.EndAttack();
         isAttack = false;
     }
 }
