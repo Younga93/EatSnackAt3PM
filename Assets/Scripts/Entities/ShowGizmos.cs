@@ -13,15 +13,17 @@ public class ShowGizmos : MonoBehaviour
     /// </summary>
     private void OnDrawGizmos()
     {
-        Transform[] obstacleTopAPos = transform.Find("ObstacleTopASpawnPoints").GetComponentsInChildren<Transform>().Where(t => t.position != Vector3.zero).ToArray();
-        Transform[] obstacleTopBPos = transform.Find("ObstacleTopBSpawnPoints").GetComponentsInChildren<Transform>().Where(t => t.position != Vector3.zero).ToArray();
-        Transform[] obstacleBotAPos = transform.Find("ObstacleBotASpawnPoints").GetComponentsInChildren<Transform>().Where(t => t.position != Vector3.zero).ToArray();
-        Transform[] obstacleBotBPos = transform.Find("ObstacleBotBSpawnPoints").GetComponentsInChildren<Transform>().Where(t => t.position != Vector3.zero).ToArray();
-        Transform[] obstacleBreakPos = transform.Find("ObstacleBreakSpawnPoints").GetComponentsInChildren<Transform>().Where(t => t.position != Vector3.zero).ToArray();
-        Transform[] coinItemAPos = transform.Find("CoinItemASpawnPoints").GetComponentsInChildren<Transform>().Where(t => t.position != Vector3.zero).ToArray();
-        Transform[] coinItemBPos = transform.Find("CoinItemBSpawnPoints").GetComponentsInChildren<Transform>().Where(t => t.position != Vector3.zero).ToArray();
-        Transform[] recoveryItemPos = transform.Find("RecoverItemSpawnPoints").GetComponentsInChildren<Transform>().Where(t => t.position != Vector3.zero).ToArray();
-        Transform[] speedUpItemPos = transform.Find("SpeedUpItemSpawnPoints").GetComponentsInChildren<Transform>().Where(t => t.position != Vector3.zero).ToArray();
+        Transform[] obstacleTopAPos = transform.Find("ObstacleTopASpawnPoints").GetComponentsInChildren<Transform>().Where(t => t.parent != transform).ToArray();
+        Transform[] obstacleTopBPos = transform.Find("ObstacleTopBSpawnPoints").GetComponentsInChildren<Transform>().Where(t => t.parent != transform).ToArray();
+        Transform[] obstacleBotAPos = transform.Find("ObstacleBotASpawnPoints").GetComponentsInChildren<Transform>().Where(t => t.parent != transform).ToArray();
+        Transform[] obstacleBotBPos = transform.Find("ObstacleBotBSpawnPoints").GetComponentsInChildren<Transform>().Where(t => t.parent != transform).ToArray();
+        Transform[] obstacleBreakPos = transform.Find("ObstacleBreakSpawnPoints").GetComponentsInChildren<Transform>().Where(t => t.parent != transform).ToArray();
+        Transform[] coinItemAPos = transform.Find("CoinItemASpawnPoints").GetComponentsInChildren<Transform>().Where(t => t.parent != transform).ToArray();
+        Transform[] coinItemBPos = transform.Find("CoinItemBSpawnPoints").GetComponentsInChildren<Transform>().Where(t => t.parent != transform).ToArray();
+        Transform[] recoveryItemPos = transform.Find("RecoverItemSpawnPoints").GetComponentsInChildren<Transform>().Where(t => t.parent != transform).ToArray();
+        Transform[] speedUpItemPos = transform.Find("SpeedUpItemSpawnPoints").GetComponentsInChildren<Transform>().Where(t => t.parent != transform).ToArray();
+
+        
 
         foreach (Transform t in obstacleTopAPos)
         {

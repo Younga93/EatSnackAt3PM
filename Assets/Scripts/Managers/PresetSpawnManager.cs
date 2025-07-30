@@ -88,7 +88,7 @@ public class PresetSpawnManager : MonoBehaviour
     /// </summary>
     /// <param name="type">가져오고자 하는 장애물 타입</param>
     /// <returns>실제로 가져온 장애물</returns>
-    public GameObject GetObstacle(ObstacleType type)
+    private GameObject GetObstacle(ObstacleType type)
     {
         switch (type)
         {
@@ -106,7 +106,7 @@ public class PresetSpawnManager : MonoBehaviour
     /// </summary>
     /// <param name="type">가져오고자 하는 아이템 타입</param>
     /// <returns>실제로 가져온 아이템</returns>
-    public GameObject GetItem(ItemType type)
+    private GameObject GetItem(ItemType type)
     {
         switch (type)
         {
@@ -124,17 +124,17 @@ public class PresetSpawnManager : MonoBehaviour
     /// </summary>
     /// <param name="preset">사용하고자 하는 배치 프리셋 정보</param>
     /// <param name="parent">가져온 오브젝트들을 묶어둘 부모 오브젝트</param>
-    public void PlaceObjects(GameObject preset, Transform parent)
+    private void PlaceObjects(GameObject preset, Transform parent)
     {
-        Transform[] obstacleTopAPos = preset.transform.Find("ObstacleTopASpawnPoints").GetComponentsInChildren<Transform>().Where(t => t.position != Vector3.zero).ToArray();
-        Transform[] obstacleTopBPos = preset.transform.Find("ObstacleTopBSpawnPoints").GetComponentsInChildren<Transform>().Where(t => t.position != Vector3.zero).ToArray();
-        Transform[] obstacleBotAPos = preset.transform.Find("ObstacleBotASpawnPoints").GetComponentsInChildren<Transform>().Where(t => t.position != Vector3.zero).ToArray();
-        Transform[] obstacleBotBPos = preset.transform.Find("ObstacleBotBSpawnPoints").GetComponentsInChildren<Transform>().Where(t => t.position != Vector3.zero).ToArray();
-        Transform[] obstacleBreakPos = preset.transform.Find("ObstacleBreakSpawnPoints").GetComponentsInChildren<Transform>().Where(t => t.position != Vector3.zero).ToArray();
-        Transform[] coinItemAPos = preset.transform.Find("CoinItemASpawnPoints").GetComponentsInChildren<Transform>().Where(t => t.position != Vector3.zero).ToArray();
-        Transform[] coinItemBPos = preset.transform.Find("CoinItemBSpawnPoints").GetComponentsInChildren<Transform>().Where(t => t.position != Vector3.zero).ToArray();
-        Transform[] recoveryItemPos = preset.transform.Find("RecoverItemSpawnPoints").GetComponentsInChildren<Transform>().Where(t => t.position != Vector3.zero).ToArray();
-        Transform[] speedUpItemPos = preset.transform.Find("SpeedUpItemSpawnPoints").GetComponentsInChildren<Transform>().Where(t => t.position != Vector3.zero).ToArray();
+        Transform[] obstacleTopAPos = preset.transform.Find("ObstacleTopASpawnPoints").GetComponentsInChildren<Transform>().Where(t => t.parent != preset.transform).ToArray();
+        Transform[] obstacleTopBPos = preset.transform.Find("ObstacleTopBSpawnPoints").GetComponentsInChildren<Transform>().Where(t => t.parent != preset.transform).ToArray();
+        Transform[] obstacleBotAPos = preset.transform.Find("ObstacleBotASpawnPoints").GetComponentsInChildren<Transform>().Where(t => t.parent != preset.transform).ToArray();
+        Transform[] obstacleBotBPos = preset.transform.Find("ObstacleBotBSpawnPoints").GetComponentsInChildren<Transform>().Where(t => t.parent != preset.transform).ToArray();
+        Transform[] obstacleBreakPos = preset.transform.Find("ObstacleBreakSpawnPoints").GetComponentsInChildren<Transform>().Where(t => t.parent != preset.transform).ToArray();
+        Transform[] coinItemAPos = preset.transform.Find("CoinItemASpawnPoints").GetComponentsInChildren<Transform>().Where(t => t.parent != preset.transform).ToArray();
+        Transform[] coinItemBPos = preset.transform.Find("CoinItemBSpawnPoints").GetComponentsInChildren<Transform>().Where(t => t.parent != preset.transform).ToArray();
+        Transform[] recoveryItemPos = preset.transform.Find("RecoverItemSpawnPoints").GetComponentsInChildren<Transform>().Where(t => t.parent != preset.transform).ToArray();
+        Transform[] speedUpItemPos = preset.transform.Find("SpeedUpItemSpawnPoints").GetComponentsInChildren<Transform>().Where(t => t.parent != preset.transform).ToArray();
 
         foreach (Transform t in obstacleTopAPos)
         {
@@ -190,7 +190,6 @@ public class PresetSpawnManager : MonoBehaviour
             go.transform.parent = parent;
             go.transform.localPosition = t.position;
         }
-
     }
 
     /// <summary>
@@ -232,13 +231,13 @@ public class PresetSpawnManager : MonoBehaviour
     /// 랜덤한 배치 프리셋을 선택하고 이를 지정 위치에 생성하는 함수
     /// </summary>
     /// <param name="spawnPos">해당 배치 프리셋을 생성할 위치</param>
-    public void MakePreset(Vector3 spawnPos)
+    public void MakePreset(float x)
     {
         int n = Random.Range(0, presets.Length); // 랜덤한 프리셋을 선택
         if (n < presets.Length) // 해당 프리셋이 실제로 존재하는 지 확인
         {
             GameObject go = new GameObject("[PRESET]");
-            go.transform.position = spawnPos;
+            go.transform.position = new Vector3(x,0,0);
             go.AddComponent<Preset>();
             go.GetComponent<Preset>().Init(this);
             PlaceObjects(presets[n], go.transform);
@@ -248,6 +247,11 @@ public class PresetSpawnManager : MonoBehaviour
     private void Awake()
     {
         Init();
-    }
 
+        MakePreset(5);
+        MakePreset(30);
+        MakePreset(55);
+        MakePreset(80);
+        MakePreset(105);
+    }
 }

@@ -7,7 +7,7 @@ public class MagnetItem : ItemBase
     [SerializeField] private float _duration;
     [SerializeField] private float _range;
 
-    public override void OnInteract()
+    public override void OnInteract(PlayerController player)
     {
         
     }

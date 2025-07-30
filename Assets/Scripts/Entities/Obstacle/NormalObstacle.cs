@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class NormalObstacle : ObstacleBase
 {
-    public override void OnInteract()
+    public override void OnInteract(PlayerController player)
     {
         // TODO: 플레이어의 체력 감소 및 감속
+        player.ChangeHp(-15); // 임시값
     }
 }

@@ -254,7 +254,9 @@ MonoBehaviour:
   recoveryItemPrefab: {fileID: 7858876677893516950, guid: ebfdd0fe6050d4a4a925cc72fd73900b, type: 3}
   SpeedUpItemPrefab: {fileID: 5865038146276636957, guid: da5754671b824e04398fbfe92631eb13, type: 3}
   presets:
-  - {fileID: 8961782985308924064, guid: e9276f2883163674fb75a4b06c4a361a, type: 3}
+  - {fileID: 5233846064242055444, guid: e9276f2883163674fb75a4b06c4a361a, type: 3}
+  - {fileID: 7814552674064313386, guid: 4095943f45c83a440a140a98b7a103ac, type: 3}
+  - {fileID: 2918555863071492422, guid: 13b48ee5e7ce8264c8e1d6c6ab9b9934, type: 3}
 --- !u!4 &1474143099
 Transform:
   m_ObjectHideFlags: 0
