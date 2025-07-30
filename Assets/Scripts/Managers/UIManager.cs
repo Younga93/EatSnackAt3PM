@@ -5,14 +5,14 @@ using UnityEngine.XR;
 
 public enum UIState
 {
-    Home,
+    Title,
     Game,
     GameOver
 }
 
 public class UIManager : MonoBehaviour
 {
-    HomeUI homeUI;
+    TitleUI homeUI;
     GameUI gameUI;
     GameOverUI gameOverUI;
 
@@ -30,15 +30,30 @@ public class UIManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        homeUI = GetComponentInChildren<HomeUI>(true);
-        homeUI.Init();
+        // null 체크 후 초기화
+        homeUI = GetComponentInChildren<TitleUI>(true);
+        if(homeUI != null)
+            homeUI.Init();
         gameUI = GetComponentInChildren<GameUI>(true);
-        gameUI.Init();
+        if(gameUI != null)
+            gameUI.Init();
         gameOverUI = GetComponentInChildren<GameOverUI>(true);
+        if(gameOverUI != null)
         gameOverUI.Init();
 
-        //ChangeState(UIState.Home);
     }
+
+    public void Update()
+    {
+        // 작동 테스트용 코드
+        if (gameUI != null)
+        {
+            gameUI.UpdateEnergyBarMeter();
+            gameUI.UpdateNowScoreText();
+            gameUI.UpdateBestScoreText();
+        }
+    }
+
 
     //public void SetPlayGame()
     //{
@@ -49,13 +64,6 @@ public class UIManager : MonoBehaviour
     //{
     //    ChangeState(UIState.GameOver);
     //}
-
-    public void Update()
-    {
-        gameUI.UpdateEnergyBarMeter();
-        gameUI.UpdateNowScoreText();
-        gameUI.UpdateBestScoreText();
-    }
 
     //public void ChangeState(UIState state)
     //{
