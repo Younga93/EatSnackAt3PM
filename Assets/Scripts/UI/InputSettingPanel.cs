@@ -20,6 +20,7 @@ public class InputSettingPanel : MonoBehaviour
     [SerializeField] private Button slideButton;
     [SerializeField] private Button attackButton;
     [SerializeField] private Button resetButton;
+    [SerializeField] private Button closeButton;
 
     private void Start()
     {
