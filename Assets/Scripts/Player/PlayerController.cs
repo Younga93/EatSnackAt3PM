@@ -154,7 +154,7 @@ public class PlayerController : MonoBehaviour
 
         Debug.Log($"Collision Enter in Player : {collision.gameObject.name}");
 
-        if (collision.gameObject.CompareTag("ground"))
+        if (collision.gameObject.CompareTag("Ground"))
         {
             if(jumpCount != 0)
             {
@@ -168,7 +168,7 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log($"Trigger Enter in Player : {collision.gameObject.name}");
 
-        if (collision.gameObject.CompareTag("enemy"))
+        if (collision.gameObject.CompareTag("Enemy"))
         {
             /*
 
