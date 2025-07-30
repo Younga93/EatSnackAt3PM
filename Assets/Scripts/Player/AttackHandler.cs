@@ -1,18 +1,22 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class AttackHandler : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    PlayerController playerController;
+
+    private void Awake()
     {
-        
+        playerController = GetComponent<PlayerController>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        
+        // TODO : 장애물 부딛쳤을 때 판정 필요
+        if (collision.CompareTag("enemy"))
+        {
+            Debug.Log("부딛힘");
+        }
     }
 }
