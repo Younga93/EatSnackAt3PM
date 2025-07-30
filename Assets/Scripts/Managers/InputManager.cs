@@ -23,6 +23,10 @@ public class InputManager : MonoBehaviour
             Destroy(gameObject);
         }
 
+        //테스트코드
+        PlayerPrefs.DeleteKey(inputBindingKey);
+        //테스트코드 끝
+
         //이미 변경되어서 저장된 키가 있는 지 확인: 아니라면 기본 바인딩 그대로 유지될것임.
         if (PlayerPrefs.HasKey(inputBindingKey))
         {
@@ -34,6 +38,12 @@ public class InputManager : MonoBehaviour
         }
         //입력 감지 시작
         inputActions.Enable();
+
+    }
+    private void Start()
+    {
+
+        InputManager.Instance.StartNewKeyBinding("Jump", 0);
     }
 
     //유저가 설정한 키 바인딩 초기화
@@ -48,6 +58,12 @@ public class InputManager : MonoBehaviour
     //InputManager.Instance.StartNewKeyBinding("Jump", 0); //키 바인딩 호출 예시
     public void StartNewKeyBinding(string actionName, int bindingIndex)
     {
+
+        //테스트코드
+        Debug.Log("현재 jump: " + inputActions.FindAction(actionName).bindings[0]);
+        Debug.Log("PlayerPref 저장 jump: " + PlayerPrefs.GetString(inputBindingKey));
+        //테스트코드 끝
+
         InputAction targetAction = inputActions.FindAction(actionName);
 
         if (targetAction == null)
@@ -63,7 +79,7 @@ public class InputManager : MonoBehaviour
         }
 
         targetAction.Disable(); //리바인딩 하는 동안 disable
-        var rebind = targetAction.PerformInteractiveRebinding(bindingIndex);
+        var rebind = targetAction.PerformInteractiveRebinding(bindingIndex).WithControlsExcluding("Mouse");
 
         Debug.Log($"새로운 키 바인딩을 시작합니다: {actionName}");
         Debug.Log("원하는 키를 입력해주세요.");
@@ -79,5 +95,10 @@ public class InputManager : MonoBehaviour
                 operation.Dispose();
             });
         rebind.Start();
+
+        //테스트코드
+        Debug.Log("현재 jump: " +inputActions.FindAction(actionName).bindings[0]);
+        Debug.Log("PlayerPref 저장 jump: " + PlayerPrefs.GetString(inputBindingKey));
+        //테스트코드 끝
     }
 }
