@@ -40,11 +40,12 @@ public class InputManager : MonoBehaviour
         inputActions.Enable();
 
     }
+    //테스트코드
     private void Start()
     {
-
         InputManager.Instance.StartNewKeyBinding("Jump", 0);
     }
+    //테스트코드 끝
 
     //유저가 설정한 키 바인딩 초기화
     public void ResetBinding()
@@ -66,35 +67,36 @@ public class InputManager : MonoBehaviour
 
         InputAction targetAction = inputActions.FindAction(actionName);
 
-        if (targetAction == null)
+        if (targetAction == null)   //target Action 예외처리
         {
             Debug.Log($"{actionName}은 존재하지 않는 액션입니다.");
             return;
         }
 
-        if (bindingIndex < 0 || bindingIndex >= targetAction.bindings.Count)
+        if (bindingIndex < 0 || bindingIndex >= targetAction.bindings.Count)    //index 예외처리
         {
             Debug.Log($"{actionName}은 {bindingIndex}번째 액션이 존재하지 않습니다.");
             return;
         }
 
         targetAction.Disable(); //리바인딩 하는 동안 disable
-        var rebind = targetAction.PerformInteractiveRebinding(bindingIndex).WithControlsExcluding("Mouse");
+        var rebind = targetAction.PerformInteractiveRebinding(bindingIndex).WithControlsExcluding("Mouse"); //마우스 제외한 입력장치만 받게 함. (디버그로그 테스트하는데 마우스 스크롤로 바뀌어서 변경함)
 
         Debug.Log($"새로운 키 바인딩을 시작합니다: {actionName}");
         Debug.Log("원하는 키를 입력해주세요.");
 
+        //
         rebind.OnComplete(
             operation =>
             {
-                PlayerPrefs.SetString(inputBindingKey, inputActions.SaveBindingOverridesAsJson());
+                PlayerPrefs.SetString(inputBindingKey, inputActions.SaveBindingOverridesAsJson()); //PlayerPrefs에 변경사항 저장
                 PlayerPrefs.Save();
                 targetAction.Enable();
 
-                Debug.Log($"Rebound '{targetAction}' to '{operation.selectedControl.displayName}'");
+                Debug.Log($"Rebound '{targetAction}' to '{operation.selectedControl.displayName}'");    //변경 로그
                 operation.Dispose();
             });
-        rebind.Start();
+        rebind.Start(); //리바인딩 시작
 
         //테스트코드
         Debug.Log("현재 jump: " +inputActions.FindAction(actionName).bindings[0]);
