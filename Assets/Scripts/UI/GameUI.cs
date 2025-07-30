@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class GameUI : BaseUI
 {
-    [SerializeField] private TextMeshProUGUI nowScoreText;
+    [SerializeField] private TextMeshProUGUI currentScoreText;
     [SerializeField] private TextMeshProUGUI bestScoreText;
     [SerializeField]private Image energyBarMeter;
 
@@ -18,23 +18,22 @@ public class GameUI : BaseUI
     public int bestScore;
 
 
-    // 에너지바 업데이트
+    // 에너지바 업데이트 (연동 필요)
     public void UpdateEnergyBarMeter()
     {
-        //테스트용
-        energyBarMeter.fillAmount = (float)currentHP / (float)maxHP;
+        energyBarMeter.fillAmount = (float)currentHP / (float)maxHP;        //테스트
     }
 
-    // 현재점수 업데이트
-    public void UpdateNowScoreText()
+    // 현재점수 업데이트 (연동 필요)
+    public void UpdateCurrentScoreText()
     {
-        nowScoreText.text = currentScore.ToString();
+        currentScoreText.text = currentScore.ToString();        //테스트
     }
 
-    // 최고점수 업데이트
+    // 최고점수 업데이트 (연동 필요)
     public void UpdateBestScoreText()
     {
-        bestScoreText.text = bestScore.ToString();
+        bestScoreText.text = bestScore.ToString();      //테스트
     }
 
     protected override UIState GetUIState()

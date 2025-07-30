@@ -12,7 +12,7 @@ public enum UIState
 
 public class UIManager : MonoBehaviour
 {
-    TitleUI homeUI;
+    TitleUI titleUI;
     GameUI gameUI;
     GameOverUI gameOverUI;
 
@@ -31,15 +31,19 @@ public class UIManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         // null 체크 후 초기화
-        homeUI = GetComponentInChildren<TitleUI>(true);
-        if(homeUI != null)
-            homeUI.Init();
+        titleUI = GetComponentInChildren<TitleUI>(true);
+        if(titleUI != null)
+            titleUI.Init();
         gameUI = GetComponentInChildren<GameUI>(true);
-        if(gameUI != null)
+        if (gameUI != null)
+        {
+            SetPlayGame();
             gameUI.Init();
+        }
+            
         gameOverUI = GetComponentInChildren<GameOverUI>(true);
         if(gameOverUI != null)
-        gameOverUI.Init();
+            gameOverUI.Init();
 
     }
 
@@ -49,28 +53,44 @@ public class UIManager : MonoBehaviour
         if (gameUI != null)
         {
             gameUI.UpdateEnergyBarMeter();
-            gameUI.UpdateNowScoreText();
+            gameUI.UpdateCurrentScoreText();
             gameUI.UpdateBestScoreText();
+
+            if (gameUI.currentHP == 0)
+            {
+                SetGameOver();
+            }
         }
+
+        if(gameOverUI != null)
+        {
+            gameOverUI.UpdateCurrentScoreText();
+            gameOverUI.UpdateBestScoreText();
+        }
+
+        
     }
 
+    public void SetPlayGame()
+    {
+        ChangeState(UIState.Game);
+    }
 
-    //public void SetPlayGame()
-    //{
-    //    ChangeState(UIState.Game);
-    //}
+    public void SetGameOver()
+    {
+        ChangeState(UIState.GameOver);
+    }
 
-    //public void SetGameOver()
-    //{
-    //    ChangeState(UIState.GameOver);
-    //}
+    public void ChangeState(UIState state)
+    {
+        currentState = state;
 
-    //public void ChangeState(UIState state)
-    //{
-    //    currentState = state;
-    //    homeUI.SetActive(currentState);
-    //    gameUI.SetActive(currentState);
-    //    gameOverUI.SetActive(currentState);
-    //}
+        if(titleUI != null)
+            titleUI.SetActive(currentState);
+        if(gameUI != null) 
+            gameUI.SetActive(currentState);
+        if(gameOverUI!= null)
+            gameOverUI.SetActive(currentState);
+    }
 }
 

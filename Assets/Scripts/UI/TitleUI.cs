@@ -16,15 +16,19 @@ public class TitleUI : BaseUI
         exitButton.onClick.AddListener(OnClickExitButton);
     }
 
-    // Debug.Log는 전부 테스트용 입니다.
+    // 시작버튼 누를시(연동필요)
     public void OnClickStartButton()
     {
         Debug.Log("게임 시작");
     }
+
+    // 설정버튼 누를시(연동필요)
     public void OnClickSettingButton()
     {
         Debug.Log("설정 창");
     }
+
+    // 나가기버튼 누를시(연동필요)
     public void OnClickExitButton()
     {
         Debug.Log("나가기");
