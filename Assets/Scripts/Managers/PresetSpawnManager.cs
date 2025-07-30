@@ -88,7 +88,7 @@ public class PresetSpawnManager : MonoBehaviour
     /// </summary>
     /// <param name="type">가져오고자 하는 장애물 타입</param>
     /// <returns>실제로 가져온 장애물</returns>
-    public GameObject GetObstacle(ObstacleType type)
+    private GameObject GetObstacle(ObstacleType type)
     {
         switch (type)
         {
@@ -106,7 +106,7 @@ public class PresetSpawnManager : MonoBehaviour
     /// </summary>
     /// <param name="type">가져오고자 하는 아이템 타입</param>
     /// <returns>실제로 가져온 아이템</returns>
-    public GameObject GetItem(ItemType type)
+    private GameObject GetItem(ItemType type)
     {
         switch (type)
         {
@@ -124,7 +124,7 @@ public class PresetSpawnManager : MonoBehaviour
     /// </summary>
     /// <param name="preset">사용하고자 하는 배치 프리셋 정보</param>
     /// <param name="parent">가져온 오브젝트들을 묶어둘 부모 오브젝트</param>
-    public void PlaceObjects(GameObject preset, Transform parent)
+    private void PlaceObjects(GameObject preset, Transform parent)
     {
         Transform[] obstacleTopAPos = preset.transform.Find("ObstacleTopASpawnPoints").GetComponentsInChildren<Transform>().Where(t => t.parent != preset.transform).ToArray();
         Transform[] obstacleTopBPos = preset.transform.Find("ObstacleTopBSpawnPoints").GetComponentsInChildren<Transform>().Where(t => t.parent != preset.transform).ToArray();
