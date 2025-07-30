@@ -7,17 +7,20 @@ using UnityEngine.UI;
 public class GameUI : BaseUI
 {
     [SerializeField] private TextMeshProUGUI nowScoreText;
-    [SerializeField] private Image energyBarMeter;
+    [SerializeField]private Image energyBarMeter;
+
+    public int currentHP;
+    public int maxHP;
 
     private void Start()
     {
-        energyBarMeter = GetComponent<Image>();
+        //energyBarMeter = GetComponentInChildren<Image>();
     }
 
-    public void UpdateEnergyBarMeter(float percentage)
+    public void UpdateEnergyBarMeter()
     {
         //테스트용
-        energyBarMeter.fillAmount = percentage;
+        energyBarMeter.fillAmount = (float)currentHP / (float)maxHP;
     }
 
     public void UpdateNowScoreText(int score)

@@ -15,6 +15,7 @@ public class UIManager : MonoBehaviour
     HomeUI homeUI;
     GameUI gameUI;
     GameOverUI gameOverUI;
+
     private UIState currentState;
 
     public static UIManager Instance { get; private set; }
@@ -36,34 +37,34 @@ public class UIManager : MonoBehaviour
         gameOverUI = GetComponentInChildren<GameOverUI>(true);
         gameOverUI.Init();
 
-        ChangeState(UIState.Home);
+        //ChangeState(UIState.Home);
     }
 
-    public void SetPlayGame()
-    {
-        ChangeState(UIState.Game);
-    }
+    //public void SetPlayGame()
+    //{
+    //    ChangeState(UIState.Game);
+    //}
 
-    public void SetGameOver()
-    {
-        ChangeState(UIState.GameOver);
-    }
+    //public void SetGameOver()
+    //{
+    //    ChangeState(UIState.GameOver);
+    //}
 
     public void ChangeNowScore(int nowScore)
     {
         gameUI.UpdateNowScoreText(nowScore);
     }
 
-    public void ChangePlayerEnergy(float currentHP, float maxHP)
+    public void Update()
     {
-        gameUI.UpdateEnergyBarMeter(currentHP / maxHP);
+        gameUI.UpdateEnergyBarMeter();
     }
 
-    public void ChangeState(UIState state)
-    {
-        currentState = state;
-        homeUI.SetActive(currentState);
-        gameUI.SetActive(currentState);
-        gameOverUI.SetActive(currentState);
-    }
+    //public void ChangeState(UIState state)
+    //{
+    //    currentState = state;
+    //    homeUI.SetActive(currentState);
+    //    gameUI.SetActive(currentState);
+    //    gameOverUI.SetActive(currentState);
+    //}
 }

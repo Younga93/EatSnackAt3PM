@@ -9,6 +9,11 @@ public class GameOverUI : BaseUI
 {
     [SerializeField] private Button restartButton;
     [SerializeField] private Button homeButton;
+    public override void Init()
+    {
+        restartButton.onClick.AddListener(OnClickRestartButton);
+        homeButton.onClick.AddListener(OnClickHomeButton);
+    }
 
     public void OnClickRestartButton()
     {
