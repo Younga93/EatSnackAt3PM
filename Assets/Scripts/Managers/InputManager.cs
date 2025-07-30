@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -9,7 +10,7 @@ public class InputManager : MonoBehaviour
 
     [SerializeField] InputActionAsset inputActions;
 
-    private string inputBindingKey = "InputBindings";   //PlayerPrefs 키
+    public string inputBindingKey { get; private set; } = "InputBindings";   //PlayerPrefs 키
     private void Awake()
     {
         //싱글톤
@@ -23,28 +24,21 @@ public class InputManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        //테스트코드
-        ResetBinding();
-        //테스트코드 끝
-
         //이미 변경되어서 저장된 키가 있는 지 확인: 아니라면 기본 바인딩 그대로 유지될것임.
-        if (PlayerPrefs.HasKey(inputBindingKey))
-        {
-            inputActions.LoadBindingOverridesFromJson(PlayerPrefs.GetString(inputBindingKey));
-        }
-        else
+        if (!PlayerPrefs.HasKey(inputBindingKey))
         {
             ResetBinding();
         }
+        inputActions.LoadBindingOverridesFromJson(PlayerPrefs.GetString(inputBindingKey));
         //입력 감지 시작
         inputActions.Enable();
 
     }
-    //테스트코드
-    private void Start()
-    {
-        InputManager.Instance.StartNewKeyBinding("Jump", 0);
-    }
+    ////테스트코드
+    //private void Start()
+    //{
+    //    InputManager.Instance.StartNewKeyBinding("Jump", 0);
+    //}
     //테스트코드 끝
 
     //유저가 설정한 키 바인딩 초기화
@@ -52,30 +46,28 @@ public class InputManager : MonoBehaviour
     {
         inputActions.RemoveAllBindingOverrides();
         PlayerPrefs.DeleteKey(inputBindingKey);
+        PlayerPrefs.SetString(inputBindingKey, inputActions.SaveBindingOverridesAsJson());
+        PlayerPrefs.Save();
         Debug.Log("키 설정 초기화됨");
     }
 
     //유저가 새로운 키를 입력했을 때 해당 액션에 바인딩 적용
     //InputManager.Instance.StartNewKeyBinding("Jump", 0); //키 바인딩 호출 예시
-    public void StartNewKeyBinding(string actionName, int bindingIndex)
+    public void StartNewKeyBinding(string actionName, int bindingIndex, Action<string> onBindingComplete)
     {
-
-        //테스트코드
-        Debug.Log("현재 jump: " + inputActions.FindAction(actionName).bindings[0]);
-        Debug.Log("PlayerPref 저장 jump: " + PlayerPrefs.GetString(inputBindingKey));
-        //테스트코드 끝
-
         InputAction targetAction = inputActions.FindAction(actionName);
 
         if (targetAction == null)   //target Action 예외처리
         {
             Debug.Log($"{actionName}은 존재하지 않는 액션입니다.");
+            onBindingComplete?.Invoke("");  //실패시 "" 반환
             return;
         }
 
         if (bindingIndex < 0 || bindingIndex >= targetAction.bindings.Count)    //index 예외처리
         {
             Debug.Log($"{actionName}은 {bindingIndex}번째 액션이 존재하지 않습니다.");
+            onBindingComplete?.Invoke("");  //실패시 "" 반환
             return;
         }
 
@@ -83,7 +75,6 @@ public class InputManager : MonoBehaviour
         var rebind = targetAction.PerformInteractiveRebinding(bindingIndex).WithControlsExcluding("Mouse"); //마우스 제외한 입력장치만 받게 함. (디버그로그 테스트하는데 마우스 스크롤로 바뀌어서 변경함)
 
         Debug.Log($"새로운 키 바인딩을 시작합니다: {actionName}");
-        Debug.Log("원하는 키를 입력해주세요.");
 
         //
         rebind.OnComplete(
@@ -95,9 +86,12 @@ public class InputManager : MonoBehaviour
                     PlayerPrefs.SetString(inputBindingKey, inputActions.SaveBindingOverridesAsJson()); //PlayerPrefs에 변경사항 저장
                     PlayerPrefs.Save();
                     Debug.Log($"Rebound '{targetAction}' to '{operation.selectedControl.displayName}'");    //변경 로그
+
+                    onBindingComplete?.Invoke(newKey);  //결과 전달
                 }
                 else
                 {
+                    onBindingComplete?.Invoke("");
                     Debug.Log($"Rebound failed");    //변경 로그
                 }
 
@@ -107,8 +101,8 @@ public class InputManager : MonoBehaviour
         rebind.Start(); //리바인딩 시작
 
         //테스트코드
-        Debug.Log("현재 jump: " +inputActions.FindAction(actionName).bindings[0]);
-        Debug.Log("PlayerPref 저장 jump: " + PlayerPrefs.GetString(inputBindingKey));
+        //Debug.Log($"현재 {actionName}: " + inputActions.FindAction(actionName).bindings[0]);
+        //Debug.Log($"PlayerPref 저장 {actionName}: " + PlayerPrefs.GetString(inputBindingKey));
         //테스트코드 끝
     }
     bool IsBindingConflict(string actionName, string newBindingPath)
@@ -121,17 +115,43 @@ public class InputManager : MonoBehaviour
         {
             if (action.name == actionName)
                 continue;
-            foreach (var binding in action.bindings)
-            {
-                Debug.Log($"binding.effectivePath: {binding.effectivePath}");
-                Debug.Log($"newBindingPath: {newBindingPath}");
-                if (binding.effectivePath == newBindingPath)
-                {  
-                    return true; //이미 사용중임
-                }
 
+            Debug.Log($"binding.effectivePath: {action.bindings[0].effectivePath}");
+            Debug.Log($"newBindingPath: {newBindingPath}");
+            if (action.bindings[0].effectivePath == newBindingPath) //각 액션은 키 하나랑만 바인딩 되어있음.
+            {
+                return true; //이미 사용중임
             }
         }
         return false;
+    }
+    public string GetFormattedKeyBoardValue(string inputBindingKey)
+    {
+        string formattedKeyValue;
+
+        if(inputBindingKey.StartsWith('<'))
+        {
+            formattedKeyValue = inputBindingKey.Replace("<Keyboard>", "Keyboard");
+        }
+        else if(inputBindingKey.StartsWith('/'))
+        {
+            formattedKeyValue = inputBindingKey.Substring(1);
+        }
+        else
+        {
+            formattedKeyValue = inputBindingKey;
+        }
+        return formattedKeyValue;
+    }
+    public Dictionary<string,string> GetCurrentBindingDictionary()
+    {
+        Dictionary<string, string> currentBinding = new Dictionary<string, string>();
+
+        foreach (var action in inputActions)
+        {
+            currentBinding.Add(action.name, GetFormattedKeyBoardValue(action.bindings[0].effectivePath));  //각 키는 바인딩 하나만 갖고 있음.
+        }
+
+        return currentBinding;
     }
 }
