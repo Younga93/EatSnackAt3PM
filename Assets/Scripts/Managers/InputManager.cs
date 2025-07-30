@@ -8,7 +8,6 @@ public class InputManager : MonoBehaviour
     public static InputManager Instance { get; private set; }
 
     [SerializeField] InputActionAsset inputActions;
-    [SerializeField] InputBindingsSO defaultBindings;
 
     private string inputBindingKey = "InputBindings";   //PlayerPrefs 키
     private void Awake()
@@ -31,19 +30,12 @@ public class InputManager : MonoBehaviour
         }
         else
         {
-            ApplyDefaultBindings();
+            ResetBinding();
         }
-            //입력 감지 시작
-            inputActions.Enable();
+        //입력 감지 시작
+        inputActions.Enable();
     }
-    public void ApplyDefaultBindings()
-    {
-        //InputBindingsSO에 저장된 기본 키 값 설정
-        inputActions["Jump"].ApplyBindingOverride(defaultBindings.jumpBindingPath);
-        inputActions["Slide"].ApplyBindingOverride(defaultBindings.slideBindingPath);
-        inputActions["Attack"].ApplyBindingOverride(defaultBindings.attackBindingPath);
-        PlayerPrefs.SetString(inputBindingKey, inputActions.SaveBindingOverridesAsJson());
-    }
+
     //유저가 설정한 키 바인딩 초기화
     public void ResetBinding()
     {
