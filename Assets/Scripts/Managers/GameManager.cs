@@ -54,13 +54,19 @@ public class GameManager : MonoBehaviour
         currentScore += score;
         //To do: UI에 점수 업데이트
     }
-
-    private void StartGame()
+    public void LoadGame()
     {
+        //To do: Title Scene에서 게임 시작하기 눌리면 호출되어야함
+        Time.timeScale = 1f;
+        //To do: ReadyUI 출력하기
+    }
+    public void StartGame()
+    {
+        //To do: ReadyUI에서 게임 시작 눌리면 호출되어야함.
         //To do: 게임 시작 로직 (씬전환, 초기화, UI 업데이트 등)
         Debug.Log("Game Started");
     }
-    private void GameOver()
+    public void GameOver()
     {
         //To do: 게임 오버 화면 표시
         Debug.Log("Game Over");

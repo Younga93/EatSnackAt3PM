@@ -24,7 +24,7 @@ public class InputManager : MonoBehaviour
         }
 
         //테스트코드
-        PlayerPrefs.DeleteKey(inputBindingKey);
+        ResetBinding();
         //테스트코드 끝
 
         //이미 변경되어서 저장된 키가 있는 지 확인: 아니라면 기본 바인딩 그대로 유지될것임.
@@ -89,11 +89,19 @@ public class InputManager : MonoBehaviour
         rebind.OnComplete(
             operation =>
             {
-                PlayerPrefs.SetString(inputBindingKey, inputActions.SaveBindingOverridesAsJson()); //PlayerPrefs에 변경사항 저장
-                PlayerPrefs.Save();
-                targetAction.Enable();
+                string newKey = operation.selectedControl.path;
+                if (!IsBindingConflict(actionName, newKey))
+                {
+                    PlayerPrefs.SetString(inputBindingKey, inputActions.SaveBindingOverridesAsJson()); //PlayerPrefs에 변경사항 저장
+                    PlayerPrefs.Save();
+                    Debug.Log($"Rebound '{targetAction}' to '{operation.selectedControl.displayName}'");    //변경 로그
+                }
+                else
+                {
+                    Debug.Log($"Rebound failed");    //변경 로그
+                }
 
-                Debug.Log($"Rebound '{targetAction}' to '{operation.selectedControl.displayName}'");    //변경 로그
+                targetAction.Enable();
                 operation.Dispose();
             });
         rebind.Start(); //리바인딩 시작
@@ -102,5 +110,28 @@ public class InputManager : MonoBehaviour
         Debug.Log("현재 jump: " +inputActions.FindAction(actionName).bindings[0]);
         Debug.Log("PlayerPref 저장 jump: " + PlayerPrefs.GetString(inputBindingKey));
         //테스트코드 끝
+    }
+    bool IsBindingConflict(string actionName, string newBindingPath)
+    {
+        if (!newBindingPath.StartsWith('<')) //만약 받은 path가 <로 시작하지 않으면 binding.effectivePath와 형식이 맞지 않음으로 포맷팅 새로함.
+        {
+            newBindingPath = newBindingPath.Replace("/Keyboard/", "<Keyboard>/");
+        }
+        foreach (var action in inputActions)
+        {
+            if (action.name == actionName)
+                continue;
+            foreach (var binding in action.bindings)
+            {
+                Debug.Log($"binding.effectivePath: {binding.effectivePath}");
+                Debug.Log($"newBindingPath: {newBindingPath}");
+                if (binding.effectivePath == newBindingPath)
+                {  
+                    return true; //이미 사용중임
+                }
+
+            }
+        }
+        return false;
     }
 }
