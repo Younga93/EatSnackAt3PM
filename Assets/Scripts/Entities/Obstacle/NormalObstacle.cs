@@ -1,18 +1,11 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NormalObstacle : MonoBehaviour
+public class NormalObstacle : ObstacleBase
 {
-    // Start is called before the first frame update
-    void Start()
+    public override void OnInteract()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        // TODO: 플레이어의 체력 감소 및 감속
     }
 }

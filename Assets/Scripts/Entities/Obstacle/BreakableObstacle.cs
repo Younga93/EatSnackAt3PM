@@ -1,18 +1,19 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BreakableObstacle : MonoBehaviour
+public class BreakableObstacle : ObstacleBase
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private float _energyRecoveryAmount;
+    [SerializeField] private int _score;
+
+    public override void OnInteract()
     {
-        
+        // TODO: 플레이어의 체력 감소 및 감속
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Break()
     {
-        
+        // TODO: 오브젝트 파괴 및 플레이어 체력 회복, 점수 증가?
     }
 }
