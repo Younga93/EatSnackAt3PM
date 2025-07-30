@@ -50,14 +50,11 @@ public class UIManager : MonoBehaviour
     //    ChangeState(UIState.GameOver);
     //}
 
-    public void ChangeNowScore(int nowScore)
-    {
-        gameUI.UpdateNowScoreText(nowScore);
-    }
-
     public void Update()
     {
         gameUI.UpdateEnergyBarMeter();
+        gameUI.UpdateNowScoreText();
+        gameUI.UpdateBestScoreText();
     }
 
     //public void ChangeState(UIState state)
@@ -68,3 +65,4 @@ public class UIManager : MonoBehaviour
     //    gameOverUI.SetActive(currentState);
     //}
 }
+
