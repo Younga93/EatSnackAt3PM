@@ -290,7 +290,10 @@ public class PlayerController : MonoBehaviour
     public void StartInvincible(float? itemInvincibleTime)
     {
         // 무적 시작부분
+        if (isInvincible) return;
+        CancelInvoke("EndInvincible");
         isInvincible = true;
+        aniHandler.StartInvincible();
         if (itemInvincibleTime == null)
             Invoke("EndInvincible", invincibleTime);
         else
@@ -300,7 +303,9 @@ public class PlayerController : MonoBehaviour
     public void EndInvincible()
     {
         // 무적 끝나는 부분
+        // Debug.Log("End Invincible");
         isInvincible = false;
+        aniHandler.EndInvincible();
     }
 
     public void Death()
