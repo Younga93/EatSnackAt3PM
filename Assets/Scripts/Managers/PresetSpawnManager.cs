@@ -22,6 +22,9 @@ public enum ItemType
 
 public class PresetSpawnManager : MonoBehaviour
 {
+    private static PresetSpawnManager _instance;
+    public static PresetSpawnManager Instance {  get { return _instance; } }
+
     /// <summary>
     /// 각 오브젝트마다 저장해놓을 오브젝트 풀
     /// </summary>
