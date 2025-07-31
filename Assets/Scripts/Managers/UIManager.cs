@@ -52,7 +52,7 @@ public class UIManager : MonoBehaviour
         // 작동 테스트용 코드
         if (gameUI != null)
         {
-            gameUI.UpdateEnergyBarMeter();
+            gameUI.UpdateEnergyBar();
             gameUI.UpdateCurrentScoreText();
             gameUI.UpdateBestScoreText();
 
