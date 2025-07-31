@@ -57,15 +57,24 @@ public class GameManager : MonoBehaviour
     }
     public void LoadGame()
     {
+        UIManager.Instance.ChangeState(UIState.Loading);
+        SceneManager.sceneLoaded += OnSceneLoaded;
         SceneManager.LoadScene("GameScene");
-        UIManager.Instance.ChangeState(UIState.Game);
-        Time.timeScale = 1f;
-        //To do: ReadyUI 출력하기
+        //Time.timeScale = 0f;
+    }
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode) //씬이 로드 된 다음에 변경된 UI 적용
+    {
+        if (scene.name == "GameScene")   //씬 종류 많아지면 switch로 변경
+        {
+            UIManager.Instance.ChangeState(UIState.Game);
+        }
+        SceneManager.sceneLoaded -= OnSceneLoaded;  //이벤트 중복 방지로 제거
     }
     public void StartGame()
     {
         //To do: ReadyUI에서 게임 시작 눌리면 호출되어야함.
         //To do: 게임 시작 로직 (씬전환, 초기화, UI 업데이트 등)
+        Time.timeScale = 1f;
         Debug.Log("Game Started");
     }
     public void GameOver()

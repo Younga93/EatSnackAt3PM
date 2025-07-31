@@ -9,7 +9,8 @@ public enum UIState
     Game,
     GameOver,
     InputSetting,
-    SystemMessage
+    SystemMessage,
+    Loading
 }
 
 public class UIManager : MonoBehaviour
@@ -20,6 +21,7 @@ public class UIManager : MonoBehaviour
     
     GameOverUI gameOverUI;
     InputSettingUI inputSettingUI;
+    LoadingUI loadingUI;
 
     //패널 UI //다른 UI들과 겹쳐서 켜졌다가 꺼질 수 있는 UI들
     SystemMessageUI systemMessageUI;
@@ -55,6 +57,9 @@ public class UIManager : MonoBehaviour
         inputSettingUI = GetComponentInChildren<InputSettingUI>(true);
         if (inputSettingUI != null)
             inputSettingUI.Init();
+        loadingUI = GetComponentInChildren<LoadingUI>(true);
+        if(loadingUI != null)
+            loadingUI.Init();
         systemMessageUI = GetComponentInChildren<SystemMessageUI>(true);
         if(systemMessageUI != null)
             systemMessageUI.Init();
@@ -136,8 +141,10 @@ public class UIManager : MonoBehaviour
             gameUI.SetActive(currentState);
         if(gameOverUI!= null)
             gameOverUI.SetActive(currentState);
-        if(inputSettingUI!= null)
+        if (inputSettingUI != null)
             inputSettingUI.SetActive(currentState);
+        if (loadingUI != null)
+            loadingUI.SetActive(currentState);
     }
 }
 
