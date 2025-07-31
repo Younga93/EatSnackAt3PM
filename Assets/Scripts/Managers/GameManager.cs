@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
-        UIManager.Instance.ChangeState(UIState.Title);
+        //UIManager.Instance.ChangeState(UIState.Title);
     }
     //public void SetGameState(GameState newState)
     //{

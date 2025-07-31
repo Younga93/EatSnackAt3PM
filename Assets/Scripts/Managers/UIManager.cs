@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.XR;
 
 public enum UIState
@@ -63,7 +64,23 @@ public class UIManager : MonoBehaviour
         systemMessageUI = GetComponentInChildren<SystemMessageUI>(true);
         if(systemMessageUI != null)
             systemMessageUI.Init();
-
+    }
+    private void Start()
+    {
+        Init();
+    }
+    private void Init()
+    {
+        string currentScene = SceneManager.GetActiveScene().name;
+        switch (currentScene)
+        {
+            case "TitleScene":
+                ChangeState(UIState.Title);
+                break;
+            case "GameScene":
+                ChangeState(UIState.Game);
+                break;
+        }
     }
 
     public void Update()
