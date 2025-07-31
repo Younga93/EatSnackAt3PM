@@ -13,9 +13,9 @@ public class GameOverUI : BaseUI
     [SerializeField] private TextMeshProUGUI currentScoreText;
     [SerializeField] private TextMeshProUGUI bestScoreText;
 
-    // 점수 테스트용 변수
-    public int currentScore;
-    public int bestScore;
+    //// 점수 테스트용 변수
+    //public int currentScore;
+    //public int bestScore;
 
     public override void Init()
     {
@@ -24,15 +24,15 @@ public class GameOverUI : BaseUI
     }
 
     // 현재점수 업데이트
-    public void UpdateCurrentScoreText()
+    public void UpdateCurrentScoreText(int currentScore)
     {
-        currentScoreText.text = currentScore.ToString();    //테스트
+        currentScoreText.text = currentScore.ToString();
     }
 
     // 최고점수 업데이트
-    public void UpdateBestScoreText()
+    public void UpdateBestScoreText(int bestScore)
     {
-        bestScoreText.text = bestScore.ToString();      //테스트
+        bestScoreText.text = bestScore.ToString();
     }
 
     // 재시작 버튼 누를시

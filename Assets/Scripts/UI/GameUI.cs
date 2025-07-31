@@ -12,7 +12,7 @@ public class GameUI : BaseUI
 
     //테스트용 변수
     public int currentHP;
-    public int maxHP;
+    public int maxHP = 500;
 
     //public int currentScore;
     //public int bestScore;
@@ -22,9 +22,9 @@ public class GameUI : BaseUI
     }
 
     // 에너지바 업데이트 (연동 필요)
-    public void UpdateEnergyBar()
+    public void UpdateEnergyBar(int currentHealth)
     {
-        energyBar.value = (float)currentHP / (float)maxHP;        //테스트
+        energyBar.value = (float)currentHealth / (float)maxHP;        //테스트
     }
 
     // 현재점수 업데이트 (연동 필요)
