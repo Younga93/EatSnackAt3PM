@@ -27,6 +27,8 @@ public class PlayerController : MonoBehaviour
     //
 
     // 슬라이드 관련 변수들
+    [Header("Slide Settings")]
+    [SerializeField] private InputActionReference slideAction;
     float originalColliderOffsetY;
     float originalColliderSizeY;
     float slideColliderOffsetY;
@@ -63,6 +65,18 @@ public class PlayerController : MonoBehaviour
         jumpDelay = maxJumpDelay;
     }
 
+    private void OnEnable()
+    {
+        slideAction.action.canceled += StopSliding;
+        slideAction.action.Enable();
+    }
+
+    private void OnDisable()
+    {
+        slideAction.action.canceled -= StopSliding;
+        slideAction.action.Disable();
+    }
+
     private void Start()
     {
         attackHandler = attackPivot.GetComponent<AttackHandler>();
@@ -73,6 +87,7 @@ public class PlayerController : MonoBehaviour
         slideColliderSizeY = originalColliderSizeY / 2f;
         slideColliderOffsetY = originalColliderOffsetY - 1.4f;
         SetHp(maxHp);
+
     }
 
 
@@ -83,6 +98,23 @@ public class PlayerController : MonoBehaviour
         Vector3 velo = rb.velocity;
         velo.x = forwardSpeed;
         rb.velocity = velo;
+
+        if (slideAction.action.IsPressed()) StartSliding();
+    }
+    public void StartSliding()
+    {
+        // Debug.Log("Slide");
+        isSlide = true;
+        StartSlide();
+        jumpCount = 0;
+        
+    }
+
+    public void StopSliding(InputAction.CallbackContext context)
+    {
+        // Debug.Log("Stop Slide");
+        isSlide = false;
+        OnSlideAnimationEnd();
     }
 
     void Tick()
@@ -120,21 +152,6 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-
-    void OnSlide(InputValue inputValue)
-    {
-        if (inputValue.isPressed)
-        {
-            if(!isSlide)
-            {
-                Debug.Log("Slide");
-                isSlide = true;
-                StartSlide();
-                jumpCount = 0;
-            }
-        }
-    }
-
     void OnAttack(InputValue inputValue)
     {
         if(inputValue.isPressed)
@@ -273,7 +290,10 @@ public class PlayerController : MonoBehaviour
     public void StartInvincible(float? itemInvincibleTime)
     {
         // 무적 시작부분
+        if (isInvincible) return;
+        CancelInvoke("EndInvincible");
         isInvincible = true;
+        aniHandler.StartInvincible();
         if (itemInvincibleTime == null)
             Invoke("EndInvincible", invincibleTime);
         else
@@ -283,7 +303,9 @@ public class PlayerController : MonoBehaviour
     public void EndInvincible()
     {
         // 무적 끝나는 부분
+        // Debug.Log("End Invincible");
         isInvincible = false;
+        aniHandler.EndInvincible();
     }
 
     public void Death()

@@ -2004,6 +2004,7 @@ GameObject:
   - component: {fileID: 6819133488195092389}
   - component: {fileID: 7707484511830482542}
   - component: {fileID: 1908010099638739566}
+  - component: {fileID: 1127337060969052874}
   m_Layer: 0
   m_Name: MagnetField
   m_TagString: Untagged
@@ -6859,6 +6860,20 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &1127337060969052874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6399282379033822434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc0006b204f84674aa2bc0672bc52bce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _radius: 0
+  _duration: 0
 --- !u!1 &6435069199887408744
 GameObject:
   m_ObjectHideFlags: 0

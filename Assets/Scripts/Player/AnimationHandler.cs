@@ -11,6 +11,7 @@ public class AnimationHandler : MonoBehaviour
     [SerializeField] float resumeAnimationHeight; // 점프하고 내려올때 다시 애니메이션 재개할 기준 높이
     [SerializeField] float maxJumpHeight; // 최대 높이
     [SerializeField] float groundHeight;
+    [SerializeField] float invincibleAlpha; // 무적일 때 투명도
 
     private readonly int IsJump = Animator.StringToHash("IsJump");
     private readonly int IsSlide = Animator.StringToHash("IsSlide");
@@ -18,21 +19,15 @@ public class AnimationHandler : MonoBehaviour
     private readonly int IsDamage = Animator.StringToHash("IsDamage");
     private readonly int IsDeath = Animator.StringToHash("IsDeath");
 
-    private int jumpCount;
     private Rigidbody2D rb;
+    private SpriteRenderer[] renderers;
    
     private void Awake()
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
-        
+        renderers = GetComponentsInChildren<SpriteRenderer>();
     }
-
-    private void Update()
-    {
-        
-    }
-
     private void FixedUpdate()
     {
 
@@ -41,9 +36,6 @@ public class AnimationHandler : MonoBehaviour
         {
             animator.speed = 1f;
         }
-
-        
-        
 
         // 최대 높이 설정
         Vector3 pos = transform.position;
@@ -55,11 +47,6 @@ public class AnimationHandler : MonoBehaviour
     public void Jump(int jumpCount)
     {
 
-        // TurnOnState(IsJump);
-
-        this.jumpCount = jumpCount;
-
-        // jumpCount == 1 : 이단 점프
         if (transform.position.y > groundHeight)
         {
             Debug.Log("Double Jump Animation Stopped");
@@ -76,7 +63,7 @@ public class AnimationHandler : MonoBehaviour
     public void Slide()
     {
         animator.speed = 1f;
-        animator.SetTrigger(IsSlide);
+        animator.SetBool(IsSlide, true);
     }
 
     public void OnSlideAnimationEnd()
@@ -98,5 +85,22 @@ public class AnimationHandler : MonoBehaviour
     public void Death()
     {
         animator.SetBool(IsDeath, true);
+    }
+
+    public void StartInvincible()
+    {
+        foreach(var renderer in renderers)
+        {
+            Color color = renderer.color;
+            renderer.color = new Color(color.r, color.g, color.b, invincibleAlpha);
+        }
+    }
+    public void EndInvincible()
+    {
+        foreach (var renderer in renderers)
+        {
+            Color color = renderer.color;
+            renderer.color = new Color(color.r, color.g, color.b, 1f);
+        }
     }
 }
