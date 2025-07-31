@@ -16,10 +16,12 @@ public class ShowGizmos : MonoBehaviour
     [SerializeField] CircleCollider2D coinB;
     [SerializeField] CircleCollider2D recoveryItem;
     [SerializeField] CircleCollider2D speedUpItem;
+    [SerializeField] CircleCollider2D magnetItem;
+    [SerializeField] CircleCollider2D invincibleItem;
 
     /// <summary>
     /// 프리셋 만들때 에디터에서 기즈모 표시되게 하는 스크립트
-    /// 일반 장애물 = 하얀색, 공격 가능한 장애물 = 빨간색, 코인 = 노란색, 아이템 = 파란색
+    /// 일반 장애물 = 하얀색, 공격 가능한 장애물 = 빨간색, 코인 = 노란색, 체력회복 = 파란색, 속도업 = 초록색, 자석 = 시안, 무적 = 마젠타
     /// </summary>
     private void OnDrawGizmos()
     {
@@ -32,8 +34,10 @@ public class ShowGizmos : MonoBehaviour
         Transform[] coinItemBPos = transform.Find("CoinItemBSpawnPoints").GetComponentsInChildren<Transform>().Where(t => t.parent != transform).ToArray();
         Transform[] recoveryItemPos = transform.Find("RecoverItemSpawnPoints").GetComponentsInChildren<Transform>().Where(t => t.parent != transform).ToArray();
         Transform[] speedUpItemPos = transform.Find("SpeedUpItemSpawnPoints").GetComponentsInChildren<Transform>().Where(t => t.parent != transform).ToArray();
+        Transform[] magnetItemPos = transform.Find("MagnetItemSpawnPoints").GetComponentsInChildren<Transform>().Where(t => t.parent != transform).ToArray();
+        Transform[] invincibleItemPos = transform.Find("InvincibleItemSpawnPoints").GetComponentsInChildren<Transform>().Where(t => t.parent != transform).ToArray();
 
-        
+
 
         foreach (Transform t in obstacleTopAPos)
         {
@@ -77,8 +81,18 @@ public class ShowGizmos : MonoBehaviour
         }
         foreach (Transform t in speedUpItemPos)
         {
-            Gizmos.color = Color.blue;
+            Gizmos.color = Color.green;
             Gizmos.DrawSphere(new Vector3(t.position.x, t.position.y, 0), speedUpItem.radius);
+        }
+        foreach (Transform t in magnetItemPos)
+        {
+            Gizmos.color = Color.cyan;
+            Gizmos.DrawSphere(new Vector3(t.position.x, t.position.y, 0), magnetItem.radius);
+        }
+        foreach (Transform t in invincibleItemPos)
+        {
+            Gizmos.color = Color.magenta;
+            Gizmos.DrawSphere(new Vector3(t.position.x, t.position.y, 0), invincibleItem.radius);
         }
     }
 }

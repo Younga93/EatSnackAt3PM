@@ -25,6 +25,7 @@ public enum ItemType
 public class PresetSpawnManager : MonoBehaviour
 {
     // 아 싱글턴 쓰기 싫었는데 어쩔 수가 없네
+    // 아마 게임매니저가 관리하면 싱글턴 안써도 될듯?
     private static PresetSpawnManager _instance;
     public static PresetSpawnManager Instance {  get { return _instance; } }
 
@@ -42,8 +43,9 @@ public class PresetSpawnManager : MonoBehaviour
     private ObjectPool<CoinItem> coinItemBPool;
 
     private ObjectPool<RecoveryItem> recoveryItemPool;
-
     private ObjectPool<SpeedUpItem> speedUpItemPool;
+    private ObjectPool<MagnetItem> magnetItemPool;
+    private ObjectPool<InvincibleItem> invincibleItemPool;
 
     /// <summary>
     /// 생성할 오브젝트 프리팹 목록
@@ -60,8 +62,9 @@ public class PresetSpawnManager : MonoBehaviour
     [SerializeField] CoinItem coinItemBPrefab;
 
     [SerializeField] RecoveryItem recoveryItemPrefab;
-
     [SerializeField] SpeedUpItem SpeedUpItemPrefab;
+    [SerializeField] MagnetItem magnetItemPrefab;
+    [SerializeField] InvincibleItem invincibleItemPrefab;
 
     /// <summary>
     /// 사용할 프리셋 목록
@@ -87,8 +90,9 @@ public class PresetSpawnManager : MonoBehaviour
         coinItemBPool = new ObjectPool<CoinItem>(coinItemBPrefab, 10, transform);
 
         recoveryItemPool = new ObjectPool<RecoveryItem>(recoveryItemPrefab, 10, transform);
-
         speedUpItemPool = new ObjectPool<SpeedUpItem>(SpeedUpItemPrefab, 10, transform);
+        magnetItemPool = new ObjectPool<MagnetItem>(magnetItemPrefab, 10, transform);
+        invincibleItemPool = new ObjectPool<InvincibleItem>(invincibleItemPrefab, 10, transform);
     }
 
     /// <summary>
@@ -122,6 +126,8 @@ public class PresetSpawnManager : MonoBehaviour
             case ItemType.CoinB: return coinItemBPool.Get().gameObject;
             case ItemType.Recovery: return recoveryItemPool.Get().gameObject;
             case ItemType.SpeedUp: return speedUpItemPool.Get().gameObject;
+            case ItemType.Magnet: return magnetItemPool.Get().gameObject;
+            case ItemType.Invicible: return invincibleItemPool.Get().gameObject;
             default : return null;
         }
     }
@@ -129,6 +135,7 @@ public class PresetSpawnManager : MonoBehaviour
     /// <summary>
     /// 프리셋 정보를 바탕으로 오브젝트 풀에서 가져와 실제로 배치하는 함수
     /// 되게 쓸때없이 반복적이고 긴데 개선할 방법이 있는지 찾아봐야 할 듯
+    /// 생각해보니까 그냥 배열 리스트로 하면 될거 같기도?
     /// </summary>
     /// <param name="preset">사용하고자 하는 배치 프리셋 정보</param>
     /// <param name="parent">가져온 오브젝트들을 묶어둘 부모 오브젝트</param>
@@ -143,6 +150,8 @@ public class PresetSpawnManager : MonoBehaviour
         Transform[] coinItemBPos = preset.transform.Find("CoinItemBSpawnPoints").GetComponentsInChildren<Transform>().Where(t => t.parent != preset.transform).ToArray();
         Transform[] recoveryItemPos = preset.transform.Find("RecoverItemSpawnPoints").GetComponentsInChildren<Transform>().Where(t => t.parent != preset.transform).ToArray();
         Transform[] speedUpItemPos = preset.transform.Find("SpeedUpItemSpawnPoints").GetComponentsInChildren<Transform>().Where(t => t.parent != preset.transform).ToArray();
+        Transform[] magnetItemPos = preset.transform.Find("MagnetItemSpawnPoints").GetComponentsInChildren<Transform>().Where(t => t.parent != preset.transform).ToArray();
+        Transform[] invincibleItemPos = preset.transform.Find("InvincibleItemSpawnPoints").GetComponentsInChildren<Transform>().Where(t => t.parent != preset.transform).ToArray();
 
         foreach (Transform t in obstacleTopAPos)
         {
@@ -198,6 +207,18 @@ public class PresetSpawnManager : MonoBehaviour
             go.transform.parent = parent;
             go.transform.localPosition = t.position;
         }
+        foreach (Transform t in magnetItemPos)
+        {
+            GameObject go = GetItem(ItemType.Magnet);
+            go.transform.parent = parent;
+            go.transform.localPosition = t.position;
+        }
+        foreach (Transform t in invincibleItemPos)
+        {
+            GameObject go = GetItem(ItemType.Invicible);
+            go.transform.parent = parent;
+            go.transform.localPosition = t.position;
+        }
     }
 
     /// <summary>
@@ -231,6 +252,8 @@ public class PresetSpawnManager : MonoBehaviour
             case ItemType.CoinB: coinItemBPool.Return(item as CoinItem); break;
             case ItemType.Recovery: recoveryItemPool.Return(item as RecoveryItem); break;
             case ItemType.SpeedUp: speedUpItemPool.Return(item as SpeedUpItem); break;
+            case ItemType.Magnet: magnetItemPool.Return(item as MagnetItem); break;
+            case ItemType.Invicible: invincibleItemPool.Return(item as InvincibleItem); break;
             default : break;
         }
     }
@@ -255,11 +278,11 @@ public class PresetSpawnManager : MonoBehaviour
     private void Awake()
     {
         Init();
-
-        //MakePreset(5);
-        //MakePreset(30);
-        //MakePreset(55);
-        //MakePreset(80);
-        //MakePreset(105);
+#if UNITY_EDITOR
+        for(int i=0;i<10;i++)
+        {
+            MakePreset(i * 25);
+        }
+#endif
     }
 }
