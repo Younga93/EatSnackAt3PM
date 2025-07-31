@@ -84,7 +84,7 @@ public class InputManager : MonoBehaviour
             operation =>
             {
                 string newKey = operation.selectedControl.path;
-                if(newKey.EndsWith("escape"))
+                if(operation.selectedControl.name.ToLower() == "escape")
                 {
                     Debug.Log($"ESC를 눌러 취소합니다.");    //변경 로그
                 }
