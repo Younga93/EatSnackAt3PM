@@ -13,10 +13,9 @@ public class AttackHandler : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // TODO : 장애물 부딛쳤을 때 판정 필요
         if (collision.CompareTag("Enemy"))
         {
-            Debug.Log("공격 성공");
+            collision.gameObject.GetComponent<BreakableObstacle>()?.Break();
         }
     }
 }
