@@ -74,6 +74,8 @@ public class PresetSpawnManager : MonoBehaviour
     /// </summary>
     public void Init()
     {
+        _instance = this;
+
         obstacleTopAPool = new ObjectPool<NormalObstacle>(obstacleTopAPrefab, 10, transform);
         obstacleTopBPool = new ObjectPool<NormalObstacle>(obstacleTopBPrefab, 10, transform);
         obstacleBotAPool = new ObjectPool<NormalObstacle>(obstacleBotAPrefab, 10, transform);
@@ -254,10 +256,10 @@ public class PresetSpawnManager : MonoBehaviour
     {
         Init();
 
-        MakePreset(5);
-        MakePreset(30);
-        MakePreset(55);
-        MakePreset(80);
-        MakePreset(105);
+        //MakePreset(5);
+        //MakePreset(30);
+        //MakePreset(55);
+        //MakePreset(80);
+        //MakePreset(105);
     }
 }
