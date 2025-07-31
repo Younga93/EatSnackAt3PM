@@ -11,5 +11,6 @@ public class CoinItem : ItemBase
     {
         // TODO: 게임매니저에 접근해서 점수 상승
         GameManager.Instance.AddScore(_score);
+        PresetSpawnManager.Instance.ReturnItem(this);
     }
 }
