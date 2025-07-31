@@ -8,7 +8,7 @@ public class AttackHandler : MonoBehaviour
 
     private void Awake()
     {
-        playerController = GetComponent<PlayerController>();
+        playerController = gameObject.GetComponentInParent<PlayerController>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
