@@ -64,6 +64,7 @@ public class GameManager : MonoBehaviour
     private void InitScore()
     {
         currentScore = 0;
+        UIManager.Instance.UpdateGameScoresUI(currentScore);
         //bestScore = PlayerPrefs.GetInt("BestScore", 0); //BestScore 없을 경우 자동으로 0 반환
     }
 
@@ -74,39 +75,46 @@ public class GameManager : MonoBehaviour
     }
     public void UpdateHealth(int currentHealth)  //0이 되면 게임오버, 업데이트 될때마다 UI 업데이트
     {
+        UIManager.Instance.UpdateHealthUI(currentHealth);
         if (currentHealth <= 0)
         {
             GameOver();
             return;
         }
-
-        UIManager.Instance.UpdateHealthUI(currentHealth);
     }
-    public void LoadGame()
+    public void InitGame()
     {
-        UIManager.Instance.ChangeState(UIState.Loading);
-        SceneManager.sceneLoaded += OnSceneLoaded;
-        SceneManager.LoadScene("GameScene");
+        LoadSceneWithCallback("GameScene");
         InitScore();
         //Time.timeScale = 0f;
     }
+    public void LoadSceneWithCallback(string sceneName)
+    {
+        UIManager.Instance.ChangeState(UIState.Loading);
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        SceneManager.LoadScene(sceneName);
+    }
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode) //씬이 로드 된 다음에 변경된 UI 적용
     {
-        if (scene.name == "GameScene")   //씬 종류 많아지면 switch로 변경
+        switch (scene.name)
         {
-            UIManager.Instance.ChangeState(UIState.Game);
-            PresetSpawnManager.Instance.MakePreset(10);
-            Time.timeScale = 1f;
+            case "GameScene":
+                UIManager.Instance.ChangeState(UIState.Game);
+                PresetSpawnManager.Instance.MakePreset(10);
+                Time.timeScale = 1f;
+                break;
+            case "TitleScene":
+                UIManager.Instance.ChangeState(UIState.Title);
+                break;
         }
+        //if(scene.name == "GameScene")   //씬 종류 많아지면 switch로 변경
+        //{
+        //    UIManager.Instance.ChangeState(UIState.Game);
+        //    PresetSpawnManager.Instance.MakePreset(10);
+        //    Time.timeScale = 1f;
+        //}
         SceneManager.sceneLoaded -= OnSceneLoaded;  //이벤트 중복 방지로 제거
     }
-    //public void StartGame() //아
-    //{
-    //    //To do: ReadyUI에서 게임 시작 눌리면 호출되어야함.
-    //    //To do: 게임 시작 로직 (씬전환, 초기화, UI 업데이트 등)
-    //    Time.timeScale = 1f;
-    //    Debug.Log("Game Started");
-    //}
     public void GameOver()
     {
         //To do: 게임 오버 화면 표시

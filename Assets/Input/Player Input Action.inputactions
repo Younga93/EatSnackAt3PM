@@ -7,9 +7,9 @@
             "actions": [
                 {
                     "name": "Jump",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "5e58a11b-55e1-46f3-aa01-4740021dfecc",
-                    "expectedControlType": "",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -21,7 +21,7 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Attack",

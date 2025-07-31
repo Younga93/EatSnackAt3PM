@@ -19,7 +19,7 @@ public class TitleUI : BaseUI
     // 시작버튼 누를시(연동필요)
     public void OnClickStartButton()
     {
-        GameManager.Instance.LoadGame();
+        GameManager.Instance.InitGame();
     }
 
     // 설정버튼 누를시(연동필요)
