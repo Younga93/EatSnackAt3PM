@@ -11,9 +11,9 @@ public class BgLooper : MonoBehaviour
 
     void Start()
     {
-        ObstacleBase[] obstacles = GameObject.FindObjectsOfType<ObstacleBase>();  // 씬에 존재하는 모든 ObstacleBase 객체를 배열로 가져오기 (임시 코드 수정 상태)
-        obstacleLastPosition = obstacles[0].transform.position;
-        obstacleCount = obstacles.Length;
+        //ObstacleBase[] obstacles = GameObject.FindObjectsOfType<ObstacleBase>();  // 씬에 존재하는 모든 ObstacleBase 객체를 배열로 가져오기 (임시 코드 수정 상태)
+        //obstacleLastPosition = obstacles[0].transform.position;
+        //obstacleCount = obstacles.Length;
 
         //for (int i = 0; i < obstacleCount; i++)
         //{
