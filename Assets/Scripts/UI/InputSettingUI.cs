@@ -13,8 +13,6 @@ public class InputSettingUI : BaseUI
 
     private string inputBindingKey; //PlayerPrefs 키
     private Dictionary<string, string> keyValuePairs = new Dictionary<string, string>();    //사용..? 할일... 있나?
-    private bool isWaitingForKey = false;
-    private Action<string> onKeyboardReceived;
 
     [SerializeField] private Button jumpButton;
     [SerializeField] private Button slideButton;
