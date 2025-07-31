@@ -239,6 +239,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 441bb2ad0678b7243a2a32305e11f715, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  topA: {fileID: 6046048737759175547, guid: effd6343313c12f498d9852fd09f4fc9, type: 3}
+  topB: {fileID: 6695564588920266044, guid: 61636aa875f39fb4e97f92e823f75a88, type: 3}
+  BotA: {fileID: 1609451549313528167, guid: 6a23890bbee3442408a0783f6f519316, type: 3}
+  BotB: {fileID: 1825524892066117825, guid: d34304fbedfab194e98e9e47dcc368c4, type: 3}
+  brkObs: {fileID: 1765644285237725931, guid: c811231292c78f94c8d0df332fb255d2, type: 3}
+  coinA: {fileID: 9117606736830154988, guid: 4a8cc3c16d350534abf282fabce581c3, type: 3}
+  coinB: {fileID: 6669618022584217481, guid: 067b2da1cea01404bbc17629dc9f1bb3, type: 3}
+  recoveryItem: {fileID: 80445904238260680, guid: ebfdd0fe6050d4a4a925cc72fd73900b, type: 3}
+  speedUpItem: {fileID: 3620252062317782771, guid: da5754671b824e04398fbfe92631eb13, type: 3}
 --- !u!1 &3684178246665245068
 GameObject:
   m_ObjectHideFlags: 0
