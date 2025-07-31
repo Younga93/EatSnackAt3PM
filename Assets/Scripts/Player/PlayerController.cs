@@ -176,7 +176,7 @@ public class PlayerController : MonoBehaviour
         Debug.Log($"Trigger Enter in Player : {collision.gameObject.name}");
         if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Item"))
         {
-            collision.gameObject.GetComponent<IInteractable>()?.OnInteract();   
+            collision.gameObject.GetComponent<IInteractable>()?.OnInteract(this);   
         }
     }
 
@@ -184,7 +184,7 @@ public class PlayerController : MonoBehaviour
     /// 체력 처리 함수. 체력을 바꿉니다.
     /// </summary>
     /// <param name="changeHp"></param>
-    private void ChangeHp(int changeHp)
+    public void ChangeHp(int changeHp)
     {
         // 추후에 체력 변화치가 양수면 주변에 밝은 파티클이 돌아다녀도 괜찮을 것 같아요.
         currentHp += changeHp;
