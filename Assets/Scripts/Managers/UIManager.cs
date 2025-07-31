@@ -118,12 +118,7 @@ public class UIManager : MonoBehaviour
     }
     public void UpdateGameOverUI(int currentScore)
     {
-        if(currentScore > PlayerPrefs.GetInt("BestScore", 0))
-        {
-            PlayerPrefs.SetInt("BestScore", currentScore);
-            PlayerPrefs.Save();
-            gameOverUI.UpdateBestScoreText(currentScore);
-        }
+        gameOverUI.UpdateBestScoreText(PlayerPrefs.GetInt("BestScore", currentScore));
         gameOverUI.UpdateCurrentScoreText(currentScore);
     }
 

@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     //public GameState gameState { get; private set; } = GameState.Ready; //게임 상태 초기화 //필요없을듯
 
     public int currentScore { get; private set; }   //현재 점수
-    public int bestScore { get; private set; }     //최고 점수
+    //public int bestScore { get; private set; }     //최고 점수
 
     private void Awake()
     {
@@ -51,16 +51,20 @@ public class GameManager : MonoBehaviour
         {
             AddScore(10);
         }
-        if (Input.GetKeyDown(KeyCode.Backspace))    //테스트용
+        if (Input.GetKeyDown(KeyCode.UpArrow))    //테스트용
         {
             UpdateHealth(10);
+        }
+        if (Input.GetKeyDown(KeyCode.DownArrow))    //테스트용
+        {
+            UpdateHealth(0);
         }
     }
 
     private void InitScore()
     {
         currentScore = 0;
-        bestScore = PlayerPrefs.GetInt("BestScore", 0); //BestScore 없을 경우 자동으로 0 반환
+        //bestScore = PlayerPrefs.GetInt("BestScore", 0); //BestScore 없을 경우 자동으로 0 반환
     }
 
     public void AddScore(int score)
@@ -72,10 +76,11 @@ public class GameManager : MonoBehaviour
     {
         if (currentHealth <= 0)
         {
-            UIManager.Instance.ChangeState(UIState.GameOver);
-            UIManager.Instance.UpdateGameOverUI(currentScore);
+            GameOver();
+            return;
         }
-        UIManager.Instance.UpdateHealthUI(currentScore);
+
+        UIManager.Instance.UpdateHealthUI(currentHealth);
     }
     public void LoadGame()
     {
@@ -91,6 +96,7 @@ public class GameManager : MonoBehaviour
         {
             UIManager.Instance.ChangeState(UIState.Game);
             PresetSpawnManager.Instance.MakePreset(10);
+            Time.timeScale = 1f;
         }
         SceneManager.sceneLoaded -= OnSceneLoaded;  //이벤트 중복 방지로 제거
     }
@@ -105,10 +111,15 @@ public class GameManager : MonoBehaviour
     {
         //To do: 게임 오버 화면 표시
         Debug.Log("Game Over");
-        if(currentScore > bestScore)
+
+        Time.timeScale = 0f;
+        if (currentScore > PlayerPrefs.GetInt("BestScore", 0))
         {
-            bestScore = currentScore;
-            PlayerPrefs.SetInt("BestScore", bestScore); //최고 점수 저장
+            PlayerPrefs.SetInt("BestScore", currentScore);
+            PlayerPrefs.Save();
         }
+        UIManager.Instance.ChangeState(UIState.GameOver);
+        UIManager.Instance.UpdateGameOverUI(currentScore);
+        UIManager.Instance.UpdateHealthUI(currentScore);
     }
 }
