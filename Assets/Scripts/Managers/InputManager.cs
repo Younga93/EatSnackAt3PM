@@ -71,6 +71,9 @@ public class InputManager : MonoBehaviour
             return;
         }
 
+        //SystemPanel로 메시지 띄움
+        UIManager.Instance.ShowSystemMessagePanel($"Press key for {actionName}", false);
+
         targetAction.Disable(); //리바인딩 하는 동안 disable
         var rebind = targetAction.PerformInteractiveRebinding(bindingIndex).WithControlsExcluding("Mouse"); //마우스 제외한 입력장치만 받게 함. (디버그로그 테스트하는데 마우스 스크롤로 바뀌어서 변경함)
 
@@ -81,12 +84,17 @@ public class InputManager : MonoBehaviour
             operation =>
             {
                 string newKey = operation.selectedControl.path;
-                if (!IsBindingConflict(actionName, newKey))
+                if(newKey.EndsWith("escape"))
+                {
+                    Debug.Log($"ESC를 눌러 취소합니다.");    //변경 로그
+                }
+                else if (!IsBindingConflict(actionName, newKey))
                 {
                     PlayerPrefs.SetString(inputBindingKey, inputActions.SaveBindingOverridesAsJson()); //PlayerPrefs에 변경사항 저장
                     PlayerPrefs.Save();
-                    Debug.Log($"Rebound '{targetAction}' to '{operation.selectedControl.displayName}'");    //변경 로그
+                    Debug.Log($"Rebound '{targetAction}' to '{newKey}'");    //변경 로그
 
+                    //newKey = GetFormattedKeyBoardValue(newKey);
                     onBindingComplete?.Invoke(newKey);  //결과 전달
                 }
                 else
@@ -95,6 +103,7 @@ public class InputManager : MonoBehaviour
                     Debug.Log($"Rebound failed");    //변경 로그
                 }
 
+                UIManager.Instance.CloseSystemMessagePanel();
                 targetAction.Enable();
                 operation.Dispose();
             });
@@ -107,6 +116,7 @@ public class InputManager : MonoBehaviour
     }
     bool IsBindingConflict(string actionName, string newBindingPath)
     {
+        //newBindingPath = GetFormattedKeyBoardValue(newBindingPath);
         if (!newBindingPath.StartsWith('<')) //만약 받은 path가 <로 시작하지 않으면 binding.effectivePath와 형식이 맞지 않음으로 포맷팅 새로함.
         {
             newBindingPath = newBindingPath.Replace("/Keyboard/", "<Keyboard>/");
@@ -125,17 +135,18 @@ public class InputManager : MonoBehaviour
         }
         return false;
     }
-    public string GetFormattedKeyBoardValue(string inputBindingKey)
+    public string GetFormattedKeyBoardValue(string inputBindingKey) // device/key 형식으로 출력됨
     {
         string formattedKeyValue;
 
         if(inputBindingKey.StartsWith('<'))
         {
-            formattedKeyValue = inputBindingKey.Replace("<Keyboard>", "Keyboard");
+            formattedKeyValue = inputBindingKey.Replace(">", "").Substring(1);  //<탈락 시키고, >를 지움
         }
-        else if(inputBindingKey.StartsWith('/'))
+        else if (inputBindingKey.StartsWith('/'))
         {
-            formattedKeyValue = inputBindingKey.Substring(1);
+            formattedKeyValue = inputBindingKey.Substring(1);   //제일 처음 /탈락
+            //formattedKeyValue = "<" + formattedKeyValue.Replace("/", ">/");
         }
         else
         {

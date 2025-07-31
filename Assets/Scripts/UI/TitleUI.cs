@@ -19,13 +19,13 @@ public class TitleUI : BaseUI
     // 시작버튼 누를시(연동필요)
     public void OnClickStartButton()
     {
-        Debug.Log("게임 시작");
+        GameManager.Instance.LoadGame();
     }
 
     // 설정버튼 누를시(연동필요)
     public void OnClickSettingButton()
     {
-        Debug.Log("설정 창");
+        UIManager.Instance.ChangeState(UIState.InputSetting);
     }
 
     // 나가기버튼 누를시(연동필요)

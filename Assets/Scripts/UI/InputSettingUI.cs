@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 
-public class InputSettingPanel : MonoBehaviour
+public class InputSettingUI : BaseUI
 {
 
     private string inputBindingKey; //PlayerPrefs 키
@@ -101,5 +101,10 @@ public class InputSettingPanel : MonoBehaviour
             keyText = keyText.Substring(1);
         }
         button.GetComponentInChildren<TextMeshProUGUI>().text = keyText;
+    }
+
+    protected override UIState GetUIState()
+    {
+        return UIState.InputSetting;
     }
 }

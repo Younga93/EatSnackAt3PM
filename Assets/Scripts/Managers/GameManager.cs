@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
 
     public static GameManager Instance { get; private set; }
-    public GameState gameState { get; private set; } = GameState.Ready; //게임 상태 초기화
+    //public GameState gameState { get; private set; } = GameState.Ready; //게임 상태 초기화 //필요없을듯
 
     public int currentScore { get; private set; }   //현재 점수
     public int bestScore { get; private set; }     //최고 점수
@@ -25,23 +26,23 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
-        Init();        
+        UIManager.Instance.ChangeState(UIState.Title);
     }
-    public void SetGameState(GameState newState)
-    {
-        gameState = newState;
-        Debug.Log("Game State Changed to: " + gameState);
-        switch(gameState)
-        {
-            case GameState.Playing:
-                Init(); //게임 시작 전에 초기화
-                StartGame();
-                break;
-            case GameState.GameOver:
-                GameOver();
-                break;
-        }
-    }
+    //public void SetGameState(GameState newState)
+    //{
+    //    gameState = newState;
+    //    Debug.Log("Game State Changed to: " + gameState);
+    //    switch(gameState)
+    //    {
+    //        case GameState.Playing:
+    //            Init(); //게임 시작 전에 초기화
+    //            StartGame();
+    //            break;
+    //        case GameState.GameOver:
+    //            GameOver();
+    //            break;
+    //    }
+    //}
 
     private void Init()
     {
@@ -56,7 +57,8 @@ public class GameManager : MonoBehaviour
     }
     public void LoadGame()
     {
-        //To do: Title Scene에서 게임 시작하기 눌리면 호출되어야함
+        SceneManager.LoadScene("GameScene");
+        UIManager.Instance.ChangeState(UIState.Game);
         Time.timeScale = 1f;
         //To do: ReadyUI 출력하기
     }
