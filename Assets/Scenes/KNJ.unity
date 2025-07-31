@@ -253,6 +253,8 @@ MonoBehaviour:
   coinItemBPrefab: {fileID: 7790831306140494515, guid: 067b2da1cea01404bbc17629dc9f1bb3, type: 3}
   recoveryItemPrefab: {fileID: 7858876677893516950, guid: ebfdd0fe6050d4a4a925cc72fd73900b, type: 3}
   SpeedUpItemPrefab: {fileID: 5865038146276636957, guid: da5754671b824e04398fbfe92631eb13, type: 3}
+  magnetItemPrefab: {fileID: 6870334193149597295, guid: 2e004745a40407a40af7145c42825cf7, type: 3}
+  invincibleItemPrefab: {fileID: 7976817776411388008, guid: a2b1e18982cdcd541a82fa673e6578b6, type: 3}
   presets:
   - {fileID: 5233846064242055444, guid: e9276f2883163674fb75a4b06c4a361a, type: 3}
   - {fileID: 7814552674064313386, guid: 4095943f45c83a440a140a98b7a103ac, type: 3}
