@@ -14,9 +14,12 @@ public class GameUI : BaseUI
     public int currentHP;
     public int maxHP;
 
-    public int currentScore;
-    public int bestScore;
-
+    //public int currentScore;
+    //public int bestScore;
+    private void Start()
+    {
+        UpdateBestScoreText(PlayerPrefs.GetInt("BestScore", 0));
+    }
 
     // 에너지바 업데이트 (연동 필요)
     public void UpdateEnergyBar()
@@ -25,13 +28,13 @@ public class GameUI : BaseUI
     }
 
     // 현재점수 업데이트 (연동 필요)
-    public void UpdateCurrentScoreText()
+    public void UpdateCurrentScoreText(int currentScore)
     {
         currentScoreText.text = currentScore.ToString();        //테스트
     }
 
     // 최고점수 업데이트 (연동 필요)
-    public void UpdateBestScoreText()
+    public void UpdateBestScoreText(int bestScore)
     {
         bestScoreText.text = bestScore.ToString();      //테스트
     }
