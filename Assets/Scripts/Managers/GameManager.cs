@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
 
     public static GameManager Instance { get; private set; }
-    public GameState gameState { get; private set; } = GameState.Ready; //게임 상태 초기화
+    //public GameState gameState { get; private set; } = GameState.Ready; //게임 상태 초기화 //필요없을듯
 
     public int currentScore { get; private set; }   //현재 점수
     public int bestScore { get; private set; }     //최고 점수
@@ -23,27 +24,36 @@ public class GameManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
     }
-    private void Start()
+
+    //private void Start()
+    //{
+    //    UIManager.Instance.ChangeState(UIState.Title);
+    //}
+
+    //public void SetGameState(GameState newState)
+    //{
+    //    gameState = newState;
+    //    Debug.Log("Game State Changed to: " + gameState);
+    //    switch(gameState)
+    //    {
+    //        case GameState.Playing:
+    //            Init(); //게임 시작 전에 초기화
+    //            StartGame();
+    //            break;
+    //        case GameState.GameOver:
+    //            GameOver();
+    //            break;
+    //    }
+    //}
+    private void Update()
     {
-        Init();        
-    }
-    public void SetGameState(GameState newState)
-    {
-        gameState = newState;
-        Debug.Log("Game State Changed to: " + gameState);
-        switch(gameState)
+        if (Input.GetKeyDown(KeyCode.Space))    //테스트용
         {
-            case GameState.Playing:
-                Init(); //게임 시작 전에 초기화
-                StartGame();
-                break;
-            case GameState.GameOver:
-                GameOver();
-                break;
+            AddScore(10);
         }
     }
 
-    private void Init()
+    private void InitScore()
     {
         currentScore = 0;
         bestScore = PlayerPrefs.GetInt("BestScore", 0); //BestScore 없을 경우 자동으로 0 반환
@@ -52,20 +62,36 @@ public class GameManager : MonoBehaviour
     public void AddScore(int score)
     {
         currentScore += score;
-        //To do: UI에 점수 업데이트
+        UIManager.Instance.UpdateGameScores(currentScore);
+    }
+    public void UpdateHealth()  //0이 되면 게임오버, 업데이트 될때마다 UI 업데이트
+    {
+
     }
     public void LoadGame()
     {
-        //To do: Title Scene에서 게임 시작하기 눌리면 호출되어야함
-        Time.timeScale = 1f;
-        //To do: ReadyUI 출력하기
+        UIManager.Instance.ChangeState(UIState.Loading);
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        SceneManager.LoadScene("GameScene");
+        InitScore();
+        //Time.timeScale = 0f;
     }
-    public void StartGame()
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode) //씬이 로드 된 다음에 변경된 UI 적용
     {
-        //To do: ReadyUI에서 게임 시작 눌리면 호출되어야함.
-        //To do: 게임 시작 로직 (씬전환, 초기화, UI 업데이트 등)
-        Debug.Log("Game Started");
+        if (scene.name == "GameScene")   //씬 종류 많아지면 switch로 변경
+        {
+            UIManager.Instance.ChangeState(UIState.Game);
+            PresetSpawnManager.Instance.MakePreset(10);
+        }
+        SceneManager.sceneLoaded -= OnSceneLoaded;  //이벤트 중복 방지로 제거
     }
+    //public void StartGame() //아
+    //{
+    //    //To do: ReadyUI에서 게임 시작 눌리면 호출되어야함.
+    //    //To do: 게임 시작 로직 (씬전환, 초기화, UI 업데이트 등)
+    //    Time.timeScale = 1f;
+    //    Debug.Log("Game Started");
+    //}
     public void GameOver()
     {
         //To do: 게임 오버 화면 표시

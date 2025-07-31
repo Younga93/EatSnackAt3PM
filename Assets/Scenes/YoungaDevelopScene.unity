@@ -541,7 +541,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 157692726}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 855672678}
+        m_TargetAssemblyTypeName: InputSettingPanel, Assembly-CSharp
+        m_MethodName: OnCloseButtonClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &157692726
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1005,7 +1017,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 732317438}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 855672678}
+        m_TargetAssemblyTypeName: InputSettingPanel, Assembly-CSharp
+        m_MethodName: OnResetButtonClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &732317438
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1105,6 +1129,8 @@ MonoBehaviour:
   jumpButton: {fileID: 908694953}
   slideButton: {fileID: 1868268922}
   attackButton: {fileID: 1855013428}
+  resetButton: {fileID: 732317437}
+  closeButton: {fileID: 157692725}
 --- !u!1 &908694951
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 
-public class InputSettingPanel : MonoBehaviour
+public class InputSettingUI : BaseUI
 {
 
     private string inputBindingKey; //PlayerPrefs 키
@@ -20,6 +20,7 @@ public class InputSettingPanel : MonoBehaviour
     [SerializeField] private Button slideButton;
     [SerializeField] private Button attackButton;
     [SerializeField] private Button resetButton;
+    [SerializeField] private Button closeButton;
 
     private void Start()
     {
@@ -90,7 +91,7 @@ public class InputSettingPanel : MonoBehaviour
     }
     public void OnCloseButtonClicked()
     {
-        this.gameObject.SetActive(false);
+        UIManager.Instance.ChangeState(UIState.Title);
     }
 
     public void ChangeButtonText(Button button, string keyText)
@@ -100,5 +101,10 @@ public class InputSettingPanel : MonoBehaviour
             keyText = keyText.Substring(1);
         }
         button.GetComponentInChildren<TextMeshProUGUI>().text = keyText;
+    }
+
+    protected override UIState GetUIState()
+    {
+        return UIState.InputSetting;
     }
 }

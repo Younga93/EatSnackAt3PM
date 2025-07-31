@@ -8,6 +8,6 @@ public class NormalObstacle : ObstacleBase
     {
         // TODO: 플레이어의 체력 감소 및 감속
         player.ChangeHp(-20); // 임시값
-        player.StartInvincible(null);
+        player.CollideWithObstacle();
     }
 }

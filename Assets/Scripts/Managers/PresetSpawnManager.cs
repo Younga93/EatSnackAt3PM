@@ -17,11 +17,14 @@ public enum ItemType
     CoinA,
     CoinB,
     Recovery,
-    SpeedUp
+    SpeedUp,
+    Magnet,
+    Invicible
 }
 
 public class PresetSpawnManager : MonoBehaviour
 {
+    // 아 싱글턴 쓰기 싫었는데 어쩔 수가 없네
     private static PresetSpawnManager _instance;
     public static PresetSpawnManager Instance {  get { return _instance; } }
 
@@ -71,6 +74,8 @@ public class PresetSpawnManager : MonoBehaviour
     /// </summary>
     public void Init()
     {
+        _instance = this;
+
         obstacleTopAPool = new ObjectPool<NormalObstacle>(obstacleTopAPrefab, 10, transform);
         obstacleTopBPool = new ObjectPool<NormalObstacle>(obstacleTopBPrefab, 10, transform);
         obstacleBotAPool = new ObjectPool<NormalObstacle>(obstacleBotAPrefab, 10, transform);
@@ -251,10 +256,10 @@ public class PresetSpawnManager : MonoBehaviour
     {
         Init();
 
-        MakePreset(5);
-        MakePreset(30);
-        MakePreset(55);
-        MakePreset(80);
-        MakePreset(105);
+        //MakePreset(5);
+        //MakePreset(30);
+        //MakePreset(55);
+        //MakePreset(80);
+        //MakePreset(105);
     }
 }
