@@ -4,17 +4,21 @@ using UnityEngine;
 
 public class BreakableObstacle : ObstacleBase
 {
-    [SerializeField] private float _energyRecoveryAmount;
+    [SerializeField] private int _energyRecoveryAmount;
     [SerializeField] private int _score;
 
     public override void OnInteract(PlayerController player)
     {
         // TODO: 플레이어의 체력 감소 및 감속
-        player.ChangeHp(-15); // 임시값
+        player.ChangeHp(-20); // 임시값
+        player.CollideWithObstacle();
     }
 
-    public void Break()
+    public void Break(PlayerController player)
     {
-        // TODO: 오브젝트 파괴 및 플레이어 체력 회복, 점수 증가?
+        player.ChangeHp(_energyRecoveryAmount);
+        GameManager.Instance.AddScore(_score);
+        PresetSpawnManager.Instance.ReturnObstacle(this);
+        // TODO: 파괴 이펙트같은게 있으면 좋을 거 같음
     }
 }

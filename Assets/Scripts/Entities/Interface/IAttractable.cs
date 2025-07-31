@@ -4,6 +4,5 @@ using UnityEngine;
 
 public interface IAttractable
 {
-    // 플레이어를 인자로 받아야함
-    public void AttractedBy();
+    public void AttractedBy(Vector3 position);
 }

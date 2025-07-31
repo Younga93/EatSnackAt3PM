@@ -15,7 +15,7 @@ public class AttackHandler : MonoBehaviour
     {
         if (collision.CompareTag("Enemy"))
         {
-            collision.gameObject.GetComponent<BreakableObstacle>()?.Break();
+            collision.gameObject.GetComponent<BreakableObstacle>()?.Break(playerController);
         }
     }
 }

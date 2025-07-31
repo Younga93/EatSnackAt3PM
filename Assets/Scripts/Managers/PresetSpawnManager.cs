@@ -17,11 +17,17 @@ public enum ItemType
     CoinA,
     CoinB,
     Recovery,
-    SpeedUp
+    SpeedUp,
+    Magnet,
+    Invicible
 }
 
 public class PresetSpawnManager : MonoBehaviour
 {
+    // 아 싱글턴 쓰기 싫었는데 어쩔 수가 없네
+    private static PresetSpawnManager _instance;
+    public static PresetSpawnManager Instance {  get { return _instance; } }
+
     /// <summary>
     /// 각 오브젝트마다 저장해놓을 오브젝트 풀
     /// </summary>
