@@ -16,11 +16,11 @@ public class GameOverUI : BaseUI
     //// 점수 테스트용 변수
     //public int currentScore;
     //public int bestScore;
-
     public override void Init()
     {
         restartButton.onClick.AddListener(OnClickRestartButton);
         titleButton.onClick.AddListener(OnClickTitleButton);
+        Debug.Log("GameOverUI Init됨");
     }
 
     // 현재점수 업데이트
@@ -38,13 +38,18 @@ public class GameOverUI : BaseUI
     // 재시작 버튼 누를시
     public void OnClickRestartButton()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        Debug.Log("Restart 버튼 눌림");
+        UIManager.Instance.ChangeState(UIState.Game);
+        GameManager.Instance.InitGame();
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     // 타이틀 버튼 누를시
     public void OnClickTitleButton()
     {
-        Debug.Log("타이틀로");  //테스트용
+        Debug.Log("TitleScene 버튼 눌림");
+        GameManager.Instance.LoadSceneWithCallback("TitleScene");
+        //Debug.Log("타이틀로");  //테스트용
     }
 
     protected override UIState GetUIState()
