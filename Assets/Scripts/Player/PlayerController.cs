@@ -61,8 +61,6 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
         jumpDelay = maxJumpDelay;
-
-        SetHp(maxHp);
     }
 
     private void Start()
@@ -74,6 +72,7 @@ public class PlayerController : MonoBehaviour
         originalColliderOffsetY = boxCollider.offset.y;
         slideColliderSizeY = originalColliderSizeY / 2f;
         slideColliderOffsetY = originalColliderOffsetY - 1.4f;
+        SetHp(maxHp);
     }
 
 
@@ -161,7 +160,7 @@ public class PlayerController : MonoBehaviour
 
         Debug.Log($"Collision Enter in Player : {collision.gameObject.name}");
 
-        if (collision.gameObject.CompareTag("Ground"))
+        if (collision.gameObject.CompareTag("BackGround"))
         {
             if(jumpCount != 0)
             {
@@ -190,6 +189,7 @@ public class PlayerController : MonoBehaviour
         currentHp += changeHp;
         currentHp = currentHp > maxHp? maxHp : currentHp;
         currentHp = currentHp < 0 ? 0 : currentHp;
+        GameManager.Instance.UpdateHealth(currentHp);
     }
 
     /// <summary>
@@ -199,6 +199,7 @@ public class PlayerController : MonoBehaviour
     public void SetHp(int changeHp)
     {
         currentHp = changeHp;
+        GameManager.Instance.UpdateHealth(currentHp);
     }
 
 
