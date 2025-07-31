@@ -74,13 +74,12 @@ public class GameManager : MonoBehaviour
     }
     public void UpdateHealth(int currentHealth)  //0이 되면 게임오버, 업데이트 될때마다 UI 업데이트
     {
+        UIManager.Instance.UpdateHealthUI(currentHealth);
         if (currentHealth <= 0)
         {
             GameOver();
             return;
         }
-
-        UIManager.Instance.UpdateHealthUI(currentHealth);
     }
     public void LoadGame()
     {
