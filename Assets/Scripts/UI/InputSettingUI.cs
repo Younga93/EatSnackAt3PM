@@ -91,7 +91,7 @@ public class InputSettingUI : BaseUI
     }
     public void OnCloseButtonClicked()
     {
-        this.gameObject.SetActive(false);
+        UIManager.Instance.ChangeState(UIState.Title);
     }
 
     public void ChangeButtonText(Button button, string keyText)

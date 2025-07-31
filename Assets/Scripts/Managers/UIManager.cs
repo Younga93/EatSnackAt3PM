@@ -94,14 +94,14 @@ public class UIManager : MonoBehaviour
     {
         ChangeState(UIState.GameOver);
     }
-
-    //일부러 패널들은 다른 UI들이랑 겹쳐서 보일 수 있도록 메소드를 따로 뻈습니다.
-    //(메인 게임 씬에 설정이 있다거나 했을 때, 되돌아갈 State 구분 안하고 그냥 패널만 꺼도 되도록
     public void ShowInputSettingPanel()
     {
         if (inputSettingUI != null)
             inputSettingUI.SetActive(UIState.InputSetting);
     }
+
+    //일부러 패널은 다른 UI들이랑 겹쳐서 보일 수 있도록 메소드를 따로 뻈습니다.
+    //(메인 게임 씬에 설정이 있다거나 했을 때, 되돌아갈 State 구분 안하고 그냥 패널만 꺼도 되도록
     public void ShowSystemMessagePanel(string message, bool isWaitingCloseButton)
     {
         if (systemMessageUI != null)
