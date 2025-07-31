@@ -44,6 +44,13 @@ public class PlayerController : MonoBehaviour
     bool isAttack = false;
     //
 
+    // 무적 관련 변수들
+    [Header("Invincible Settings")]
+    [SerializeField] float invincibleTime;
+
+    bool isInvincible = false;
+    //
+
     AnimationHandler aniHandler;
     Rigidbody2D rb;
     BoxCollider2D boxCollider;
@@ -154,7 +161,7 @@ public class PlayerController : MonoBehaviour
 
         Debug.Log($"Collision Enter in Player : {collision.gameObject.name}");
 
-        if (collision.gameObject.CompareTag("ground"))
+        if (collision.gameObject.CompareTag("Ground"))
         {
             if(jumpCount != 0)
             {
@@ -168,23 +175,16 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log($"Trigger Enter in Player : {collision.gameObject.name}");
 
-        if (collision.gameObject.CompareTag("enemy"))
+        if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Item"))
         {
-            /*
-
-
-            여기에 충돌 설정하시면 됩니다. 필요하시면 디버그 코드는 지워주세요!
-
-            */ 
-            Debug.Log($"Enemy와 부딪힘");
-            aniHandler.Damage();
+            collision.gameObject.GetComponent<IInteractable>()?.OnInteract();   
         }
     }
 
     /// <summary>
     /// 체력 처리 함수. 체력을 바꿉니다.
     /// </summary>
-    /// <param name="hp"></param>
+    /// <param name="changeHp"></param>
     private void ChangeHp(int changeHp)
     {
         // 추후에 체력 변화치가 양수면 주변에 밝은 파티클이 돌아다녀도 괜찮을 것 같아요.
@@ -261,5 +261,34 @@ public class PlayerController : MonoBehaviour
     {
         attackPivot.SetActive(false);
         isAttack = false;
+    }
+
+    public void CollideWithObstacle()
+    {
+        if (isInvincible) return;
+        StartInvincible(null);
+        aniHandler.Damage();
+    }
+
+    public void StartInvincible(float? itemInvincibleTime)
+    {
+        // 무적 시작부분
+        isInvincible = true;
+        if (itemInvincibleTime == null)
+            Invoke("EndInvincible", invincibleTime);
+        else
+            Invoke("EndInvincible", (float)itemInvincibleTime);
+    }
+    
+    public void EndInvincible()
+    {
+        // 무적 끝나는 부분
+        isInvincible = false;
+    }
+
+    public void Death()
+    {
+        // 죽는 부분
+        aniHandler.Death();
     }
 }

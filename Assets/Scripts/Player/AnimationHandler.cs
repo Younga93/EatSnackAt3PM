@@ -21,8 +21,6 @@ public class AnimationHandler : MonoBehaviour
     private int jumpCount;
     private Rigidbody2D rb;
    
-
-
     private void Awake()
     {
         animator = GetComponent<Animator>();
