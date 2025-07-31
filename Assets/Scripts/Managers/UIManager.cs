@@ -83,36 +83,48 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        // 작동 테스트용 코드
-        if (UIManager.Instance.currentState == UIState.Game)
-        {
-            gameUI.UpdateEnergyBar();
-            //gameUI.UpdateCurrentScoreText();  //게임매니저로부터 인자 받아서, UIManager의 UpdateGameUI를 호출하면, 현재 점수와 베스트 점수 확인하여 업데이트 하는 방법으로 UpdateGameScores 추가하여 변경하였음.
-            //gameUI.UpdateBestScoreText();
+    //private void Update()
+    //{
+    //    //// 작동 테스트용 코드
+    //    //if (UIManager.Instance.currentState == UIState.Game)
+    //    //{
+    //    //    //gameUI.UpdateEnergyBar();
+    //    //    //gameUI.UpdateCurrentScoreText();  //게임매니저로부터 인자 받아서, UIManager의 UpdateGameUI를 호출하면, 현재 점수와 베스트 점수 확인하여 업데이트 하는 방법으로 UpdateGameScores 추가하여 변경하였음.
+    //    //    //gameUI.UpdateBestScoreText();
 
-            if (gameUI.currentHP == 0)
-            {
-                SetGameOver();
-            }
-        }
+    //    //    //if (gameUI.currentHP == 0)
+    //    //    //{
+    //    //    //    SetGameOver();
+    //    //    //}
+    //    //}
 
-        if(UIManager.Instance.currentState == UIState.GameOver)
-        {
-            gameOverUI.UpdateCurrentScoreText();
-            gameOverUI.UpdateBestScoreText();
-        }
-    }
-    public void UpdateGameScores(int currentScore)
+    //    //if(UIManager.Instance.currentState == UIState.GameOver)
+    //    //{
+    //    //    gameOverUI.UpdateCurrentScoreText();
+    //    //    gameOverUI.UpdateBestScoreText();
+    //    //}
+    //}
+    public void UpdateGameScoresUI(int currentScore)
     {
         gameUI.UpdateCurrentScoreText(currentScore);
         if(currentScore > PlayerPrefs.GetInt("BestScore", 0))
         {
             gameUI.UpdateBestScoreText(currentScore);
-            //추후 게임종료 구현되면 그때 한번만 저장하는게 맞을 것 같음. 일단 임시
-            PlayerPrefs.SetInt("BestScore", currentScore); //최고 점수 저장
         }
+    }
+    public void UpdateHealthUI(int currentHealth)
+    {
+        gameUI.UpdateEnergyBar(currentHealth);
+    }
+    public void UpdateGameOverUI(int currentScore)
+    {
+        if(currentScore > PlayerPrefs.GetInt("BestScore", 0))
+        {
+            PlayerPrefs.SetInt("BestScore", currentScore);
+            PlayerPrefs.Save();
+            gameOverUI.UpdateBestScoreText(currentScore);
+        }
+        gameOverUI.UpdateCurrentScoreText(currentScore);
     }
 
     public void SetPlayGame()

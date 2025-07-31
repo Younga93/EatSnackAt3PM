@@ -51,6 +51,10 @@ public class GameManager : MonoBehaviour
         {
             AddScore(10);
         }
+        if (Input.GetKeyDown(KeyCode.Backspace))    //테스트용
+        {
+            UpdateHealth(10);
+        }
     }
 
     private void InitScore()
@@ -62,11 +66,16 @@ public class GameManager : MonoBehaviour
     public void AddScore(int score)
     {
         currentScore += score;
-        UIManager.Instance.UpdateGameScores(currentScore);
+        UIManager.Instance.UpdateGameScoresUI(currentScore);
     }
-    public void UpdateHealth()  //0이 되면 게임오버, 업데이트 될때마다 UI 업데이트
+    public void UpdateHealth(int currentHealth)  //0이 되면 게임오버, 업데이트 될때마다 UI 업데이트
     {
-
+        if (currentHealth <= 0)
+        {
+            UIManager.Instance.ChangeState(UIState.GameOver);
+            UIManager.Instance.UpdateGameOverUI(currentScore);
+        }
+        UIManager.Instance.UpdateHealthUI(currentScore);
     }
     public void LoadGame()
     {
