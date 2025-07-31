@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
     //{
     //    UIManager.Instance.ChangeState(UIState.Title);
     //}
+
     //public void SetGameState(GameState newState)
     //{
     //    gameState = newState;
@@ -63,6 +64,10 @@ public class GameManager : MonoBehaviour
         currentScore += score;
         UIManager.Instance.UpdateGameScores(currentScore);
     }
+    public void UpdateHealth()  //0이 되면 게임오버, 업데이트 될때마다 UI 업데이트
+    {
+
+    }
     public void LoadGame()
     {
         UIManager.Instance.ChangeState(UIState.Loading);
@@ -76,6 +81,7 @@ public class GameManager : MonoBehaviour
         if (scene.name == "GameScene")   //씬 종류 많아지면 switch로 변경
         {
             UIManager.Instance.ChangeState(UIState.Game);
+            PresetSpawnManager.Instance.MakePreset(10);
         }
         SceneManager.sceneLoaded -= OnSceneLoaded;  //이벤트 중복 방지로 제거
     }
