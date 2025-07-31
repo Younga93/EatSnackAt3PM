@@ -64,7 +64,7 @@ public class GameManager : MonoBehaviour
         currentScore += score;
         UIManager.Instance.UpdateGameScores(currentScore);
     }
-    public void UpdateHealth()  //0이 되면 게임오버, 업데이트 될때마다 UI 업데이트
+    public void UpdateHealth(int currentHealth)  //0이 되면 게임오버, 업데이트 될때마다 UI 업데이트
     {
 
     }
