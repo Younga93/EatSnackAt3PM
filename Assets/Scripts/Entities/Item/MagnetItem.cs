@@ -5,19 +5,16 @@ using UnityEngine;
 public class MagnetItem : ItemBase
 {
     [SerializeField] private float _duration;
-    [SerializeField] private float _range;
 
     public override void OnInteract(PlayerController player)
     {
-        
+        StartCoroutine(AttractItemsCoroutine(player));
     }
 
-    IEnumerator AttractItemsCoroutine()
+    IEnumerator AttractItemsCoroutine(PlayerController player)
     {
-        GameObject go = new GameObject("MagnetZone");
-        // 부모를 플레이어로 설정
-        // 
-
+        player.GetComponentInChildren<MagnetArea>(true).gameObject.SetActive(true);
         yield return new WaitForSeconds(_duration);
+        player.GetComponentInChildren<MagnetArea>().gameObject.SetActive(false);
     }
 }

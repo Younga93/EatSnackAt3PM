@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class ItemBase : MonoBehaviour, IInteractable
+public abstract class ItemBase : MonoBehaviour, IInteractable, IAttractable
 {
     [SerializeField] private ItemType itemType;
 
@@ -10,4 +10,8 @@ public abstract class ItemBase : MonoBehaviour, IInteractable
 
     public ItemType GetItemType() { return itemType; }
 
+    public void AttractedBy(Vector3 position)
+    {
+        transform.position = Vector3.Lerp(transform.position, position, 0.1f);
+    }
 }
