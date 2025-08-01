@@ -93,6 +93,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         attackHandler = attackPivot.GetComponent<AttackHandler>();
+        attackHandler.Init(this);
 
         // 슬라이드 시 콜라이더 크기 변경을 위해 저장됨
         originalColliderSizeY = capsuleCollider.size.y;

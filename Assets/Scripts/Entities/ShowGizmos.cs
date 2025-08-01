@@ -25,6 +25,9 @@ public class ShowGizmos : MonoBehaviour
     /// </summary>
     private void OnDrawGizmos()
     {
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireCube(new Vector3(10f, 0, 0), new Vector3(20, 10, 1));
+
         Transform[] obstacleTopAPos = transform.Find("ObstacleTopASpawnPoints").GetComponentsInChildren<Transform>().Where(t => t.parent != transform).ToArray();
         Transform[] obstacleTopBPos = transform.Find("ObstacleTopBSpawnPoints").GetComponentsInChildren<Transform>().Where(t => t.parent != transform).ToArray();
         Transform[] obstacleBotAPos = transform.Find("ObstacleBotASpawnPoints").GetComponentsInChildren<Transform>().Where(t => t.parent != transform).ToArray();
