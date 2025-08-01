@@ -18,6 +18,7 @@ public class AnimationHandler : MonoBehaviour
     private readonly int IsAttack = Animator.StringToHash("IsAttack");
     private readonly int IsDamage = Animator.StringToHash("IsDamage");
     private readonly int IsDeath = Animator.StringToHash("IsDeath");
+    
 
     private Rigidbody2D rb;
     private SpriteRenderer[] renderers;
@@ -69,7 +70,7 @@ public class AnimationHandler : MonoBehaviour
         animator.SetBool(IsSlide, true);
     }
 
-    public void OnSlideAnimationEnd()
+    public void EndSlide()
     {
         animator.SetBool(IsSlide, false);
     }

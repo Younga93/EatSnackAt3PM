@@ -52,7 +52,18 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float invincibleTime;
 
     bool isInvincible = false;
-    public bool IsInvincible { get { return isInvincible; } } 
+    public bool IsInvincible { get { return isInvincible; } }
+    //
+
+    // 효과음 관련 변수들
+    [Header("Sound Settings")]
+    [SerializeField] AudioClip jumpSound;
+    [SerializeField] AudioClip slideSound;
+    [SerializeField] AudioClip attackSound;
+    // TODO : 데미지 받으면 재생되는 사운드 추가
+    //[SerializeField] AudioClip damageSound;
+
+    private AudioSource slideSource;
     //
 
     AnimationHandler aniHandler;
@@ -65,16 +76,16 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         capsuleCollider = GetComponent<CapsuleCollider2D>();
         jumpDelay = maxJumpDelay;
+
+
+        
+        
     }
 
-    private void OnEnable()
-    {
-        slideAction.action.canceled += StopSliding;
-        slideAction.action.Enable();
-    }
 
     private void OnDisable()
     {
+        slideAction.action.started -= StartSliding;
         slideAction.action.canceled -= StopSliding;
         slideAction.action.Disable();
     }
@@ -91,6 +102,10 @@ public class PlayerController : MonoBehaviour
         slideColliderOffsetY = originalColliderOffsetY - 1.4f;
         SetHp(maxHp);
 
+        // 슬라이드 액션 설정
+        slideAction.action.started += StartSliding;
+        slideAction.action.canceled += StopSliding;
+        slideAction.action.Enable();
     }
 
 
@@ -102,11 +117,12 @@ public class PlayerController : MonoBehaviour
         velo.x = forwardSpeed;
         rb.velocity = velo;
 
-        if (slideAction.action.IsPressed()) StartSliding();
+        // if (slideAction.action.IsPressed()) StartSliding();
     }
-    public void StartSliding()
+    public void StartSliding(InputAction.CallbackContext context)
     {
         // Debug.Log("Slide");
+        if (slideSource == null) slideSource = SoundManager.PlayClip(slideSound, true);
         isSlide = true;
         StartSlide();
         jumpCount = 0;
@@ -115,9 +131,14 @@ public class PlayerController : MonoBehaviour
 
     public void StopSliding(InputAction.CallbackContext context)
     {
-        // Debug.Log("Stop Slide");
+        Debug.Log("Stop Slide");
         isSlide = false;
-        OnSlideAnimationEnd();
+        SlideEnd();
+        if (slideSource != null)
+        {
+            slideSource.gameObject.GetComponent<SoundSource>()?.Disable();
+            slideSource = null;
+        }
     }
 
     void Tick()
@@ -137,7 +158,7 @@ public class PlayerController : MonoBehaviour
             {
                 if (jumpDelay >= maxJumpDelay)
                 {
-                    OnSlideAnimationEnd();
+                    SlideEnd();
 
                     Vector3 velocity = rb.velocity;
                     velocity.y += jumpCount == 0 ? firstJumpForce : secondJumpForce;
@@ -147,6 +168,7 @@ public class PlayerController : MonoBehaviour
 
                     jumpCount++;
                     jumpDelay = 0f;
+                    SoundManager.PlayClip(jumpSound, false);
                 }
             }
             else
@@ -160,13 +182,14 @@ public class PlayerController : MonoBehaviour
         if(inputValue.isPressed)
         {
             if (isSlide) {
-                OnSlideAnimationEnd();
+                SlideEnd();
             }
             if (!isAttack)
             {
                 Debug.Log("Attack");
                 isAttack = true;
                 StartAttack();
+                SoundManager.PlayClip(attackSound, false);
             }
             
 
@@ -209,6 +232,11 @@ public class PlayerController : MonoBehaviour
         currentHp += changeHp;
         currentHp = currentHp > maxHp? maxHp : currentHp;
         currentHp = currentHp < 0 ? 0 : currentHp;
+
+        //if(changeHp < 0)
+        //{
+        //    SoundManager.PlayClip(damageSound);
+        //}
         GameManager.Instance.UpdateHealth(currentHp);
     }
 
@@ -262,11 +290,12 @@ public class PlayerController : MonoBehaviour
         aniHandler.Slide();
     }
 
-    private void OnSlideAnimationEnd()
+    private void SlideEnd()
     {
         capsuleCollider.size = new Vector2(capsuleCollider.size.x, originalColliderSizeY);
         capsuleCollider.offset = new Vector2(capsuleCollider.offset.x, originalColliderOffsetY);
         isSlide = false;
+        aniHandler.EndSlide();
     }
 
     private void StartAttack()
@@ -293,10 +322,10 @@ public class PlayerController : MonoBehaviour
     public void StartInvincible(float? itemInvincibleTime)
     {
         // 무적 시작부분
-        if (isInvincible) return;
+        
         CancelInvoke("EndInvincible");
+        if (!isInvincible) aniHandler.StartInvincible();
         isInvincible = true;
-        aniHandler.StartInvincible();
         if (itemInvincibleTime == null)
             Invoke("EndInvincible", invincibleTime);
         else

@@ -28,6 +28,7 @@ public class MagnetArea : MonoBehaviour
             Rigidbody2D rigid = transform.AddComponent<Rigidbody2D>();
             rigid.isKinematic = true;
         }
+        StopAllCoroutines();
         StartCoroutine(EndMagnetArea(duration));
     }
 
