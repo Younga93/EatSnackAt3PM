@@ -73,6 +73,8 @@ public class PresetSpawnManager : MonoBehaviour
     [SerializeField] GameObject[] presets;
 
     private float nextPos = 15f;
+    [SerializeField] private int _curCount;
+    [SerializeField] private int _maxCount = 6;
 
     /// <summary>
     /// 오브젝트 풀을 초기화하는 함수
@@ -97,6 +99,9 @@ public class PresetSpawnManager : MonoBehaviour
         invincibleItemPool = new ObjectPool<InvincibleItem>(invincibleItemPrefab, 10, transform);
 
         ResetNextPos();
+
+        _curCount = 0;
+        _maxCount = 6;
     }
 
     /// <summary>
@@ -266,9 +271,12 @@ public class PresetSpawnManager : MonoBehaviour
     /// 랜덤한 배치 프리셋을 선택하고 이를 지정 위치에 생성하는 함수
     /// </summary>
     /// <param name="spawnPos">해당 배치 프리셋을 생성할 위치</param>
-    public void MakePreset(float x)
+    public void MakePreset(float x, int n = -1)
     {
-        int n = Random.Range(0, presets.Length); // 랜덤한 프리셋을 선택
+        // 만약 n을 지정하지 않으면 랜덤 값 사용
+        if (n == -1)
+            n = Random.Range(0, presets.Length); // 랜덤한 프리셋을 선택
+
         if (n < presets.Length) // 해당 프리셋이 실제로 존재하는 지 확인
         {
             GameObject go = new GameObject("[PRESET]");
@@ -291,7 +299,14 @@ public class PresetSpawnManager : MonoBehaviour
 
     public void MakeNextPos()
     {
-        MakePreset(nextPos);
+        ++_curCount;
+        if(_curCount >= _maxCount)
+        {
+            MakePreset(nextPos, 0);
+            _curCount = 0;
+        }
+        else
+            MakePreset(nextPos);
         nextPos += 25f;
     }
 
