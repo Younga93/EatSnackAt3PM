@@ -66,12 +66,15 @@ public class PlayerController : MonoBehaviour
     private AudioSource slideSource;
     //
 
-    AnimationHandler aniHandler;
-    Rigidbody2D rb;
-    CapsuleCollider2D capsuleCollider;
 
     // 틱 관련 변수
     float tick = 0f;
+
+    // 컴포넌트들 
+    AnimationHandler aniHandler;
+    Rigidbody2D rb;
+    CapsuleCollider2D capsuleCollider;
+    PlayerInput playerInput;
 
     private void Awake()
     {
@@ -80,9 +83,9 @@ public class PlayerController : MonoBehaviour
         capsuleCollider = GetComponent<CapsuleCollider2D>();
         jumpDelay = maxJumpDelay;
 
+        playerInput = GetComponent<PlayerInput>();
 
-        
-        
+
     }
 
 
@@ -236,21 +239,24 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void GetDamaged()
+    {
+        //if(changeHp < 0)
+        //{
+        //    SoundManager.PlayClip(damageSound);
+        //}
+    }
+
     /// <summary>
     /// 체력 처리 함수. 체력을 바꿉니다.
     /// </summary>
     /// <param name="changeHp"></param>
     public void ChangeHp(int changeHp)
     {
-        // 추후에 체력 변화치가 양수면 주변에 밝은 파티클이 돌아다녀도 괜찮을 것 같아요.
         currentHp += changeHp;
         currentHp = currentHp > maxHp? maxHp : currentHp;
         currentHp = currentHp < 0 ? 0 : currentHp;
 
-        //if(changeHp < 0)
-        //{
-        //    SoundManager.PlayClip(damageSound);
-        //}
         GameManager.Instance.UpdateHealth(currentHp);
     }
 
@@ -333,23 +339,28 @@ public class PlayerController : MonoBehaviour
         aniHandler.Damage();
     }
 
+    // 아이템 써서 무적 시작부분
     public void StartInvincible(float? itemInvincibleTime)
-    {
-        // 무적 시작부분
-        
+    {      
         CancelInvoke("EndInvincible");
         if (!isInvincible) aniHandler.StartInvincible();
         isInvincible = true;
-        if (itemInvincibleTime == null)
+        if( itemInvincibleTime == null)
+        {
+            playerInput.currentActionMap.Disable();
             Invoke("EndInvincible", invincibleTime);
+        }
         else
+        {
             Invoke("EndInvincible", (float)itemInvincibleTime);
+        }
     }
-    
+
     public void EndInvincible()
     {
         // 무적 끝나는 부분
         // Debug.Log("End Invincible");
+        playerInput.currentActionMap.Enable();
         isInvincible = false;
         aniHandler.EndInvincible();
     }
