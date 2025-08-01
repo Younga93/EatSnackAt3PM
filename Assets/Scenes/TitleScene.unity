@@ -313,6 +313,17 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1380395062 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8491271089923815422, guid: e0c928dea1005b14bac071b87e05a3c8, type: 3}
+  m_PrefabInstance: {fileID: 7222856688943786702}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1800250365 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2342829904663836125, guid: e0c928dea1005b14bac071b87e05a3c8, type: 3}
@@ -771,7 +782,7 @@ PrefabInstance:
     - target: {fileID: 4145739097689091429, guid: e0c928dea1005b14bac071b87e05a3c8, type: 3}
       propertyPath: exitButton
       value: 
-      objectReference: {fileID: 1341862856}
+      objectReference: {fileID: 1380395062}
     - target: {fileID: 4540664606664943054, guid: e0c928dea1005b14bac071b87e05a3c8, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -450
@@ -1008,6 +1019,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: cd3452e85966ac24ca85aa2bc3296958, type: 3}
+    - target: {fileID: 8131841329683571693, guid: e0c928dea1005b14bac071b87e05a3c8, type: 3}
+      propertyPath: m_Name
+      value: ExitButton
+      objectReference: {fileID: 0}
     - target: {fileID: 8132685767386152108, guid: e0c928dea1005b14bac071b87e05a3c8, type: 3}
       propertyPath: m_SizeDelta.x
       value: 652.4365
