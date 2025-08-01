@@ -76,16 +76,16 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         capsuleCollider = GetComponent<CapsuleCollider2D>();
         jumpDelay = maxJumpDelay;
+
+
+        
+        
     }
 
-    private void OnEnable()
-    {
-        slideAction.action.canceled += StopSliding;
-        slideAction.action.Enable();
-    }
 
     private void OnDisable()
     {
+        slideAction.action.started -= StartSliding;
         slideAction.action.canceled -= StopSliding;
         slideAction.action.Disable();
     }
@@ -102,6 +102,10 @@ public class PlayerController : MonoBehaviour
         slideColliderOffsetY = originalColliderOffsetY - 1.4f;
         SetHp(maxHp);
 
+        // 슬라이드 액션 설정
+        slideAction.action.started += StartSliding;
+        slideAction.action.canceled += StopSliding;
+        slideAction.action.Enable();
     }
 
 
@@ -113,9 +117,9 @@ public class PlayerController : MonoBehaviour
         velo.x = forwardSpeed;
         rb.velocity = velo;
 
-        if (slideAction.action.IsPressed()) StartSliding();
+        // if (slideAction.action.IsPressed()) StartSliding();
     }
-    public void StartSliding()
+    public void StartSliding(InputAction.CallbackContext context)
     {
         // Debug.Log("Slide");
         if (slideSource == null) slideSource = SoundManager.PlayClip(slideSound, true);
@@ -127,10 +131,10 @@ public class PlayerController : MonoBehaviour
 
     public void StopSliding(InputAction.CallbackContext context)
     {
-        // Debug.Log("Stop Slide");
+        Debug.Log("Stop Slide");
         isSlide = false;
         OnSlideAnimationEnd();
-        if(slideSource != null)
+        if (slideSource != null)
         {
             slideSource.gameObject.GetComponent<SoundSource>()?.Disable();
             slideSource = null;
@@ -154,7 +158,7 @@ public class PlayerController : MonoBehaviour
             {
                 if (jumpDelay >= maxJumpDelay)
                 {
-                    OnSlideAnimationEnd();
+                    SlideEnd();
 
                     Vector3 velocity = rb.velocity;
                     velocity.y += jumpCount == 0 ? firstJumpForce : secondJumpForce;
@@ -178,7 +182,7 @@ public class PlayerController : MonoBehaviour
         if(inputValue.isPressed)
         {
             if (isSlide) {
-                OnSlideAnimationEnd();
+                SlideEnd();
             }
             if (!isAttack)
             {
@@ -286,11 +290,12 @@ public class PlayerController : MonoBehaviour
         aniHandler.Slide();
     }
 
-    private void OnSlideAnimationEnd()
+    private void SlideEnd()
     {
         capsuleCollider.size = new Vector2(capsuleCollider.size.x, originalColliderSizeY);
         capsuleCollider.offset = new Vector2(capsuleCollider.offset.x, originalColliderOffsetY);
         isSlide = false;
+        aniHandler.EndSlide();
     }
 
     private void StartAttack()
@@ -317,10 +322,10 @@ public class PlayerController : MonoBehaviour
     public void StartInvincible(float? itemInvincibleTime)
     {
         // 무적 시작부분
-        if (isInvincible) return;
+        
         CancelInvoke("EndInvincible");
+        if (!isInvincible) aniHandler.StartInvincible();
         isInvincible = true;
-        aniHandler.StartInvincible();
         if (itemInvincibleTime == null)
             Invoke("EndInvincible", invincibleTime);
         else
