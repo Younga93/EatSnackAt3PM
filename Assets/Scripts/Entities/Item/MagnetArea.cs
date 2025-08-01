@@ -15,14 +15,15 @@ public class MagnetArea : MonoBehaviour
 
     private List<IAttractable> _attractableItems;
 
-    public void Init(float duration)
+    public void Init(float duration, PlayerController player)
     {
         _attractableItems = new List<IAttractable>();
         _circleCollider = GetComponent<CircleCollider2D>();
         //_circleCollider.radius = _radius;
         _duration = duration;
+        _playerController = player;
 
-        if(GetComponent<Rigidbody2D>() == null)
+        if (GetComponent<Rigidbody2D>() == null)
         {
             Rigidbody2D rigid = transform.AddComponent<Rigidbody2D>();
             rigid.isKinematic = true;
