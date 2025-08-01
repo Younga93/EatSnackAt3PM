@@ -10,6 +10,7 @@ public class BreakableObstacle : ObstacleBase
     public override void OnInteract(PlayerController player)
     {
         // TODO: 플레이어의 체력 감소 및 감속
+        if (player.IsInvincible) return;
         player.ChangeHp(-20); // 임시값
         player.CollideWithObstacle();
     }

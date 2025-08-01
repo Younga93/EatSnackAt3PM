@@ -21,12 +21,15 @@ public class AnimationHandler : MonoBehaviour
 
     private Rigidbody2D rb;
     private SpriteRenderer[] renderers;
+
+    private Color originalColor;
    
     private void Awake()
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         renderers = GetComponentsInChildren<SpriteRenderer>();
+        originalColor = renderers[0].color;
     }
     private void FixedUpdate()
     {
@@ -92,15 +95,14 @@ public class AnimationHandler : MonoBehaviour
         foreach(var renderer in renderers)
         {
             Color color = renderer.color;
-            renderer.color = new Color(color.r, color.g, color.b, invincibleAlpha);
+            renderer.color = new Color(color.r/2f, color.g / 2f, color.b / 2f, color.a);
         }
     }
     public void EndInvincible()
     {
         foreach (var renderer in renderers)
         {
-            Color color = renderer.color;
-            renderer.color = new Color(color.r, color.g, color.b, 1f);
+            renderer.color = originalColor;
         }
     }
 }
