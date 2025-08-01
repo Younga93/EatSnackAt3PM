@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
 
+    public bool isGodMode = false;
     public static GameManager Instance { get; private set; }
     //public GameState gameState { get; private set; } = GameState.Ready; //게임 상태 초기화 //필요없을듯
 
@@ -78,6 +79,10 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.UpdateHealthUI(currentHealth);
         if (currentHealth <= 0)
         {
+            if(isGodMode)
+            {
+                return;
+            }
             GameOver();
             return;
         }
