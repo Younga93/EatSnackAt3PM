@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using static UnityEditor.Progress;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     //public GameState gameState { get; private set; } = GameState.Ready; //게임 상태 초기화 //필요없을듯
 
+    public PlayerOutfitController PlayerOutfit { get; private set; }
     public int currentScore { get; private set; }   //현재 점수
     //public int bestScore { get; private set; }     //최고 점수
 
@@ -26,7 +28,10 @@ public class GameManager : MonoBehaviour
         }
 
         Instance = this;
+        OutfitItemData.InitializeData();
         DontDestroyOnLoad(gameObject);
+
+        PlayerOutfit = FindObjectOfType<PlayerOutfitController>();
 
         spawnManager = GetComponentInChildren<PresetSpawnManager>();
     }
@@ -57,6 +62,19 @@ public class GameManager : MonoBehaviour
         {
             PlayerPrefs.DeleteAll();
             Debug.Log("PlayerPrefs 삭제");
+        }
+        if(Input.GetKeyDown(KeyCode.UpArrow))   //의상 출력
+        {
+            Debug.Log("---------보유아이템---------");
+            foreach (OutfitItemBase item in OutfitItemData.userOutfitItems)
+            {
+                Debug.Log(item.Name + " 소지중");
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            PlayerOutfit.ChangeColorByTag(Color.red, "Hair");
+            //TryPurchaseOutfitItemById(2);
         }
     }
 
@@ -103,14 +121,19 @@ public class GameManager : MonoBehaviour
         {
             case "GameScene":
                 UIManager.Instance.ChangeState(UIState.Game);
+
                 spawnManager.ResetNextPos();
                 spawnManager.MakeNextPos();
                 spawnManager.MakeNextPos();
                 spawnManager.MakeNextPos();
+                ApplyEquippedOutfitItems();
                 Time.timeScale = 1f;
                 break;
             case "TitleScene":
                 UIManager.Instance.ChangeState(UIState.Title);
+                break;
+            case "StoreScene":
+                UIManager.Instance.ChangeState(UIState.Store);
                 break;
         }
         //if(scene.name == "GameScene")   //씬 종류 많아지면 switch로 변경
@@ -134,17 +157,47 @@ public class GameManager : MonoBehaviour
         }
 
         //재화 Score 쌓기
-        int points = PlayerPrefs.GetInt("Points", 0);
+        int points = PlayerPrefs.GetInt("Point", 0);
         points += currentScore;
-        PlayerPrefs.SetInt("Points", points);
+        PlayerPrefs.SetInt("Point", points);
         PlayerPrefs.Save();
 
         //테스트
-        Debug.Log("Points: " + PlayerPrefs.GetInt("Points", 0));
+        Debug.Log("Point: " + PlayerPrefs.GetInt("Point", 0));
         //테스트코드끝
 
         UIManager.Instance.ChangeState(UIState.GameOver);
         UIManager.Instance.UpdateGameOverUI(currentScore);
         UIManager.Instance.UpdateHealthUI(currentScore);
+    }
+
+    public bool TryPurchaseOutfitItemById(int id)
+    {
+        bool isSuccessful;
+        OutfitItemBase item = OutfitItemData.GetOutfitItemFromAllItemsById(id);
+        int playerPoints = PlayerPrefs.GetInt("Point", 0);
+        if (item != null && playerPoints >= item.Price)
+        {
+            PlayerPrefs.SetInt("Point", playerPoints - item.Price);
+            OutfitItemData.AddUserItemById(id); ///밥먹고 오면 이거 먼저 테스트하기
+            isSuccessful = true;
+        }
+        else
+        {
+            Debug.Log("아이템이 존재하지 않거나 금액이 부족합니다.");
+            isSuccessful = false;
+        }
+
+        return isSuccessful;
+    }
+
+    public void ApplyEquippedOutfitItems()
+    {
+        int[] equippedItemIds = OutfitItemData.GetEquippedOutfitItemIds();
+        foreach(int itemId in equippedItemIds)
+        {
+            OutfitItemData.GetOutfitItemFromUserItemsById(itemId);
+            //
+        }
     }
 }
