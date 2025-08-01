@@ -70,6 +70,9 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D rb;
     CapsuleCollider2D capsuleCollider;
 
+    // 틱 관련 변수
+    float tick = 0f;
+
     private void Awake()
     {
         aniHandler = GetComponent<AnimationHandler>();
@@ -106,6 +109,8 @@ public class PlayerController : MonoBehaviour
         slideAction.action.started += StartSliding;
         slideAction.action.canceled += StopSliding;
         slideAction.action.Enable();
+
+         
     }
 
 
@@ -116,6 +121,14 @@ public class PlayerController : MonoBehaviour
         Vector3 velo = rb.velocity;
         velo.x = forwardSpeed;
         rb.velocity = velo;
+
+        if(tick >= 1.0f)
+        {
+            // 1초에 한번씩 실행됨
+            ChangeHp(-1);
+            forwardSpeed += 0.1f;
+            tick = 0f;
+        }
 
         // if (slideAction.action.IsPressed()) StartSliding();
     }
@@ -147,6 +160,7 @@ public class PlayerController : MonoBehaviour
         {
             jumpDelay += Time.deltaTime;
         }
+        tick += Time.deltaTime;
     }
 
     void OnJump(InputValue inputValue)
