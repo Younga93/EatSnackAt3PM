@@ -74,7 +74,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnDisable()
     {
-        slideAction.action.performed -= StartSliding;
+        slideAction.action.started -= StartSliding;
         slideAction.action.canceled -= StopSliding;
         slideAction.action.Disable();
     }
@@ -92,7 +92,7 @@ public class PlayerController : MonoBehaviour
         SetHp(maxHp);
 
         // 슬라이드 액션 설정
-        slideAction.action.performed += StartSliding;
+        slideAction.action.started += StartSliding;
         slideAction.action.canceled += StopSliding;
         slideAction.action.Enable();
     }
