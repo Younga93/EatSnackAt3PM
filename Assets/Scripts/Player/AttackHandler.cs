@@ -5,10 +5,19 @@ using UnityEngine;
 public class AttackHandler : MonoBehaviour
 {
     PlayerController playerController;
+    private float offsetX;
 
-    private void Awake()
+    public void Init(PlayerController playerController)
     {
-        playerController = gameObject.GetComponentInParent<PlayerController>();
+        this.playerController = playerController;   
+        offsetX = transform.position.x - playerController.transform.position.x;
+    }
+
+    private void FixedUpdate()
+    {
+        Vector3 position = playerController.transform.position;
+        position.x += offsetX;
+        transform.position = position;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

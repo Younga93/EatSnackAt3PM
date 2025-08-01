@@ -7,6 +7,7 @@ public class MagnetArea : MonoBehaviour
 {
     [SerializeField] private float _radius;
     [SerializeField] private float _duration;
+    [SerializeField] private PlayerController _playerController;
 
     private CircleCollider2D _circleCollider;
 
@@ -37,6 +38,7 @@ public class MagnetArea : MonoBehaviour
 
     private void FixedUpdate()
     {
+        transform.position = _playerController.transform.position;
         foreach (IAttractable item in _attractableItems)
         {
             item.AttractedBy(transform.position);
