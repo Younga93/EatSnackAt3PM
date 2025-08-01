@@ -7,6 +7,7 @@ public class MagnetArea : MonoBehaviour
 {
     [SerializeField] private float _radius;
     [SerializeField] private float _duration;
+    [SerializeField] private PlayerController _playerController;
 
     private CircleCollider2D _circleCollider;
 
@@ -14,14 +15,15 @@ public class MagnetArea : MonoBehaviour
 
     private List<IAttractable> _attractableItems;
 
-    public void Init(float duration)
+    public void Init(float duration, PlayerController player)
     {
         _attractableItems = new List<IAttractable>();
         _circleCollider = GetComponent<CircleCollider2D>();
         //_circleCollider.radius = _radius;
         _duration = duration;
+        _playerController = player;
 
-        if(GetComponent<Rigidbody2D>() == null)
+        if (GetComponent<Rigidbody2D>() == null)
         {
             Rigidbody2D rigid = transform.AddComponent<Rigidbody2D>();
             rigid.isKinematic = true;
@@ -37,6 +39,7 @@ public class MagnetArea : MonoBehaviour
 
     private void FixedUpdate()
     {
+        transform.position = _playerController.transform.position;
         foreach (IAttractable item in _attractableItems)
         {
             item.AttractedBy(transform.position);

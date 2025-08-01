@@ -31,4 +31,10 @@ public class Preset : MonoBehaviour
         _spawnManager = null;
         Destroy(gameObject);
     }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireCube(transform.position + new Vector3(7.5f, 0, 0), new Vector3(15, 10, 1));
+    }
 }

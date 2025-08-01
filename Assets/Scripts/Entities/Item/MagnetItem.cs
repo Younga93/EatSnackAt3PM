@@ -8,9 +8,9 @@ public class MagnetItem : ItemBase
 
     public override void OnInteract(PlayerController player)
     {
-        MagnetArea area = player.GetComponentInChildren<MagnetArea>(true);
+        MagnetArea area = player.transform.parent.GetComponentInChildren<MagnetArea>(true);
         area.gameObject.SetActive(true);
-        area.Init(_duration);
+        area.Init(_duration, player);
 
         PresetSpawnManager.Instance.ReturnItem(this);
     }
