@@ -48,17 +48,10 @@ public class GameManager : MonoBehaviour
     //}
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))    //테스트용
+        if (Input.GetKeyDown(KeyCode.DownArrow))    //테스트용  //Prefs.Rest
         {
-            AddScore(10);
-        }
-        if (Input.GetKeyDown(KeyCode.UpArrow))    //테스트용
-        {
-            UpdateHealth(10);
-        }
-        if (Input.GetKeyDown(KeyCode.DownArrow))    //테스트용
-        {
-            UpdateHealth(0);
+            PlayerPrefs.DeleteAll();
+            Debug.Log("PlayerPrefs 삭제");
         }
     }
 
@@ -131,6 +124,17 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetInt("BestScore", currentScore);
             PlayerPrefs.Save();
         }
+
+        //재화 Score 쌓기
+        int points = PlayerPrefs.GetInt("Points", 0);
+        points += currentScore;
+        PlayerPrefs.SetInt("Points", points);
+        PlayerPrefs.Save();
+
+        //테스트
+        Debug.Log("Points: " + PlayerPrefs.GetInt("Points", 0));
+        //테스트코드끝
+
         UIManager.Instance.ChangeState(UIState.GameOver);
         UIManager.Instance.UpdateGameOverUI(currentScore);
         UIManager.Instance.UpdateHealthUI(currentScore);
