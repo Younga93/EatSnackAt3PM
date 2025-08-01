@@ -72,6 +72,8 @@ public class PresetSpawnManager : MonoBehaviour
     [Header("Preset")]
     [SerializeField] GameObject[] presets;
 
+    private float nextPos = 15f;
+
     /// <summary>
     /// 오브젝트 풀을 초기화하는 함수
     /// </summary>
@@ -93,6 +95,8 @@ public class PresetSpawnManager : MonoBehaviour
         speedUpItemPool = new ObjectPool<SpeedUpItem>(SpeedUpItemPrefab, 10, transform);
         magnetItemPool = new ObjectPool<MagnetItem>(magnetItemPrefab, 10, transform);
         invincibleItemPool = new ObjectPool<InvincibleItem>(invincibleItemPrefab, 10, transform);
+
+        ResetNextPos();
     }
 
     /// <summary>
@@ -280,14 +284,25 @@ public class PresetSpawnManager : MonoBehaviour
         }
     }
 
+    public void ResetNextPos()
+    {
+        nextPos = 15f;
+    }
+
+    public void MakeNextPos()
+    {
+        MakePreset(nextPos);
+        nextPos += 25f;
+    }
+
     private void Awake()
     {
         Init();
 #if UNITY_EDITOR
-        for (int i = 0; i < 10; i++)
-        {
-            MakePreset(i * 25);
-        }
+        //for (int i = 0; i < 10; i++)
+        //{
+        //    MakePreset(i * 25);
+        //}
 #endif
     }
 }
