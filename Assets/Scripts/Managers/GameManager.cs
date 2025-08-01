@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using static UnityEditor.Progress;
 
 public class GameManager : MonoBehaviour
 {
@@ -62,6 +63,18 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.DeleteAll();
             Debug.Log("PlayerPrefs 삭제");
         }
+        if(Input.GetKeyDown(KeyCode.UpArrow))   //의상 출력
+        {
+            Debug.Log("---------보유아이템---------");
+            foreach (OutfitItemBase item in OutfitItemData.userOutfitItems)
+            {
+                Debug.Log(item.Name + " 소지중");
+            }
+        }
+        //if(Input.GetKeyDown(KeyCode.LeftArrow))
+        //{
+        //    TryPurchaseOutfitItemById(2);
+        //}
     }
 
     private void InitScore()
@@ -155,5 +168,25 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.ChangeState(UIState.GameOver);
         UIManager.Instance.UpdateGameOverUI(currentScore);
         UIManager.Instance.UpdateHealthUI(currentScore);
+    }
+
+    public bool TryPurchaseOutfitItemById(int id)
+    {
+        bool isSuccessful;
+        OutfitItemBase item = OutfitItemData.GetOutfitItemById(id);
+        int playerPoints = PlayerPrefs.GetInt("Point", 0);
+        if (item != null && playerPoints >= item.Price)
+        {
+            PlayerPrefs.SetInt("Point", playerPoints - item.Price);
+            OutfitItemData.AddUserItemById(id); ///밥먹고 오면 이거 먼저 테스트하기
+            isSuccessful = true;
+        }
+        else
+        {
+            Debug.Log("아이템이 존재하지 않거나 금액이 부족합니다.");
+            isSuccessful = false;
+        }
+
+        return isSuccessful;
     }
 }

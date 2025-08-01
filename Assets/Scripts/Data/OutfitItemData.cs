@@ -36,7 +36,7 @@ public static class OutfitItemData  //게임 내 아웃핏 데이터
         }
         return item;
     }
-    public static void AddUserItem(int id)
+    public static void AddUserItemById(int id)
     {
         if(GetUserOutfitItemById(id) != null)
         {

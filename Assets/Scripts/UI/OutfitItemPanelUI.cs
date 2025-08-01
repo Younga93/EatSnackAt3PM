@@ -28,15 +28,13 @@ public class OutfitItemPanelUI : MonoBehaviour
         equipToggle.isOn = item.IsEquipped;
 
         purchaseButton.GetComponentInChildren<TextMeshProUGUI>(true).text = item.Price.ToString();
-        if (OutfitItemData.GetUserOutfitItemById(item.Id) == null)
+        if (OutfitItemData.GetUserOutfitItemById(item.Id) == null)  //안갖고 있음.
         {
-            equipToggle.gameObject.SetActive(false);
-            purchaseButton.gameObject.SetActive(true);
+            SwitchToggleAndPanel(false);
         }
         else
         {
-            equipToggle.gameObject.SetActive(true);
-            purchaseButton.gameObject.SetActive(false);
+            SwitchToggleAndPanel(true);
         }
     }
     void OnEquipToggleChanged(bool isOn)
@@ -45,8 +43,17 @@ public class OutfitItemPanelUI : MonoBehaviour
 
         Debug.Log($"{item.Name}이 장착되었나? {item.IsEquipped}");
     }
+    void SwitchToggleAndPanel(bool isOwned)
+    {
+        equipToggle.gameObject.SetActive(isOwned);
+        purchaseButton.gameObject.SetActive(!isOwned);
+    }
     void OnPurchaseButtonClicked()
     {
-
+        bool isSuccessful = GameManager.Instance.TryPurchaseOutfitItemById(item.Id);
+        if (isSuccessful)
+        {
+            SwitchToggleAndPanel(true);
+        }
     }
 }
