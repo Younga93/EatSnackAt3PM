@@ -286,7 +286,7 @@ public class PresetSpawnManager : MonoBehaviour
 #if UNITY_EDITOR
         for (int i = 0; i < 10; i++)
         {
-            MakePreset(i * 25);
+            MakePreset(i * 30);
         }
 #endif
     }

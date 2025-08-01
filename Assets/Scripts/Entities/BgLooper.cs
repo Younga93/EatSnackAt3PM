@@ -34,6 +34,10 @@ public class BgLooper : MonoBehaviour
             collision.transform.position = pos;
             return;
         }
+        if(collision.CompareTag("Preset"))
+        {
+            collision.GetComponent<Preset>().ReturnEveryObjects();
+        }
 
         ObstacleBase obstacle = collision.GetComponent<ObstacleBase>(); // 충돌한 객체가 ObstacleBase인지 확인 (임시 코드 수정 상태)
         //if (obstacle)

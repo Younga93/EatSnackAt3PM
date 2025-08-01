@@ -131,48 +131,6 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: door (topB)
-      rect:
-        serializedVersion: 2
-        x: 392
-        y: 276
-        width: 246
-        height: 480
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 3, y: 3, z: 1, w: 2}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b21ce8ac1fbc58542a8a641bb6b5703d
-      internalID: -1419526273
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: school_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 248
-        width: 1820
-        height: 776
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 081897160abda154b8786e283b0f3973
-      internalID: -621266916
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: background
       rect:
         serializedVersion: 2
