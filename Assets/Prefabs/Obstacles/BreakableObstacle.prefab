@@ -26,8 +26,8 @@ Transform:
   m_GameObject: {fileID: 2732136408738899346}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -4, z: 0}
-  m_LocalScale: {x: 10.24, y: 15.359999, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2507350025756994871}
@@ -73,11 +73,11 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 50
-  m_Sprite: {fileID: 21300000, guid: 1b3ac4e9b3deb3d438f98cacb789bfc1, type: 3}
-  m_Color: {r: 1, g: 0.2971698, b: 0.2971698, a: 1}
+  m_Sprite: {fileID: 21300000, guid: d5f4d66abcfc3a54e8731897a53e5a3e, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 2
+  m_DrawMode: 0
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
@@ -93,7 +93,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2507350025756994871}
-  - component: {fileID: 1765644285237725931}
+  - component: {fileID: 2004198011320640645}
   - component: {fileID: 751668914780710500}
   m_Layer: 0
   m_Name: BreakableObstacle
@@ -118,8 +118,8 @@ Transform:
   - {fileID: 913102627921789270}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &1765644285237725931
-BoxCollider2D:
+--- !u!70 &2004198011320640645
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -151,18 +151,8 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
+  m_Size: {x: 0.5, y: 1.5}
+  m_Direction: 0
 --- !u!114 &751668914780710500
 MonoBehaviour:
   m_ObjectHideFlags: 0
