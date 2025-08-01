@@ -18,4 +18,10 @@ public class AttackHandler : MonoBehaviour
             collision.gameObject.GetComponent<BreakableObstacle>()?.Break(playerController);
         }
     }
+
+    public void StopAttack()
+    {
+        gameObject.SetActive(false);
+        playerController.IsAttack = false;
+    }
 }

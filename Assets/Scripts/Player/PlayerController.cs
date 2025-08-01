@@ -44,6 +44,7 @@ public class PlayerController : MonoBehaviour
     AttackHandler attackHandler;
 
     bool isAttack = false;
+    public bool IsAttack { get => isAttack; set => isAttack = value; }
     //
 
     // 무적 관련 변수들
@@ -296,7 +297,7 @@ public class PlayerController : MonoBehaviour
         attackPivot.SetActive(true);
         Debug.Log("True");
         aniHandler.Attack();
-        Invoke("EndAttack", attackTime);
+        // Invoke("EndAttack", attackTime);
     }
 
     private void EndAttack()
