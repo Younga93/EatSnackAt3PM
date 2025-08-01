@@ -15,6 +15,9 @@ public class GameManager : MonoBehaviour
     public int currentScore { get; private set; }   //현재 점수
     //public int bestScore { get; private set; }     //최고 점수
 
+    private PresetSpawnManager spawnManager;
+    public PresetSpawnManager SpawnManager { get => spawnManager; }
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -26,7 +29,10 @@ public class GameManager : MonoBehaviour
         Instance = this;
         OutfitItemData.InitializeData();
         DontDestroyOnLoad(gameObject);
+
         PlayerOutfit = FindObjectOfType<PlayerOutfitController>();
+
+        spawnManager = GetComponentInChildren<PresetSpawnManager>();
     }
 
     //private void Start()
@@ -101,7 +107,12 @@ public class GameManager : MonoBehaviour
         {
             case "GameScene":
                 UIManager.Instance.ChangeState(UIState.Game);
-                //PresetSpawnManager.Instance.MakePreset(10);
+
+                spawnManager.ResetNextPos();
+                spawnManager.MakeNextPos();
+                spawnManager.MakeNextPos();
+                spawnManager.MakeNextPos();
+                
                 Time.timeScale = 1f;
                 break;
             case "TitleScene":

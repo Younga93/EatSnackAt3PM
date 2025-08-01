@@ -11,7 +11,8 @@ public class SpeedUpItem : ItemBase
     {
         // TODO: 플레이어 속도를 일시적으로 상승 시킴, 코루틴으로 구현할 듯?
         StartCoroutine(PlayerSpeedUpCoroutine(player));
-        PresetSpawnManager.Instance.ReturnItem(this);
+        transform.parent = null;
+        GetComponentInChildren<SpriteRenderer>().sprite = null;
     }
 
     // 매개변수로 플레이어 속도 조절 가능한 스크립트 받아옴
@@ -23,5 +24,6 @@ public class SpeedUpItem : ItemBase
         yield return new WaitForSeconds(_duration);
         // 속도 감소
         player.ChangeSpeed(-_speed); // TODO: 플레이어 이전 속도로 되돌리기
+        PresetSpawnManager.Instance.ReturnItem(this);
     }
 }
