@@ -21,14 +21,14 @@ public class OutfitItemPanelUI : MonoBehaviour
     }
     public void Setting(int id)
     {
-        item = OutfitItemData.GetOutfitItemById(id);
+        item = OutfitItemData.GetOutfitItemFromAllItemsById(id);
 
         itemName.text = item.Name;
         itemImage.sprite = Resources.Load<Sprite>(item.ImageFileName);
         equipToggle.isOn = item.IsEquipped;
 
         purchaseButton.GetComponentInChildren<TextMeshProUGUI>(true).text = item.Price.ToString();
-        if (OutfitItemData.GetUserOutfitItemById(item.Id) == null)  //안갖고 있음.
+        if (OutfitItemData.GetOutfitItemFromUserItemsById(item.Id) == null)  //안갖고 있음.
         {
             SwitchToggleAndPanel(false);
         }
@@ -41,7 +41,7 @@ public class OutfitItemPanelUI : MonoBehaviour
     {
         item.EquipOutfitItem(isOn);
 
-        Debug.Log($"{item.Name}이 장착되었나? {item.IsEquipped}");
+        Debug.Log($"{item.Name}이 장착되었냐?: {item.IsEquipped}");
     }
     void SwitchToggleAndPanel(bool isOwned)
     {

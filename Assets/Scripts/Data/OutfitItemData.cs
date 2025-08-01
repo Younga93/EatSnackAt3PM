@@ -15,11 +15,9 @@ public static class OutfitItemData  //게임 내 아웃핏 데이터
         allOutfitItems.Add(new ColorOutfitItem(2, "Hair Pin", 2000, "BlueHairPin", Color.blue, "HairPin"));
         allOutfitItems.Add(new ColorOutfitItem(3, "HandBand", 3000, "GreenHairBand", Color.green, "HandBand"));
         allOutfitItems.Add(new ColorOutfitItem(4, "Shoes", 4000, "RedShoes", Color.magenta, "Shoes"));
-
-        userOutfitItems.Add(allOutfitItems[0]);
     }
 
-    public static OutfitItemBase GetOutfitItemById(int id)
+    public static OutfitItemBase GetOutfitItemFromAllItemsById(int id)
     {
         OutfitItemBase item = allOutfitItems.FirstOrDefault(x => x.Id == id);
         if (item == null) {
@@ -27,7 +25,7 @@ public static class OutfitItemData  //게임 내 아웃핏 데이터
         }
         return item;
     }
-    public static OutfitItemBase? GetUserOutfitItemById(int id)
+    public static OutfitItemBase? GetOutfitItemFromUserItemsById(int id)
     {
         OutfitItemBase? item = userOutfitItems.FirstOrDefault(x => x.Id == id); 
         if (item == null)
@@ -38,17 +36,20 @@ public static class OutfitItemData  //게임 내 아웃핏 데이터
     }
     public static void AddUserItemById(int id)
     {
-        if(GetUserOutfitItemById(id) != null)
+        if(GetOutfitItemFromUserItemsById(id) != null)
         {
             Debug.LogWarning($"아이템 ID {id}는 유저가 이미 소지하고 있습니다.");
             return;
         }
-        userOutfitItems.Add(GetOutfitItemById(id));
+        userOutfitItems.Add(GetOutfitItemFromAllItemsById(id));
     }
-    public static List<OutfitItemBase>? GetEquippedOutfitItems()
+    public static int[] GetEquippedOutfitItemIds()
     {
-        List<OutfitItemBase> equippedOutfitItems;
-        equippedOutfitItems = userOutfitItems.Where(x => x.IsEquipped == true).ToList();
-        return equippedOutfitItems;
+        return userOutfitItems.Where(x => x.IsEquipped).Select(x => x.Id).ToArray();
     }
+    //public static bool IsEquippedItemById(int id)
+    //{
+    //    OutfitItemBase? item = GetOutfitItemFromUserItemsById(id);
+    //    return item.IsEquipped;
+    //}
 }

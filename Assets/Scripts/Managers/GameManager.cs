@@ -71,10 +71,11 @@ public class GameManager : MonoBehaviour
                 Debug.Log(item.Name + " 소지중");
             }
         }
-        //if(Input.GetKeyDown(KeyCode.LeftArrow))
-        //{
-        //    TryPurchaseOutfitItemById(2);
-        //}
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            PlayerOutfit.ChangeColorByTag(Color.red, "Hair");
+            //TryPurchaseOutfitItemById(2);
+        }
     }
 
     private void InitScore()
@@ -125,7 +126,7 @@ public class GameManager : MonoBehaviour
                 spawnManager.MakeNextPos();
                 spawnManager.MakeNextPos();
                 spawnManager.MakeNextPos();
-                
+                ApplyEquippedOutfitItems();
                 Time.timeScale = 1f;
                 break;
             case "TitleScene":
@@ -173,7 +174,7 @@ public class GameManager : MonoBehaviour
     public bool TryPurchaseOutfitItemById(int id)
     {
         bool isSuccessful;
-        OutfitItemBase item = OutfitItemData.GetOutfitItemById(id);
+        OutfitItemBase item = OutfitItemData.GetOutfitItemFromAllItemsById(id);
         int playerPoints = PlayerPrefs.GetInt("Point", 0);
         if (item != null && playerPoints >= item.Price)
         {
@@ -188,5 +189,15 @@ public class GameManager : MonoBehaviour
         }
 
         return isSuccessful;
+    }
+
+    public void ApplyEquippedOutfitItems()
+    {
+        int[] equippedItemIds = OutfitItemData.GetEquippedOutfitItemIds();
+        foreach(int itemId in equippedItemIds)
+        {
+            OutfitItemData.GetOutfitItemFromUserItemsById(itemId);
+            //
+        }
     }
 }

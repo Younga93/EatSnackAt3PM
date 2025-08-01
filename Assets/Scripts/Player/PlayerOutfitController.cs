@@ -16,8 +16,7 @@ public class PlayerOutfitController : MonoBehaviour
         hairpinRenderers = GetComponentsInChildren<SpriteRenderer>(true).Where(x => x.CompareTag("HairPin")).ToArray();
         handbandRenderers = GetComponentsInChildren<SpriteRenderer>(true).Where(x => x.CompareTag("HandBand")).ToArray();
         shoesRendererss = GetComponentsInChildren<SpriteRenderer>(true).Where(x => x.CompareTag("Shoes")).ToArray();
-
-        ChangeColor(Color.red, hairRenderers);
+        ChangeColorByTag(Color.red, "Hair");
     }
     public void ChangeColorByTag(Color color, string tagName)
     {
