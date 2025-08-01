@@ -271,6 +271,11 @@ public class PresetSpawnManager : MonoBehaviour
             go.transform.position = new Vector3(x,0,0);
             go.AddComponent<Preset>();
             go.GetComponent<Preset>().Init(this);
+            go.AddComponent<BoxCollider2D>();
+            go.GetComponent<BoxCollider2D>().isTrigger = true;
+            go.GetComponent<BoxCollider2D>().size = new Vector3(1, 3, 0);
+            go.GetComponent<BoxCollider2D>().offset = new Vector3(15, 0, 0);
+            go.tag = "Preset";
             PlaceObjects(presets[n], go.transform);
         }
     }
