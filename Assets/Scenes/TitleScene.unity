@@ -261,7 +261,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.9843138, g: 0.92549026, b: 0.8470589, a: 0}
+  m_BackGroundColor: {r: 0.3372549, g: 0.6, b: 0.69411767, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -842,14 +842,14 @@ PrefabInstance:
     - target: {fileID: 7781640910370416802, guid: e0c928dea1005b14bac071b87e05a3c8, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: fcf5b6a70f488f24993736fa24549cf4, type: 3}
+      objectReference: {fileID: 21300000, guid: cd3452e85966ac24ca85aa2bc3296958, type: 3}
     - target: {fileID: 8132685767386152108, guid: e0c928dea1005b14bac071b87e05a3c8, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 744
+      value: 652.4365
       objectReference: {fileID: 0}
     - target: {fileID: 8132685767386152108, guid: e0c928dea1005b14bac071b87e05a3c8, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 307
+      value: 364.4044
       objectReference: {fileID: 0}
     - target: {fileID: 8132685767386152108, guid: e0c928dea1005b14bac071b87e05a3c8, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -857,7 +857,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8132685767386152108, guid: e0c928dea1005b14bac071b87e05a3c8, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -95
+      value: -74
       objectReference: {fileID: 0}
     - target: {fileID: 8563992315614021621, guid: e0c928dea1005b14bac071b87e05a3c8, type: 3}
       propertyPath: m_fontSize
