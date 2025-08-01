@@ -56,13 +56,13 @@ public class PlayerController : MonoBehaviour
 
     AnimationHandler aniHandler;
     Rigidbody2D rb;
-    BoxCollider2D boxCollider;
+    CapsuleCollider2D capsuleCollider;
 
     private void Awake()
     {
         aniHandler = GetComponent<AnimationHandler>();
         rb = GetComponent<Rigidbody2D>();
-        boxCollider = GetComponent<BoxCollider2D>();
+        capsuleCollider = GetComponent<CapsuleCollider2D>();
         jumpDelay = maxJumpDelay;
     }
 
@@ -83,8 +83,8 @@ public class PlayerController : MonoBehaviour
         attackHandler = attackPivot.GetComponent<AttackHandler>();
 
         // 슬라이드 시 콜라이더 크기 변경을 위해 저장됨
-        originalColliderSizeY = boxCollider.size.y;
-        originalColliderOffsetY = boxCollider.offset.y;
+        originalColliderSizeY = capsuleCollider.size.y;
+        originalColliderOffsetY = capsuleCollider.offset.y;
         slideColliderSizeY = originalColliderSizeY / 2f;
         slideColliderOffsetY = originalColliderOffsetY - 1.4f;
         SetHp(maxHp);
@@ -255,15 +255,15 @@ public class PlayerController : MonoBehaviour
         }
         if (isAttack) isAttack = false;
 
-        boxCollider.size = new Vector2(boxCollider.size.x, slideColliderSizeY);
-        boxCollider.offset = new Vector2(boxCollider.offset.x, slideColliderOffsetY);
+        capsuleCollider.size = new Vector2(capsuleCollider.size.x, slideColliderSizeY);
+        capsuleCollider.offset = new Vector2(capsuleCollider.offset.x, slideColliderOffsetY);
         aniHandler.Slide();
     }
 
     private void OnSlideAnimationEnd()
     {
-        boxCollider.size = new Vector2(boxCollider.size.x, originalColliderSizeY);
-        boxCollider.offset = new Vector2(boxCollider.offset.x, originalColliderOffsetY);
+        capsuleCollider.size = new Vector2(capsuleCollider.size.x, originalColliderSizeY);
+        capsuleCollider.offset = new Vector2(capsuleCollider.offset.x, originalColliderOffsetY);
         isSlide = false;
     }
 
