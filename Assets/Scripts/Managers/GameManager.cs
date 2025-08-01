@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     //public GameState gameState { get; private set; } = GameState.Ready; //게임 상태 초기화 //필요없을듯
 
+    public PlayerController Player { get; private set; }
     public int currentScore { get; private set; }   //현재 점수
     //public int bestScore { get; private set; }     //최고 점수
 
@@ -23,7 +24,9 @@ public class GameManager : MonoBehaviour
         }
 
         Instance = this;
+        OutfitItemData.InitializeData();
         DontDestroyOnLoad(gameObject);
+        Player = FindObjectOfType<PlayerController>();
     }
 
     //private void Start()

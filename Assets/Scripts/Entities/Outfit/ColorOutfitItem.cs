@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class ColorOutfitItem : OutfitItemBase
 {
+    public readonly Color outfitColor;
 
-
-    public ColorOutfitItem(int id, string name, string imageFileName) : base(id, name, imageFileName)
+    public ColorOutfitItem(int id, string name, int price, string imageFileName, Color color) : base(id, name, price, imageFileName)
     {
+        outfitColor = color;
     }
-    public override void EquipOutfitItem(PlayerController player)
+
+    public override void ApplyOutfitItem(PlayerController player)
     {
-        //To do: 장착 시 플레이어에게 적용할 것.
+        throw new System.NotImplementedException();
     }
 }

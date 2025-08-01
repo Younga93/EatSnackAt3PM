@@ -4,17 +4,23 @@ using UnityEngine;
 
 public abstract class OutfitItemBase
 {
-    private int id;
-    private string name;
-    private string imageFileName;
-    private bool isEquipped;
+    public int Id { get; private set; }
+    public string Name { get; private set; }
+    public int Price { get; private set; }
+    public string ImageFileName { get; private set; }
+    public bool IsEquipped { get; private set; }
 
-    public OutfitItemBase(int id, string name, string imageFileName, bool isEquipped = false)
+    public OutfitItemBase(int id, string name, int price, string imageFileName, bool isEquipped = false)
     {
-        this.id = id;
-        this.name = name;
-        this.imageFileName = imageFileName;
-        this.isEquipped = isEquipped;
+        this.Id = id;
+        this.Name = name;
+        this.Price = price;
+        this.ImageFileName = imageFileName;
+        this.IsEquipped = isEquipped;
     }
-    public abstract void EquipOutfitItem(PlayerController player);
+    public void EquipOutfitItem(bool isEquipped)
+    {
+        this.IsEquipped = isEquipped;
+    }
+    public abstract void ApplyOutfitItem(PlayerController player);
 }

@@ -4,11 +4,28 @@ using UnityEngine;
 
 public class ParticleOutfitItem : OutfitItemBase
 {
-    public ParticleOutfitItem(int id, string name, string imageFileName) : base(id, name, imageFileName)
+    private GameObject particleInstance;
+    public ParticleOutfitItem(int id, string name, int price, string imageFileName) : base(id, name, price, imageFileName)
     {
     }
-    public override void EquipOutfitItem(PlayerController player)
+    public override void ApplyOutfitItem(PlayerController player)
     {
-        //To do: 장착 시 플레이어에게 적용할 것.
+        if (particleInstance != null) return; // 이미 생성되어 있으면 패스
+
+        particleInstance = new GameObject($"Particle_{Name}");
+        particleInstance.transform.SetParent(player.transform);
+        particleInstance.transform.localPosition = Vector3.zero;
+
+        ParticleSystem ps = particleInstance.AddComponent<ParticleSystem>();
+        ps.Play();
+
+    }
+    public void UnEquipOutfitItem(PlayerController player)
+    {
+        if (particleInstance != null)
+        {
+            GameObject.Destroy(particleInstance);
+            particleInstance = null;
+        }
     }
 }
