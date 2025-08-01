@@ -51,6 +51,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float invincibleTime;
 
     bool isInvincible = false;
+    public bool IsInvincible { get { return isInvincible; } } 
     //
 
     AnimationHandler aniHandler;
