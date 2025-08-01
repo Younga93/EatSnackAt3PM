@@ -9,6 +9,10 @@ TagManager:
   - Enemy
   - Item
   - Preset
+  - Hair
+  - Shoes
+  - HairPin
+  - HandBand
   layers:
   - Default
   - TransparentFX

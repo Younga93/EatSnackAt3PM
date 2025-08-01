@@ -11,10 +11,10 @@ public static class OutfitItemData  //게임 내 아웃핏 데이터
     public static void InitializeData()
     {
         allOutfitItems.Clear();
-        allOutfitItems.Add(new ColorOutfitItem(1, "red", 1111, "dummy", Color.red));
-        allOutfitItems.Add(new ColorOutfitItem(2, "yellow", 2222, "dummy", Color.yellow));
-        allOutfitItems.Add(new ParticleOutfitItem(3, "3333", 3333, "dummy"));
-        allOutfitItems.Add(new ParticleOutfitItem(4, "4444", 4444, "dummy"));
+        allOutfitItems.Add(new ColorOutfitItem(1, "Red Hair", 1000, "RedHair", Color.red, "Hair"));
+        allOutfitItems.Add(new ColorOutfitItem(2, "Hair Pin", 2000, "BlueHairPin", Color.blue, "HairPin"));
+        allOutfitItems.Add(new ColorOutfitItem(3, "HandBand", 3000, "GreenHairBand", Color.green, "HandBand"));
+        allOutfitItems.Add(new ColorOutfitItem(4, "Shoes", 4000, "RedShoes", Color.magenta, "Shoes"));
 
         userOutfitItems.Add(allOutfitItems[0]);
     }
@@ -44,5 +44,11 @@ public static class OutfitItemData  //게임 내 아웃핏 데이터
             return;
         }
         userOutfitItems.Add(GetOutfitItemById(id));
+    }
+    public static List<OutfitItemBase>? GetEquippedOutfitItems()
+    {
+        List<OutfitItemBase> equippedOutfitItems;
+        equippedOutfitItems = userOutfitItems.Where(x => x.IsEquipped == true).ToList();
+        return equippedOutfitItems;
     }
 }

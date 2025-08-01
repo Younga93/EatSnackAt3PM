@@ -5446,7 +5446,7 @@ GameObject:
   - component: {fileID: 5018047268007061576}
   m_Layer: 0
   m_Name: Shoes_Default_L01_Hisa
-  m_TagString: Untagged
+  m_TagString: Shoes
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5637,7 +5637,7 @@ GameObject:
   - component: {fileID: 7810021482277664200}
   m_Layer: 0
   m_Name: Hairpin_Hisa
-  m_TagString: Untagged
+  m_TagString: HairPin
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5752,7 +5752,7 @@ GameObject:
   - component: {fileID: 8489342389370593772}
   m_Layer: 0
   m_Name: Shoes_Default_L01_Hisa
-  m_TagString: Untagged
+  m_TagString: Shoes
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5867,7 +5867,7 @@ GameObject:
   - component: {fileID: 4357644609217439190}
   m_Layer: 0
   m_Name: FrontHair_Default_Hisa
-  m_TagString: Untagged
+  m_TagString: Hair
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6262,7 +6262,7 @@ GameObject:
   - component: {fileID: 2285532765186201556}
   m_Layer: 0
   m_Name: RBackHair_Default_Hisa
-  m_TagString: Untagged
+  m_TagString: Hair
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6635,7 +6635,7 @@ GameObject:
   - component: {fileID: 8581904359886517954}
   m_Layer: 0
   m_Name: Handband_Hisa
-  m_TagString: Untagged
+  m_TagString: HandBand
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7515,7 +7515,7 @@ GameObject:
   - component: {fileID: 3988841935202406095}
   m_Layer: 0
   m_Name: LBackHair_Default_Hisa
-  m_TagString: Untagged
+  m_TagString: Hair
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
