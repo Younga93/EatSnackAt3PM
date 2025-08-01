@@ -11,7 +11,8 @@ public enum UIState
     GameOver,
     InputSetting,
     SystemMessage,
-    Loading
+    Loading,
+    Store
 }
 
 public class UIManager : MonoBehaviour
@@ -19,6 +20,7 @@ public class UIManager : MonoBehaviour
     //씬 UI  //서로 스위치 되는 UI들
     TitleUI titleUI;
     GameUI gameUI;
+    StoreUI storeUI;
     
     GameOverUI gameOverUI;
     InputSettingUI inputSettingUI;
@@ -51,7 +53,10 @@ public class UIManager : MonoBehaviour
             //SetPlayGame();
             gameUI.Init();
         }
-            
+        storeUI = GetComponentInChildren<StoreUI>(true);
+        if (storeUI != null)
+            storeUI.Init();
+
         gameOverUI = GetComponentInChildren<GameOverUI>(true);
         if(gameOverUI != null)
             gameOverUI.Init();
@@ -79,6 +84,9 @@ public class UIManager : MonoBehaviour
                 break;
             case "GameScene":
                 ChangeState(UIState.Game);
+                break;
+            case "StoreScene":
+                ChangeState(UIState.Store);
                 break;
         }
     }
@@ -122,21 +130,6 @@ public class UIManager : MonoBehaviour
         gameOverUI.UpdateCurrentScoreText(currentScore);
     }
 
-    public void SetPlayGame()
-    {
-        ChangeState(UIState.Game);
-    }
-
-    public void SetGameOver()
-    {
-        ChangeState(UIState.GameOver);
-    }
-    public void ShowInputSettingPanel()
-    {
-        if (inputSettingUI != null)
-            inputSettingUI.SetActive(UIState.InputSetting);
-    }
-
     //일부러 패널은 다른 UI들이랑 겹쳐서 보일 수 있도록 메소드를 따로 뻈습니다.
     //(메인 게임 씬에 설정이 있다거나 했을 때, 되돌아갈 State 구분 안하고 그냥 패널만 꺼도 되도록
     public void ShowSystemMessagePanel(string message, bool isWaitingCloseButton)
@@ -177,6 +170,8 @@ public class UIManager : MonoBehaviour
             inputSettingUI.SetActive(currentState);
         if (loadingUI != null)
             loadingUI.SetActive(currentState);
+        if (storeUI != null)
+            storeUI.SetActive(currentState);
     }
 }
 

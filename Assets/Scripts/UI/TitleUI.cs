@@ -27,6 +27,7 @@ public class TitleUI : BaseUI
     public void OnClickStoreButton()
     {
         //To do: store 씬 진입 연결
+        GameManager.Instance.LoadSceneWithCallback("StoreScene");
         Debug.Log("Store 진입하기");
     }
     // 설정버튼 누를시(연동필요)

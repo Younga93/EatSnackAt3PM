@@ -104,6 +104,9 @@ public class GameManager : MonoBehaviour
             case "TitleScene":
                 UIManager.Instance.ChangeState(UIState.Title);
                 break;
+            case "StoreScene":
+                UIManager.Instance.ChangeState(UIState.Store);
+                break;
         }
         //if(scene.name == "GameScene")   //씬 종류 많아지면 switch로 변경
         //{
@@ -126,13 +129,13 @@ public class GameManager : MonoBehaviour
         }
 
         //재화 Score 쌓기
-        int points = PlayerPrefs.GetInt("Points", 0);
+        int points = PlayerPrefs.GetInt("Point", 0);
         points += currentScore;
-        PlayerPrefs.SetInt("Points", points);
+        PlayerPrefs.SetInt("Point", points);
         PlayerPrefs.Save();
 
         //테스트
-        Debug.Log("Points: " + PlayerPrefs.GetInt("Points", 0));
+        Debug.Log("Point: " + PlayerPrefs.GetInt("Point", 0));
         //테스트코드끝
 
         UIManager.Instance.ChangeState(UIState.GameOver);
