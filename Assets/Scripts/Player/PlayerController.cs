@@ -65,16 +65,16 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         capsuleCollider = GetComponent<CapsuleCollider2D>();
         jumpDelay = maxJumpDelay;
+
+
+        
+        
     }
 
-    private void OnEnable()
-    {
-        slideAction.action.canceled += StopSliding;
-        slideAction.action.Enable();
-    }
 
     private void OnDisable()
     {
+        slideAction.action.performed -= StartSliding;
         slideAction.action.canceled -= StopSliding;
         slideAction.action.Disable();
     }
@@ -91,6 +91,10 @@ public class PlayerController : MonoBehaviour
         slideColliderOffsetY = originalColliderOffsetY - 1.4f;
         SetHp(maxHp);
 
+        // 슬라이드 액션 설정
+        slideAction.action.performed += StartSliding;
+        slideAction.action.canceled += StopSliding;
+        slideAction.action.Enable();
     }
 
 
@@ -102,9 +106,9 @@ public class PlayerController : MonoBehaviour
         velo.x = forwardSpeed;
         rb.velocity = velo;
 
-        if (slideAction.action.IsPressed()) StartSliding();
+        // if (slideAction.action.IsPressed()) StartSliding();
     }
-    public void StartSliding()
+    public void StartSliding(InputAction.CallbackContext context)
     {
         // Debug.Log("Slide");
         isSlide = true;
@@ -115,9 +119,9 @@ public class PlayerController : MonoBehaviour
 
     public void StopSliding(InputAction.CallbackContext context)
     {
-        // Debug.Log("Stop Slide");
+        Debug.Log("Stop Slide");
         isSlide = false;
-        OnSlideAnimationEnd();
+        SlideEnd();
     }
 
     void Tick()
@@ -137,7 +141,7 @@ public class PlayerController : MonoBehaviour
             {
                 if (jumpDelay >= maxJumpDelay)
                 {
-                    OnSlideAnimationEnd();
+                    SlideEnd();
 
                     Vector3 velocity = rb.velocity;
                     velocity.y += jumpCount == 0 ? firstJumpForce : secondJumpForce;
@@ -160,7 +164,7 @@ public class PlayerController : MonoBehaviour
         if(inputValue.isPressed)
         {
             if (isSlide) {
-                OnSlideAnimationEnd();
+                SlideEnd();
             }
             if (!isAttack)
             {
@@ -262,11 +266,12 @@ public class PlayerController : MonoBehaviour
         aniHandler.Slide();
     }
 
-    private void OnSlideAnimationEnd()
+    private void SlideEnd()
     {
         capsuleCollider.size = new Vector2(capsuleCollider.size.x, originalColliderSizeY);
         capsuleCollider.offset = new Vector2(capsuleCollider.offset.x, originalColliderOffsetY);
         isSlide = false;
+        aniHandler.EndSlide();
     }
 
     private void StartAttack()
