@@ -1470,6 +1470,10 @@ MonoBehaviour:
   attackTime: 0.5
   attackPivot: {fileID: 7132316939497757844}
   invincibleTime: 0
+  jumpSound: {fileID: 8300000, guid: b443d4d87ceb94646921c7643ff0da94, type: 3}
+  slideSound: {fileID: 8300000, guid: 2676fd7079fd9244798db2d4d3b9caad, type: 3}
+  attackSound: {fileID: 8300000, guid: 7fe882ebbff365d42b321160a5776237, type: 3}
+  damageSound: {fileID: 0}
 --- !u!50 &4637146442215379257
 Rigidbody2D:
   serializedVersion: 4

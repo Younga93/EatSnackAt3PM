@@ -51,7 +51,18 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float invincibleTime;
 
     bool isInvincible = false;
-    public bool IsInvincible { get { return isInvincible; } } 
+    public bool IsInvincible { get { return isInvincible; } }
+    //
+
+    // 효과음 관련 변수들
+    [Header("Sound Settings")]
+    [SerializeField] AudioClip jumpSound;
+    [SerializeField] AudioClip slideSound;
+    [SerializeField] AudioClip attackSound;
+    // TODO : 데미지 받으면 재생되는 사운드 추가
+    //[SerializeField] AudioClip damageSound;
+
+    private AudioSource slideSource;
     //
 
     AnimationHandler aniHandler;
@@ -105,6 +116,7 @@ public class PlayerController : MonoBehaviour
     public void StartSliding()
     {
         // Debug.Log("Slide");
+        if (slideSource == null) slideSource = SoundManager.PlayClip(slideSound, true);
         isSlide = true;
         StartSlide();
         jumpCount = 0;
@@ -116,6 +128,11 @@ public class PlayerController : MonoBehaviour
         // Debug.Log("Stop Slide");
         isSlide = false;
         OnSlideAnimationEnd();
+        if(slideSource != null)
+        {
+            slideSource.gameObject.GetComponent<SoundSource>()?.Disable();
+            slideSource = null;
+        }
     }
 
     void Tick()
@@ -145,6 +162,7 @@ public class PlayerController : MonoBehaviour
 
                     jumpCount++;
                     jumpDelay = 0f;
+                    SoundManager.PlayClip(jumpSound, false);
                 }
             }
             else
@@ -165,6 +183,7 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("Attack");
                 isAttack = true;
                 StartAttack();
+                SoundManager.PlayClip(attackSound, false);
             }
             
 
@@ -207,6 +226,11 @@ public class PlayerController : MonoBehaviour
         currentHp += changeHp;
         currentHp = currentHp > maxHp? maxHp : currentHp;
         currentHp = currentHp < 0 ? 0 : currentHp;
+
+        //if(changeHp < 0)
+        //{
+        //    SoundManager.PlayClip(damageSound);
+        //}
         GameManager.Instance.UpdateHealth(currentHp);
     }
 
