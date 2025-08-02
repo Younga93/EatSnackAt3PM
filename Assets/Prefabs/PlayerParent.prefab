@@ -331,6 +331,7 @@ MonoBehaviour:
     m_Extent: {x: 0.3775901, y: 0.43630505, z: 0}
   m_AlwaysUpdate: 1
   m_AutoRebind: 0
+--- !u!1 &314685025518615963
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -133,7 +133,7 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log("Stop Slide");
         isSlide = false;
-        OnSlideAnimationEnd();
+        SlideEnd();
         if (slideSource != null)
         {
             slideSource.gameObject.GetComponent<SoundSource>()?.Disable();
