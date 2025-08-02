@@ -38,6 +38,7 @@ public class GameOverUI : BaseUI
     // 재시작 버튼 누를시
     public void OnClickRestartButton()
     {
+        SoundManager.instance.ButtonSound();
         Debug.Log("Restart 버튼 눌림");
         UIManager.Instance.ChangeState(UIState.Game);
         GameManager.Instance.InitGame();
@@ -47,6 +48,7 @@ public class GameOverUI : BaseUI
     // 타이틀 버튼 누를시
     public void OnClickTitleButton()
     {
+        SoundManager.instance.ButtonSound();
         Debug.Log("TitleScene 버튼 눌림");
         GameManager.Instance.LoadSceneWithCallback("TitleScene");
         //Debug.Log("타이틀로");  //테스트용

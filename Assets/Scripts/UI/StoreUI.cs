@@ -26,6 +26,7 @@ public class StoreUI : BaseUI
     }
     public void OnClickExitButton()
     {
+        SoundManager.instance.ButtonSound();
         GameManager.Instance.LoadSceneWithCallback("TitleScene");
     }
 }

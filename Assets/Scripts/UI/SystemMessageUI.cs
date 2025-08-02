@@ -17,6 +17,7 @@ public class SystemMessageUI : BaseUI
     }
     public void OnCloseButtonClicked()
     {
+        SoundManager.instance.ButtonSound();
         this.gameObject.SetActive(false);
         Debug.Log("끔?");
     }

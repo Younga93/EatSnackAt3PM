@@ -19,6 +19,8 @@ public class InputSettingUI : BaseUI
     [SerializeField] private Button attackButton;
     [SerializeField] private Button resetButton;
     [SerializeField] private Button closeButton;
+    [SerializeField] private Slider bgmSlider;
+    [SerializeField] private Slider sfxSlider;
 
     private void Start()
     {
@@ -30,6 +32,7 @@ public class InputSettingUI : BaseUI
         }
         keyValuePairs = InputManager.Instance.GetCurrentBindingDictionary();
         UpdateButtons();
+        UpdateSliders();
 
         //this.gameObject.SetActive(false);
     }
@@ -40,6 +43,21 @@ public class InputSettingUI : BaseUI
         ChangeButtonText(slideButton, keyValuePairs["Slide"]);
         ChangeButtonText(attackButton, keyValuePairs["Attack"]);
     }
+
+    /// <summary>
+    /// Bgm / Sfx 슬라이더 값 초기 설정
+    /// </summary>
+    private void UpdateSliders()
+    {
+        bgmSlider.value = PlayerPrefs.HasKey("BgmVolume")
+            ? PlayerPrefs.GetFloat("BgmVolume")
+            : 1.0f;
+
+        sfxSlider.value = PlayerPrefs.HasKey("SfxVolume")
+            ? PlayerPrefs.GetFloat("SfxVolume")
+            : 1.0f;
+    }
+
     public void OnChangeJumpKeyButtonClicked()
     {
         InputManager.Instance.StartNewKeyBinding("Jump", 0, newKey =>
@@ -86,10 +104,12 @@ public class InputSettingUI : BaseUI
     {
         InputManager.Instance.ResetBinding();
         UpdateButtons();
+        SoundManager.instance.ButtonSound();
     }
     public void OnCloseButtonClicked()
     {
         UIManager.Instance.ChangeState(UIState.Title);
+        SoundManager.instance.ButtonSound();
     }
 
     public void ChangeButtonText(Button button, string keyText)
@@ -100,6 +120,8 @@ public class InputSettingUI : BaseUI
         }
         button.GetComponentInChildren<TextMeshProUGUI>().text = keyText;
     }
+    
+
 
     protected override UIState GetUIState()
     {

@@ -21,24 +21,28 @@ public class TitleUI : BaseUI
     // 시작버튼 누를시(연동필요)
     public void OnClickStartButton()
     {
+        SoundManager.instance.ButtonSound();
         GameManager.Instance.InitGame();
     }
 
     public void OnClickStoreButton()
     {
         //To do: store 씬 진입 연결
+        SoundManager.instance.ButtonSound();
         GameManager.Instance.LoadSceneWithCallback("StoreScene");
         Debug.Log("Store 진입하기");
     }
     // 설정버튼 누를시(연동필요)
     public void OnClickSettingButton()
     {
+        SoundManager.instance.ButtonSound();
         UIManager.Instance.ChangeState(UIState.InputSetting);
     }
 
     // 나가기버튼 누를시(연동필요)
     public void OnClickExitButton()
     {
+        SoundManager.instance.ButtonSound();
         Debug.Log("나가기");
     }
 
