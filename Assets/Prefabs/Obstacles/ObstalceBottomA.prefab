@@ -176,3 +176,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obstacleType: 2
+  damagedClip: {fileID: 8300000, guid: 83e1a8bd5e2012b4e88e755187d773ab, type: 3}

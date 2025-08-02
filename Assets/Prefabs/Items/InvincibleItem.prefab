@@ -83,6 +83,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemType: 5
   _duration: 5
+  invincibleClip: {fileID: 8300000, guid: e7f8000b8aa759c46bc57984642c66b2, type: 3}
 --- !u!1 &6736718580591477598
 GameObject:
   m_ObjectHideFlags: 0

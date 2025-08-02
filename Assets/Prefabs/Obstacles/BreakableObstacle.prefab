@@ -176,5 +176,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obstacleType: 4
+  damagedClip: {fileID: 8300000, guid: 83e1a8bd5e2012b4e88e755187d773ab, type: 3}
   _energyRecoveryAmount: 20
   _score: 1000
+  breakClip: {fileID: 8300000, guid: 1e2ed821550bc62428e76fcc7fce34f8, type: 3}

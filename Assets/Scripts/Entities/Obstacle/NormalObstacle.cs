@@ -10,5 +10,6 @@ public class NormalObstacle : ObstacleBase
         if (player.IsInvincible) return;
         player.ChangeHp(-20); // 임시값
         player.CollideWithObstacle();
+        SoundManager.PlayClip(damagedClip, false);
     }
 }

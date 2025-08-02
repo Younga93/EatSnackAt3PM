@@ -132,6 +132,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemType: 1
   _score: 100
+  coinClip: {fileID: 8300000, guid: e42dc6c3c70346c4e9bdd0c6069fb98d, type: 3}
 --- !u!58 &6669618022584217481
 CircleCollider2D:
   m_ObjectHideFlags: 0
