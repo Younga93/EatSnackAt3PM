@@ -8,7 +8,7 @@
 </p> -->
 
 ## 프로젝트 소개
-
+![MainImage]
 ## 팀 구성 및 역할
 
 | 이름 | 역할 | 담당 업무 |
@@ -52,6 +52,14 @@
 
 ## 시스템 구성도
 
+### 와이어프레임
+![Wireframe]
+</br>
+
+### 다이어그램
+![Diagram]
+</br>
+
 ## 구현 기능
 
 ### 필수 기능
@@ -92,5 +100,5 @@ MIT &copy; [NoHack](mailto:lbjp114@gmail.com)
 [WireFrame]: /Images/WireFrame.png
 [BrainStorming]: /Images/BrainStorming.png
 [Diagram]: /Images/Diagram.png
-[MainImage]: /Images/MainImage.png
+[MainImage]: /Images/MainImage.PNG
 
