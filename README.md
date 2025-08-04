@@ -19,19 +19,34 @@
 | 김남진 | 팀원 | 장애물, 아이템 |
 | 김남진 | 팀원 | 기획, QA |
 
-## 프로젝트 일정
+## 📆 프로젝트 일정
 
-| 이름 | 담당 역할 |
-| --- | --- |
-| 1 | 2 |
-| 4 | 5 |
-| 7 | 8 |
+2025.07.29 ~ 2025.08.05
 
-## 기술 스택
+| 구분 | 기간 | 활동 |
+| --- | :---: | --- |
+| 사전 기획 | 7/29 | 프로젝트 기획 및 주제 선정, 와이어프레임 작성 |
+| 필수 기능 개발 | 7/30 | 개별로 정해진 필수 기능 개발 |
+| 기능통합 | 7/31 | 필수 기능 통합 |
+| 도전 기능 개발 | 7/31 | 도전 기능 구현, 게임성 향상 요소 개발 |
+| QA | 7/31 ~ 8/1 | 게임 테스트, 버그 탐색 |
+| 디버깅 | 7/31 ~ 8/1 | 버그 수정, 성능 최적화 |
+| 문서 작업 | 8/4 ~ 8/5 | 결과 보고서 작성, 발표 자료 준비 |
+
+## 🔧 기술 스택
 
 | C# | .Net |
 | :--------: | :--------: |
 |   ![csharp]    |   ![dotnet]    |
+
+![Unity](https://img.shields.io/badge/unity-%23000000.svg?style=for-the-badge&logo=unity&logoColor=white)
+![C#](https://img.shields.io/badge/c%23-%23239120.svg?style=for-the-badge&logo=csharp&logoColor=white)
+![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)
+
+### 개발 환경
+- Unity 2022.3.17f1
+- Visuual Studio 2022
+- Github Desktop & Fork
 
 <br>
 
@@ -74,6 +89,8 @@ MIT &copy; [NoHack](mailto:lbjp114@gmail.com)
 
 [csharp]: /Images/Csharp.png
 [dotnet]: /Images/Dotnet.png
-
-
+[WireFrame]: /Images/WireFrame.png
+[BrainStorming]: /Images/BrainStorming.png
+[Diagram]: /Images/Diagram.png
+[MainImage]: /Images/MainImage.png
 
