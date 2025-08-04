@@ -79,7 +79,9 @@ public class InputManager : MonoBehaviour
 
         Debug.Log($"새로운 키 바인딩을 시작합니다: {actionName}");
 
-        //
+        //바인딩 변경 전 오버라이드 저장하기
+        var previousOverride = targetAction.bindings[bindingIndex].overridePath;
+
         rebind.OnComplete(
             operation =>
             {
@@ -87,33 +89,39 @@ public class InputManager : MonoBehaviour
                 if(operation.selectedControl.name.ToLower() == "escape")
                 {
                     Debug.Log($"ESC를 눌러 취소합니다.");    //변경 로그
-                    onBindingComplete?.Invoke("");
+                    targetAction.ApplyBindingOverride(bindingIndex, previousOverride);
+                    SaveAndInvokeEmpty();
                 }
                 else if (!IsBindingConflict(actionName, newKey))
                 {
-                    PlayerPrefs.SetString(inputBindingKey, inputActions.SaveBindingOverridesAsJson()); //PlayerPrefs에 변경사항 저장
-                    PlayerPrefs.Save();
-                    Debug.Log($"Rebound '{targetAction}' to '{newKey}'");    //변경 로그
-
-                    //newKey = GetFormattedKeyBoardValue(newKey);
-                    onBindingComplete?.Invoke(newKey);  //결과 전달
+                    SaveAndInvokeNewKey(newKey);
                 }
                 else
                 {
-                    onBindingComplete?.Invoke("");
-                    Debug.Log($"Rebound failed");    //변경 로그
+                    targetAction.ApplyBindingOverride(bindingIndex, previousOverride);
+                    SaveAndInvokeEmpty();
                 }
 
                 UIManager.Instance.CloseSystemMessagePanel();
                 targetAction.Enable();
                 operation.Dispose();
+
+                void SaveAndInvokeEmpty()
+                {
+                    PlayerPrefs.SetString(inputBindingKey, inputActions.SaveBindingOverridesAsJson());
+                    PlayerPrefs.Save();
+                    onBindingComplete?.Invoke("");
+                    Debug.Log("리바인딩이 취소되거나 실패하여 이전 바인딩으로 돌아갑니다.");
+                }
+                void SaveAndInvokeNewKey(string key)
+                {
+                    PlayerPrefs.SetString(inputBindingKey, inputActions.SaveBindingOverridesAsJson());
+                    PlayerPrefs.Save();
+                    onBindingComplete?.Invoke(key);
+                    Debug.Log($"Rebound '{targetAction}' to '{key}'");
+                }
             });
         rebind.Start(); //리바인딩 시작
-
-        //테스트코드
-        //Debug.Log($"현재 {actionName}: " + inputActions.FindAction(actionName).bindings[0]);
-        //Debug.Log($"PlayerPref 저장 {actionName}: " + PlayerPrefs.GetString(inputBindingKey));
-        //테스트코드 끝
     }
     bool IsBindingConflict(string actionName, string newBindingPath)
     {
@@ -127,14 +135,16 @@ public class InputManager : MonoBehaviour
             if (action.name == actionName)
                 continue;
 
-            //Debug.Log($"binding.effectivePath: {action.bindings[0].effectivePath}");
-            //Debug.Log($"newBindingPath: {newBindingPath}");
+            Debug.Log($"binding.effectivePath: {action.bindings[0].effectivePath}");
+            Debug.Log($"newBindingPath: {newBindingPath}");
             foreach (var binding in action.bindings)
             {
                 if (binding.effectivePath == newBindingPath)
                 {
+                    Debug.Log($"{binding.effectivePath == newBindingPath}가 true임");
                     return true;
                 }
+                Debug.Log($"{binding.effectivePath == newBindingPath}가 false임");
             }
             //if (action.bindings[0].effectivePath == newBindingPath) //각 액션은 키 하나랑만 바인딩 되어있음.
             //{
