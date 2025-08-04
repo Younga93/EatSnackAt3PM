@@ -5,6 +5,7 @@ using UnityEngine;
 public abstract class ItemBase : MonoBehaviour, IInteractable, IAttractable
 {
     [SerializeField] private ItemType itemType;
+    [SerializeField] private float attractSpeed = 0.3f;
 
     public abstract void OnInteract(PlayerController player);
 
@@ -12,6 +13,6 @@ public abstract class ItemBase : MonoBehaviour, IInteractable, IAttractable
 
     public void AttractedBy(Vector3 position)
     {
-        transform.position = Vector3.Lerp(transform.position, position, 0.1f);
+        transform.position = Vector3.Lerp(transform.position, position, attractSpeed);
     }
 }
