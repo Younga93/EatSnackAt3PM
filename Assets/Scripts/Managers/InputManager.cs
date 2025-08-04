@@ -80,7 +80,10 @@ public class InputManager : MonoBehaviour
         Debug.Log($"새로운 키 바인딩을 시작합니다: {actionName}");
 
         //바인딩 변경 전 오버라이드 저장하기
-        var previousOverride = targetAction.bindings[bindingIndex].overridePath;
+        //var previousOverride = targetAction.bindings[bindingIndex].overridePath;
+        string previousOverride = !string.IsNullOrEmpty(targetAction.bindings[bindingIndex].overridePath)
+            ? targetAction.bindings[bindingIndex].overridePath
+            : targetAction.bindings[bindingIndex].path;
 
         rebind.OnComplete(
             operation =>
