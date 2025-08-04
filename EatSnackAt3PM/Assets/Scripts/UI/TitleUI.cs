@@ -43,6 +43,11 @@ public class TitleUI : BaseUI
     public void OnClickExitButton()
     {
         SoundManager.instance.ButtonSound();
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
         Debug.Log("나가기");
     }
 

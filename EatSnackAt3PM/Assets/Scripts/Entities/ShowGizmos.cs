@@ -1,9 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Presets;
-using System.Linq;
+﻿using System.Linq;
 using UnityEngine;
-using UnityEditor;
 
 public class ShowGizmos : MonoBehaviour
 {
