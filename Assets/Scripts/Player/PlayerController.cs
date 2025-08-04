@@ -368,6 +368,7 @@ public class PlayerController : MonoBehaviour
         attackAction.Enable();
         isInvincible = false;
         aniHandler.EndInvincible();
+        GameManager.Instance.ApplyEquippedOutfitItems();
     }
 
     public void Death()
