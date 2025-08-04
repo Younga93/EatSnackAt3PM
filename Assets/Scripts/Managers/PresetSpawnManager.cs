@@ -275,7 +275,7 @@ public class PresetSpawnManager : MonoBehaviour
     {
         // 만약 n을 지정하지 않으면 랜덤 값 사용
         if (n == -1)
-            n = Random.Range(0, presets.Length); // 랜덤한 프리셋을 선택
+            n = Random.Range(1, presets.Length); // 랜덤한 프리셋을 선택 (0번 한입만 프리셋 제외)
 
         if (n < presets.Length) // 해당 프리셋이 실제로 존재하는 지 확인
         {
