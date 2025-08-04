@@ -15,6 +15,8 @@ public static class OutfitItemData  //게임 내 아웃핏 데이터
         allOutfitItems.Add(new ColorOutfitItem(2, "Hair Pin", 2000, "BlueHairPin", Color.blue, "HairPin"));
         allOutfitItems.Add(new ColorOutfitItem(3, "HandBand", 3000, "GreenHairBand", Color.green, "HandBand"));
         allOutfitItems.Add(new ColorOutfitItem(4, "Shoes", 4000, "RedShoes", Color.magenta, "Shoes"));
+
+        RetrieveOutfitInPlayeyPrefs();
     }
 
     public static OutfitItemBase GetOutfitItemFromAllItemsById(int id)
@@ -47,9 +49,48 @@ public static class OutfitItemData  //게임 내 아웃핏 데이터
     {
         return userOutfitItems.Where(x => x.IsEquipped).Select(x => x.Id).ToArray();
     }
-    //public static bool IsEquippedItemById(int id)
-    //{
-    //    OutfitItemBase? item = GetOutfitItemFromUserItemsById(id);
-    //    return item.IsEquipped;
-    //}
+    public static int[] GetOwnedOutfitItemIds()
+    {
+        return userOutfitItems.Select(x => x.Id).ToArray();
+    }
+    public static void SaveOutfitInPlayeyPrefs()
+    {
+        int[] ownedIds = GetOwnedOutfitItemIds();
+        string joinedOwnedIds = string.Join(",", ownedIds);
+        PlayerPrefs.SetString("OutfitOwned", joinedOwnedIds);
+
+        int[] equippedIds = GetEquippedOutfitItemIds();
+        string joinedEquippedIds = string.Join(",", equippedIds);
+        PlayerPrefs.SetString("OutfitEquipped", joinedEquippedIds);
+    }
+    public static void RetrieveOutfitInPlayeyPrefs()
+    {
+        //소지 아이템 아이디
+        string savedOwned = PlayerPrefs.GetString("OutfitOwned", "");
+        if (string.IsNullOrEmpty(savedOwned))
+            return;
+        int[] OwnedIds = savedOwned.Split(',')
+            .Select(s => int.TryParse(s, out var id) ? id : -1)
+            .Where(id => id >= 0)
+            .ToArray();
+
+        //착용 아이템 아이디
+        string savedEquipped = PlayerPrefs.GetString("OutfitEquipped", "");
+        if (string.IsNullOrEmpty(savedOwned))
+            return;
+        int[] EquippedIds = savedEquipped.Split(',')
+            .Select(s => int.TryParse(s, out var id) ? id : -1)
+            .Where(id => id >= 0)
+            .ToArray();
+
+        userOutfitItems.Clear();
+        foreach (int id in OwnedIds)
+        {
+            OutfitItemBase item = GetOutfitItemFromAllItemsById(id);
+
+            if (EquippedIds.Contains(id)) item.EquipOutfitItem(true);
+
+            userOutfitItems.Add(item);
+        }
+    }
 }
