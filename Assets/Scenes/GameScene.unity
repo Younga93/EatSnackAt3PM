@@ -701,6 +701,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8300000, guid: 7fe882ebbff365d42b321160a5776237, type: 3}
     - target: {fileID: 6933975150757732044, guid: 8c3088d890d5c684ab2dd9856e5d2b19, type: 3}
+      propertyPath: inputActions
+      value: 
+      objectReference: {fileID: -944628639613478452, guid: 59e2a1562c76e8742a2cd5fe3967cab5, type: 3}
+    - target: {fileID: 6933975150757732044, guid: 8c3088d890d5c684ab2dd9856e5d2b19, type: 3}
       propertyPath: maxForwardSpeed
       value: 15
       objectReference: {fileID: 0}
