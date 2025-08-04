@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -31,9 +32,9 @@ public class GameManager : MonoBehaviour
         OutfitItemData.InitializeData();
         DontDestroyOnLoad(gameObject);
 
-        PlayerOutfit = FindObjectOfType<PlayerOutfitController>();
-
         spawnManager = GetComponentInChildren<PresetSpawnManager>();
+
+        OutfitItemData.RetrieveOutfitInPlayeyPrefs();
     }
 
     //private void Start()
@@ -73,6 +74,7 @@ public class GameManager : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
+            if (PlayerOutfit == null) Debug.Log("PlayerOutfit없음");
             PlayerOutfit.ChangeColorByTag(Color.red, "Hair");
             //TryPurchaseOutfitItemById(2);
         }
@@ -109,6 +111,11 @@ public class GameManager : MonoBehaviour
         InitScore();
         //Time.timeScale = 0f;
     }
+    public void InitPlayerOutfit()
+    {
+        PlayerOutfit.ApplyAllItemsEquipped();
+        Debug.Log(PlayerOutfit == null ? "PlayerOutfit 못찾음" : "PlayerOutfit 찾음");
+    }
     public void LoadSceneWithCallback(string sceneName)
     {
         UIManager.Instance.ChangeState(UIState.Loading);
@@ -126,7 +133,10 @@ public class GameManager : MonoBehaviour
                 spawnManager.MakeNextPos();
                 spawnManager.MakeNextPos();
                 spawnManager.MakeNextPos();
+
+                PlayerOutfit = FindObjectOfType<PlayerOutfitController>(true);
                 ApplyEquippedOutfitItems();
+
                 Time.timeScale = 1f;
                 break;
             case "TitleScene":
@@ -170,7 +180,6 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.UpdateGameOverUI(currentScore);
         UIManager.Instance.UpdateHealthUI(currentScore);
     }
-
     public bool TryPurchaseOutfitItemById(int id)
     {
         bool isSuccessful;
@@ -193,11 +202,6 @@ public class GameManager : MonoBehaviour
 
     public void ApplyEquippedOutfitItems()
     {
-        int[] equippedItemIds = OutfitItemData.GetEquippedOutfitItemIds();
-        foreach(int itemId in equippedItemIds)
-        {
-            OutfitItemData.GetOutfitItemFromUserItemsById(itemId);
-            //
-        }
+        PlayerOutfit.ApplyAllItemsEquipped();
     }
 }

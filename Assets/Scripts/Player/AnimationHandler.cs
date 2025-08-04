@@ -30,7 +30,7 @@ public class AnimationHandler : MonoBehaviour
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         renderers = GetComponentsInChildren<SpriteRenderer>();
-        originalColor = renderers[0].color;
+        originalColor = new Color(1, 1, 1, 1);
     }
     private void FixedUpdate()
     {

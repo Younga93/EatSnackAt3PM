@@ -16,7 +16,21 @@ public class PlayerOutfitController : MonoBehaviour
         hairpinRenderers = GetComponentsInChildren<SpriteRenderer>(true).Where(x => x.CompareTag("HairPin")).ToArray();
         handbandRenderers = GetComponentsInChildren<SpriteRenderer>(true).Where(x => x.CompareTag("HandBand")).ToArray();
         shoesRendererss = GetComponentsInChildren<SpriteRenderer>(true).Where(x => x.CompareTag("Shoes")).ToArray();
-        ChangeColorByTag(Color.red, "Hair");
+        //ChangeColorByTag(Color.red, "Hair");
+    }
+
+    public void ApplyAllItemsEquipped()
+    {
+        int[] ids = OutfitItemData.GetEquippedOutfitItemIds();
+        foreach (int id in ids)
+        {
+            OutfitItemBase item = OutfitItemData.GetOutfitItemFromUserItemsById(id);
+
+            if (item != null && item is ColorOutfitItem colotItem)
+            {
+                ChangeColorByTag(colotItem.outfitColor, colotItem.partTag);
+            }
+        };
     }
     public void ChangeColorByTag(Color color, string tagName)
     {
@@ -46,6 +60,11 @@ public class PlayerOutfitController : MonoBehaviour
     {
         foreach (var sr in renderers)
         {
+            if (sr == null)
+            {
+                Debug.LogError("renderers 배열에 null이 포함되어 있음!");
+                continue;
+            }
             sr.color = color;
         }
     }

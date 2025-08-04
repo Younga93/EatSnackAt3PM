@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     // 이동 관련 변수
     [Header("Move Settings")]
     [SerializeField] float forwardSpeed; // 앞으로 이동하는 속도
+    [SerializeField] float maxForwardSpeed; // 최대 속도
 
 
     // 점프 관련 변수들
@@ -66,6 +67,11 @@ public class PlayerController : MonoBehaviour
     private AudioSource slideSource;
     //
 
+    // input action 관련 변수들
+    [Header("Input Settings")]
+    [SerializeField] InputActionAsset inputActions;
+    private InputAction attackAction;
+
 
     // 틱 관련 변수
     float tick = 0f;
@@ -84,8 +90,7 @@ public class PlayerController : MonoBehaviour
         jumpDelay = maxJumpDelay;
 
         playerInput = GetComponent<PlayerInput>();
-
-
+        attackAction = inputActions.FindActionMap("Player").FindAction("Attack");
     }
 
 
@@ -129,7 +134,7 @@ public class PlayerController : MonoBehaviour
         {
             // 1초에 한번씩 실행됨
             ChangeHp(-1);
-            forwardSpeed += 0.1f;
+            if(forwardSpeed < maxForwardSpeed) forwardSpeed += 0.1f;
             tick = 0f;
         }
 
@@ -347,7 +352,7 @@ public class PlayerController : MonoBehaviour
         isInvincible = true;
         if( itemInvincibleTime == null)
         {
-            playerInput.currentActionMap.Disable();
+            attackAction.Disable();
             Invoke("EndInvincible", invincibleTime);
         }
         else
@@ -360,9 +365,10 @@ public class PlayerController : MonoBehaviour
     {
         // 무적 끝나는 부분
         // Debug.Log("End Invincible");
-        playerInput.currentActionMap.Enable();
+        attackAction.Enable();
         isInvincible = false;
         aniHandler.EndInvincible();
+        GameManager.Instance.ApplyEquippedOutfitItems();
     }
 
     public void Death()

@@ -21,6 +21,7 @@ public class OutfitItemPanelUI : MonoBehaviour
     }
     public void Setting(int id)
     {
+        OutfitItemData.RetrieveOutfitInPlayeyPrefs();
         item = OutfitItemData.GetOutfitItemFromAllItemsById(id);
 
         itemName.text = item.Name;
@@ -40,6 +41,8 @@ public class OutfitItemPanelUI : MonoBehaviour
     void OnEquipToggleChanged(bool isOn)
     {
         item.EquipOutfitItem(isOn);
+        
+        OutfitItemData.SaveOutfitInPlayeyPrefs();
 
         Debug.Log($"{item.Name}이 장착되었냐?: {item.IsEquipped}");
     }
@@ -54,6 +57,7 @@ public class OutfitItemPanelUI : MonoBehaviour
         if (isSuccessful)
         {
             SwitchToggleAndPanel(true);
+            OutfitItemData.SaveOutfitInPlayeyPrefs();
         }
     }
 }
