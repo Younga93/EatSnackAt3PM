@@ -9,7 +9,7 @@ public class InvincibleItem : ItemBase
     public override void OnInteract(PlayerController player)
     {
         player.StartInvincible(_duration);
-        PresetSpawnManager.Instance.ReturnItem(this);
+        GameManager.Instance.SpawnManager.ReturnItem(this);
         SoundManager.PlayClip(invincibleClip, false);
     }
 }

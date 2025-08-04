@@ -10,6 +10,6 @@ public class RecoveryItem : ItemBase
     {
         // TODO: 플레이어 체력 회복
         player.ChangeHp(_energyRecoveryAmount);
-        PresetSpawnManager.Instance.ReturnItem(this);
+        GameManager.Instance.SpawnManager.ReturnItem(this);
     }
 }

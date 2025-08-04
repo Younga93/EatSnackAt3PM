@@ -12,7 +12,7 @@ public class MagnetItem : ItemBase
         area.gameObject.SetActive(true);
         area.Init(_duration, player);
 
-        PresetSpawnManager.Instance.ReturnItem(this);
+        GameManager.Instance.SpawnManager.ReturnItem(this);
     }
 
     IEnumerator AttractItemsCoroutine(PlayerController player)

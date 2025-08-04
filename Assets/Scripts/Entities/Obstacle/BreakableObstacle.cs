@@ -21,7 +21,7 @@ public class BreakableObstacle : ObstacleBase
     {
         player.ChangeHp(_energyRecoveryAmount);
         GameManager.Instance.AddScore(_score);
-        PresetSpawnManager.Instance.ReturnObstacle(this);
+        GameManager.Instance.SpawnManager.ReturnObstacle(this);
         SoundManager.PlayClip(breakClip, false);
         // TODO: 파괴 이펙트같은게 있으면 좋을 거 같음
     }

@@ -24,6 +24,6 @@ public class SpeedUpItem : ItemBase
         yield return new WaitForSeconds(_duration);
         // 속도 감소
         player.ChangeSpeed(-_speed); // TODO: 플레이어 이전 속도로 되돌리기
-        PresetSpawnManager.Instance.ReturnItem(this);
+        GameManager.Instance.SpawnManager.ReturnItem(this);
     }
 }

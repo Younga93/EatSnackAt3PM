@@ -26,8 +26,8 @@ public class PresetSpawnManager : MonoBehaviour
 {
     // 아 싱글턴 쓰기 싫었는데 어쩔 수가 없네
     // 아마 게임매니저가 관리하면 싱글턴 안써도 될듯?
-    private static PresetSpawnManager _instance;
-    public static PresetSpawnManager Instance {  get { return _instance; } }
+    //private static PresetSpawnManager _instance;
+    //public static PresetSpawnManager Instance {  get { return _instance; } }
 
     /// <summary>
     /// 각 오브젝트마다 저장해놓을 오브젝트 풀
@@ -81,7 +81,7 @@ public class PresetSpawnManager : MonoBehaviour
     /// </summary>
     public void Init()
     {
-        _instance = this;
+        //_instance = this;
 
         obstacleTopAPool = new ObjectPool<NormalObstacle>(obstacleTopAPrefab, 10, transform);
         obstacleTopBPool = new ObjectPool<NormalObstacle>(obstacleTopBPrefab, 10, transform);
