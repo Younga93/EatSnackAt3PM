@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     // 이동 관련 변수
     [Header("Move Settings")]
     [SerializeField] float forwardSpeed; // 앞으로 이동하는 속도
+    [SerializeField] float maxForwardSpeed; // 최대 속도
 
 
     // 점프 관련 변수들
@@ -129,7 +130,7 @@ public class PlayerController : MonoBehaviour
         {
             // 1초에 한번씩 실행됨
             ChangeHp(-1);
-            forwardSpeed += 0.1f;
+            if(forwardSpeed < maxForwardSpeed) forwardSpeed += 0.1f;
             tick = 0f;
         }
 
