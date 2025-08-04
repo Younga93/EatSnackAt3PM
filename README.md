@@ -7,6 +7,8 @@
   <br>
 </p> 
 
+[다운로드 링크](https://drive.google.com/file/d/1xZdeToCLtdGjmeGkxvPQHeEWBYR5auBr/view?usp=sharing)
+
 ## 프로젝트 소개
 ![MainImage]
 ## 팀 구성 및 역할
