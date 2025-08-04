@@ -58,6 +58,7 @@ public class OutfitItemPanelUI : MonoBehaviour
         {
             SwitchToggleAndPanel(true);
             OutfitItemData.SaveOutfitInPlayeyPrefs();
+            UIManager.Instance.UpdateStoreUI();
         }
     }
 }
