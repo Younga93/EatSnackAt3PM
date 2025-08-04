@@ -144,6 +144,7 @@ public class GameManager : MonoBehaviour
                 break;
             case "StoreScene":
                 UIManager.Instance.ChangeState(UIState.Store);
+                UIManager.Instance.UpdateStoreUI();
                 break;
         }
         //if(scene.name == "GameScene")   //씬 종류 많아지면 switch로 변경
@@ -188,6 +189,7 @@ public class GameManager : MonoBehaviour
         if (item != null && playerPoints >= item.Price)
         {
             PlayerPrefs.SetInt("Point", playerPoints - item.Price);
+            PlayerPrefs.Save();
             OutfitItemData.AddUserItemById(id); ///밥먹고 오면 이거 먼저 테스트하기
             isSuccessful = true;
         }
