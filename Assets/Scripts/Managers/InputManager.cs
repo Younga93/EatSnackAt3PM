@@ -87,6 +87,7 @@ public class InputManager : MonoBehaviour
                 if(operation.selectedControl.name.ToLower() == "escape")
                 {
                     Debug.Log($"ESC를 눌러 취소합니다.");    //변경 로그
+                    onBindingComplete?.Invoke("");
                 }
                 else if (!IsBindingConflict(actionName, newKey))
                 {
@@ -126,12 +127,19 @@ public class InputManager : MonoBehaviour
             if (action.name == actionName)
                 continue;
 
-            Debug.Log($"binding.effectivePath: {action.bindings[0].effectivePath}");
-            Debug.Log($"newBindingPath: {newBindingPath}");
-            if (action.bindings[0].effectivePath == newBindingPath) //각 액션은 키 하나랑만 바인딩 되어있음.
+            //Debug.Log($"binding.effectivePath: {action.bindings[0].effectivePath}");
+            //Debug.Log($"newBindingPath: {newBindingPath}");
+            foreach (var binding in action.bindings)
             {
-                return true; //이미 사용중임
+                if (binding.effectivePath == newBindingPath)
+                {
+                    return true;
+                }
             }
+            //if (action.bindings[0].effectivePath == newBindingPath) //각 액션은 키 하나랑만 바인딩 되어있음.
+            //{
+            //    return true; //이미 사용중임
+            //}
         }
         return false;
     }
