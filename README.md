@@ -1,11 +1,11 @@
 # 스파르타 내일배움캠프 유니티 11기 4주차 Metaverse
 
-<!-- 
+
 <p align="center">
 <br>
-  <img src="./images/playing.gif">
+  <img src="./images/Playing.gif">
   <br>
-</p> -->
+</p> 
 
 
 ## 프로젝트 소개
