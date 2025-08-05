@@ -37,6 +37,10 @@
 | 문서 작업 | 8/4 ~ 8/5 | 결과 보고서 작성, 발표 자료 준비 |
 
 ## 🔧 기술 스택
+| C# | .Net |
+| :--------: | :--------: |
+|   ![csharp]    |   ![dotnet]    |
+
 ![Unity](https://img.shields.io/badge/unity-%23000000.svg?style=for-the-badge&logo=unity&logoColor=white)
 ![C#](https://img.shields.io/badge/c%23-%23239120.svg?style=for-the-badge&logo=csharp&logoColor=white)
 ![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)
