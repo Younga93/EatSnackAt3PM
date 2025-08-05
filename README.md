@@ -1,5 +1,5 @@
 # 한입런 - One Bite Run
-
+## 프로젝트 시연 영상
 
 <p align="center">
 <br>
@@ -11,6 +11,7 @@
 
 ## 프로젝트 소개
 ![MainImage]
+> "한입런 - One Bite Run"은 '쿠키런'이라는 모바일 게임을 모작한 2D 액션 러닝 장르의 게임으로 학습 내용을 응용하고 팀단위의 개발을 경험하며 협업 역량을 키우는 것을 목적으로 개발한 게임입니다.
 ## 팀 구성 및 역할
 
 | 이름 | 역할 | 담당 업무 |
@@ -36,14 +37,10 @@
 | 문서 작업 | 8/4 ~ 8/5 | 결과 보고서 작성, 발표 자료 준비 |
 
 ## 🔧 기술 스택
-
-| C# | .Net |
-| :--------: | :--------: |
-|   ![csharp]    |   ![dotnet]    |
-
 ![Unity](https://img.shields.io/badge/unity-%23000000.svg?style=for-the-badge&logo=unity&logoColor=white)
 ![C#](https://img.shields.io/badge/c%23-%23239120.svg?style=for-the-badge&logo=csharp&logoColor=white)
 ![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)
+![.Net](https://img.shields.io/badge/.NET-5C2D91?style=for-the-badge&logo=.net&logoColor=white)
 
 ### 개발 환경
 - Unity 2022.3.17f1
